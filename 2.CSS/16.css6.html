@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        div {
+            width: 200px;
+            height: 100px;
+            color: white;
+            position: relative;
+            overflow: hidden auto;
+        }
+        .div1 { background-color: orange; z-index: 10 }
+        .div2 { background-color: red; bottom: 50px; z-index: 5 }
+        .div3 { background-color: blue; bottom: 100px; z-index: 5 }
+        .div4 { background-color: yellow; bottom: 150px; z-index: 5 }
+    </style>
+</head>
+<body>
+    <h1>Z-index를 통한 레이어 순서 변경</h1>
+    <div class="div1"><p>ORANGE 색상으로 보여지는 박스.. 조금 더 긴 글자로 만들어보기... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad vel quo error suscipit accusantium neque, distinctio dicta incidunt, nesciunt, impedit provident in commodi a veritatis quod. Praesentium commodi perferendis voluptatum!</p></div>
+    <div class="div2">RED</div>
+    <div class="div3">BLUE</div>
+    <div class="div4">YELLOW</div>
+</body>
+</html>

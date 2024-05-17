@@ -2,7 +2,30 @@
 <HTML>
 <head>
 	<title>2024년 5월 달력</title>
-	<link rel="stylesheet" href="6.calendar.css">
+	<style>
+		h1,h2 {
+			text-align: center;
+		}
+		td {
+			text-align: center;
+		}
+		#calendar {
+			width: 100%;
+			border: 1px solid;
+			height: 200px;
+		}
+		#calendar th {
+			background-color: #b4b4b4;
+			padding: 5px;
+			width: 14%;
+		}
+		#calendar th:first-child, #calendar td:first-child {
+			color:red;
+		}
+		#calendar th:last-child, #calendar td:last-child {
+			color:blue;
+		}
+	</style>
 </head>
 <body>
 	<h1>Photo Calendar</h1>
@@ -40,7 +63,7 @@
 	  <td>12</td>
 	  <td>13</td>
 	  <td>14</td>
-	  <td style="color:red">15</td>
+	  <td>15</td>
 	  <td>16</td>
 	  <td>17</td>
 	  <td>18</td>
@@ -64,8 +87,8 @@
 	  <td></td>
 	</tr>
 	</table>
-	<h2>
+	<h3>
 		<a href="6.calendar2.html">[다음 달]</a>
-	</h2>
+	</h3>
 </body>
 </HTML>

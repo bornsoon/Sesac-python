@@ -1,0 +1,12 @@
+#sky1 {
+    margine-right: 50px;
+}
+#sky2 {
+    margin-left: 50px;
+}
+.container {
+    /* solid, dashed, dotted */
+    border-left: 10px dotted red;
+    border-right: 10px dashed red;
+    width: 50%;
+}
