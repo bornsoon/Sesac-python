@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> input 요소의 입력 타입에 따른 출력 모양 </title>
+    <style>
+        td { padding-left: 20px }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td><mark>type 속성값</mark></td>
+            <td><mark>출력 모양</mark><td>
+            </tr>
+        <tr>
+            <td>(텍스트 타입) <b>type="text"</b></td>
+            <td><input type="text" placeholder="텍스트"></td>
+        </tr>
+        <tr>
+            <td>(비밀번호) <b>type="password"</b></td>
+            <td><input type="password" placeholder="1234"></td>
+        </tr>
+        <tr>
+            <td>(라디오 버튼) <b>type="radio"</b></td>
+            <td><input type="radio" name="radio" value="radio" checked>radio</td>
+        </tr>
+        <tr>
+            <td>(체크박스) <b>type="checkbox"</b></td>
+            <td><input type="checkbox" name="checkbox" value="checkbox" checked>checkbox</td>
+        </tr>
+        <tr>
+            <td>(숨김 타입) <b>type="hidden"</b></td>
+            <td><input type="hidden" name="submitted" value=""></td>
+        </tr>
+        <tr>
+            <td>(파일 선택) <b>type="file"</b></td>
+            <td><input type="file" accept="image/*" multiple></td>
+        </tr>
+        <tr>
+            <td>(이미지 제출 버튼) <b>type="image"</b></td>
+            <td><input type="image" src="../images/2.jpg" height="16em"></td>
+        </tr>
+        <tr>
+            <td>(제출 버튼) <b>type="submit"</b></td>
+            <td><input type="submit"><br></td>
+        </tr>
+        <tr>
+            <td>(초기화 버튼) <b>type="reset"</b></td>
+            <td><input type="reset"></td>
+        </tr>
+        <tr>
+            <td>(일반 버튼) <b>type="button"</b></td>
+            <td><input type="button" value="확인" onclick="alert('안녕!')"></td>
+        </tr>
+        <tr>
+            <td>(검색어) <b>type="search"</b></td>
+            <td><input type="search" value="HTML5"></td>
+        </tr>
+        <tr>
+            <td>(전화번호) <b>type="tel"</b></td>
+            <td><input type="tel" required placeholder="02-3668-4650"></td>
+        </tr>
+        <tr>
+            <td>(URL) <b>type="url"</b></td>
+            <td><input type="url" placeholder="http://kknou.ad.kr"></td>
+        </tr>
+        <tr>
+            <td>(이메일) <b>type="email"</b></td>
+            <td><input type="email" placeholder="dp34@knou.ac.kr"></td>
+        </tr>
+        <tr>
+            <td>(숫자: number) <b>type="number"</b></td>
+            <td><input type="number" min="1" max="100" value="23"></td>
+        </tr>
+        <tr>
+            <td>(숫자: range) <b>type="range"</b></td>
+            <td><input type="range" min="0" max="10" step="0.5" value="5"></td>
+        </tr>
+        <tr>
+            <td>(색상) <b>type="color"</b></td>
+            <td><input type="color"></td>            
+        </tr>
+        <tr>
+            <td>(년,월,일) <b>type="date"</b></td>
+            <td><input type="date" min="2023-03-01" max="2023-06-30"></td>
+        </tr>
+        <tr>
+            <td>(연도,월) <b>type="month"</b></td>
+            <td><input type="month" value="2023-03"></td>
+        </tr>
+        <tr>
+            <td>(연도,주차) <b>type="week"</b></td>
+            <td><input type="week"></td>
+        </tr>
+        <tr>
+            <td>(시간) <b>type="time"</b></td>
+            <td><input type="time" value="17:30:00"></td>
+        </tr>
+        <tr>
+            <td>(년,월,일,시간) <b>type="datetime-local"</b></td>
+            <td><input type="datetime-local" value="2023-03-01T14:20:00"></td>
+        </tr>
+    <table>
+</body>
+</html>
