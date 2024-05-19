@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> select 요소와 datalist 요소 </title>
+</head>
+<body>
+    <h4>select 요소</h4>
+    <form>
+        과목<br/>
+        <select name="subject" size="1">
+            <option value="java">Java 프로그래밍</option>
+            <option value="html" selected>HTML5 웹 프로그래밍</option>
+            <option value="algo">알고리즘</option>
+            <option value="dc">디지털 논리회로</option>
+            <option value="db">데이터베이스 시스템</option>
+        </select>
+        <hr>
+        <h4>datalist 요소</h4>
+        <p>웹 브라우저:
+        <input type="text" list="browsers"></p>
+        <datalist id="browsers">
+            <option value="엣지">
+            <option value="파이어폭스">
+            <option value="크롬">
+            <option value="오페라">
+            <option value="사파리" disabled>
+        </datalist>
+    </form>
+</body>
+</html>

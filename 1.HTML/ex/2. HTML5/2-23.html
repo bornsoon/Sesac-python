@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 열 단위의 스타일 지정 </title>
+    <style>
+        .subject { background-color: lightblue;}
+        .score { background-color: yellow;}
+        .average { background-color: lightgreen;}
+    </style>
+</head>
+<body>
+    <table>
+        <colgroup>
+        <col style="background-color: lightblue">
+        <col span="2" style="background-color: yellow">
+        </colgroup>
+        <tr>
+            <th>수강과목</th> <th>중간시험</th> <th>기말시험</th>
+        <tr>
+            <td>국어</td> <td>90</td> <td>95</td>
+        </tr>
+        <tr>
+            <td>영어</td> <td>95</td> <td>90</td>
+        </tr>
+        <tr>
+            <td>수학</td> <td>85</td> <td>95</td>
+        </tr>
+    </table>
+    <table>
+        <colgroup>
+        <col class="subject">
+        <col span="2" class="score">
+        <col class="average">
+        </colgroup>
+        <tr>
+            <th>수강과목</th> <th>중간시험</th> <th>기말시험</th> <th>평균</th>
+        </tr>
+        <tr>
+            <td>국어</td> <td>90</td> <td>95</td> <td>92.5</td>
+        </tr>
+        <tr>
+            <td>영어</td> <td>95</td> <td>90</td> <td>93.0</td>
+        </tr>
+        <tr>
+            <td>수학</td> <td>85</td> <td>95</td> <td>90.0</td>
+        </tr>
+    </table>
+</body>
+</html>

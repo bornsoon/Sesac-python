@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 기본 선택자의 사용 </title>
+    <style>
+        p { font-style: italic; }
+        p.class1 { text-decoration: overline; }
+        .class2 { text-decoration: underline; }
+        .header { border: 3px green dotted; text-decoration: line-through; }
+        #style1 {font-size: 20pt; color: blue; }
+        p#style2 { font-size: 15pt; color: red; text-decoration: overline; }
+    </style>
+</head>
+<body>
+    <div id="style1">
+        div 요소는 아이디 선택자(style1) 적용
+        <h3 class="class2 header">h3 요소에는 class2와 header + style1</h3>
+        <p class="class1 class2">첫 번째 p 요소에는 p, class1, class2 + style1</p>
+        <p id="style2" class="class2">두 번째 p 요소에는 p, style2, class2 + style1 적용</p>
+    </div>
+</body>
+</html>

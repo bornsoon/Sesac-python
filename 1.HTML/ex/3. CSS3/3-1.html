@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> CSS 적용의 우선순위 </title>
+    <!-- 외부 파일(mystyle.css)의 내용:body { background-color: yellow; } -->
+    <link rel="stylesheet" href="mystyle.css">
+    <!-- style 요소 -->
+    <style>
+        body { background-color: skyblue }
+    </style>
+</head>
+<!-- style 속성 -->
+<body style="background-color: pink">
+    <p>CSS 적용의 우선 순위</p>
+</body>
+</html>

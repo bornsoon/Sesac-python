@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 폼 내의 값을 출력하는 output 요소 </title>
+</head>
+<body>
+    <form oninput="out.value=(parseInt(a.value)*parseInt(b.value))">
+        <input type="range" id="a" min="1" max="50" value="10"/>
+        *
+        <input type="number" id="b" min="1" max="100" value="20"/>
+        =
+        <output name="out" for="a b"></output> 
+    </form>
+</body>
+</html>
