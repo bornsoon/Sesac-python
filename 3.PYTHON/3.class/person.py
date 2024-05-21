@@ -1,8 +1,8 @@
 class Person:
     # 명사, Property 를 정의할 수 있음
-    name = ""
+    name = ''
     age = 0
-    status = "sleeping"
+    status = 'sleeping'
 
     def __init__(self, name, age):   # 이 객체의 초기화 함수
         self.name = name
