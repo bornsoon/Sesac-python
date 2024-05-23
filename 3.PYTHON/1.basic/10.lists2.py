@@ -12,8 +12,8 @@ print(short_words)
 
 # 5. 중첩 리스트 펼치기
 nested_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-flattened_list1 = [y for y in x for x in nested_list]
-flattened_list1 = [x for x in y for  in len(nested_list)]
+flattened_list1 = [y for x in nested_list for y in x]
+flattened_list2 = [x[i] for x in nested_list for i in range(len(nested_list))]
 # 출력: [1, 2, 3, 4, 5, 6, 7, 8, 9]
 print(flattened_list1)
 print(flattened_list2)
@@ -29,4 +29,3 @@ words = ["apple", "banana", "cherry", "apricot", "egg"]
 vowel_starting_words = [x for x in words if x[0] in ("a", "e", "i", "u", "o")]
 # 출력: ["apple", "apricot", "egg"]
 print(vowel_starting_words)
-
