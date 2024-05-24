@@ -42,32 +42,32 @@ print("5. 랜덤 대문자 6자리:",''.join(random_Upper()))
 
 
 # 6. 랜덤 초이스에서 가중치를 고려한 랜덤
-class NotSameNumError(Exception):
-    def __init__(self):
-        super().__init__("원하는 랜덤 숫자의 갯수와 가중치의 갯수가 일치하지 않습니다")
+# class NotSameLenError(Exception):
+#     def __init__(self):
+#         super().__init__("원하는 랜덤 숫자의 갯수와 가중치의 갯수가 일치하지 않습니다")
 
 def weighed_random_element():
     elements2 = []
-    # try:
+    wantPer = input("원하는 숫자의 가중치(정수)를 위의 입력의 순서에 맞춰 입력하시오: ").split(',')
+    
+    # try:               # try 구문 적당히 나눠쓰는 것도 좋음
     #     wantPer.append(int(input("원하는 숫자의 가중치(정수)를 위의 입력의 순서에 맞춰 입력하시오: ").split(',')))
-        
     #     if len(elements) != len(wantPer):
-    #         raise NotSameNumError
-        
-    # except TypeError:
+    #         raise NotSameLenError
+    # except NotSameLenError:
+    #     print("원하는 랜덤 숫자의 갯수와 가중치의 갯수가 일치하지 않습니다")  
+    # except TypeError:     # 입력값이 리스트가 아니라서 숫자가 아닌 값이 맞기 때문에 오류가 아님
     #     return "입력값에 숫자가 아닌 값이 왔습니다."
     # except Exception as e:
     #     print("예외가 발생했습니다.", e)
-
-    wantPer = input("원하는 숫자의 가중치(정수)를 위의 입력의 순서에 맞춰 입력하시오: ").split(',')
-
+    
     for i in range(len(wantPer)):
         for j in range(int(wantPer[i])):
             elements2.append(elements[i])
     
     # print(wantPer)
     # print(elements2)
-
+    
     return random.choice(elements2)
 
 print("6. 당첨된 과일은:", weighed_random_element())
@@ -78,7 +78,7 @@ print("6. 당첨된 과일은:", weighed_random_element())
 num = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 strL = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 str = []
-str=[strL, strU, num]
+str = [strL, strU, num]
 str = [x for y in str for x in y]
 def random_pw():
     random_pw=[]
