@@ -7,6 +7,8 @@ new_dir = "내폴더123"
 os.mkdir(new_dir)
 print(f"생선된 디렉토리명은 {new_dir} 입니다.")
 
+os.rename("C:/Sesac/sesac/3.PYTHON/4.module/yourproject.py", "C:/Sesac/sesac/3.PYTHON/4.module/myproject.py")
+
 os.rmdir(new_dir)
 print(f"디렉토리명 ${new_dir} 이 삭제되었습니다.")
 
