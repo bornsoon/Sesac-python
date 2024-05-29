@@ -1,13 +1,19 @@
 import csv
 
 class CsvOperator:
-    csv_list = []
 
     def read_csv(self, filename):
         with open(filename, 'r', encoding = 'utf-8') as file:
             csv_reader = csv.reader(file)
             csv_list = [x.strip().strip("'") for y in csv_reader for x in y]
-        
+        return csv_list
+
+    def read_dict(self, filename):
+        csv_list = []
+        with open(filename, 'r', encoding = 'utf-8') as file:
+            csv_reader = csv.DictReader(file)
+            for l in csv_reader:
+                csv_list.append(l)
         return csv_list
     
     def print_csv(self, csv_list, filename,):
@@ -19,3 +25,9 @@ class CsvOperator:
     def print_screen(self, csv_list):
         for l in csv_list:
             print(l)
+
+# a=CsvOperator()
+# b=a.read_dict('food.csv')
+
+# print()
+# print(b)
