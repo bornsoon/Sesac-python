@@ -1,35 +1,40 @@
 import random
 import uuid
 from csv_operator import  CsvOperator
-import sys
 
 csv_operator = CsvOperator()
 
-firstname = csv_operator.read_csv('firstname.csv')
-lastname = csv_operator.read_csv('lastname.csv')
-city = csv_operator.read_csv('city.csv')
-street = csv_operator.read_csv('street.csv')
-storetype = csv_operator.read_csv('storetype.csv')
-coffee = csv_operator.read_dict('coffee.csv')
-beverage = csv_operator.read_dict('beverage.csv')
-food = csv_operator.read_dict('food.csv')
+firstname = csv_operator.read_csv('./csvfiles/firstname.csv')
+lastname = csv_operator.read_csv('./csvfiles/lastname.csv')
+city = csv_operator.read_csv('./csvfiles/city.csv')
+street = csv_operator.read_csv('./csvfiles/street.csv')
+storetype = csv_operator.read_csv('./csvfiles/storetype.csv')
+coffee = csv_operator.read_dict('./csvfiles/coffee.csv')
+beverage = csv_operator.read_dict('./csvfiles/beverage.csv')
+food = csv_operator.read_dict('./csvfiles/food.csv')
 
-class Creater:
+
+class Generator:
     lst = []
-    mode = input('원하는 생성모드(user/store/item/order): ')
+    mode = input('원하는 생성모드(user/store/item/order/orderItem): ')
 
-    def creater(self):
+    def generator(self):
         if self.mode == 'user':
-            return self.create_users()
+            return self.generate_users()
         elif self.mode == 'store':
-            return self.create_stores()
+            return self.generate_stores()
         elif self.mode == 'item':
-            return self.create_items()
+            return self.generate_items()
         elif self.mode == 'order':
-            return self.create_orders()
+            return self.generate_orders()
+        elif self.mode == 'orderItem':
+            return self.generate_orderItems()
+        else:
+            print('유효하지 않는 입력값입니다.')
+            exit()
 
 
-    def create_users(self):
+    def generate_users(self):
         num = int(input('생성하고 싶은 사용자 갯수: '))
         self.lst = []
         self.lst.append(('Id', 'Name', 'Gender', 'Age', 'Birthdate', 'Address'))
@@ -50,7 +55,7 @@ class Creater:
         return self.lst
 
 
-    def create_stores(self):
+    def generate_stores(self):
         num = int(input('생성하고 싶은 점포 갯수: '))
         self.lst = []
         self.lst.append(('Id', 'Name', 'Type', 'Address'))
@@ -67,7 +72,7 @@ class Creater:
         return self.lst
     
 
-    def create_items(self):
+    def generate_items(self):
         num = int(input('생성하고 싶은 아이템 갯수: '))
         self.lst = []
         self.lst.append(('Id', 'Item', 'Type', 'Price'))
@@ -91,41 +96,64 @@ class Creater:
         return self.lst
 
 
-    def create_orders(self, users, stores):
+    def generate_orders(self):
         num = int(input('생성하고 싶은 주문 갯수: '))
         self.lst = []
-        self.lst.append(('Id', 'OrderAt', 'StoreID', 'UserID'))
+        self.lst.append(('Id', 'OrderAt', 'StoreId', 'UserId'))
+        users = input('가져올 user 파일명: ')
+        users = csv_operator.read_dict(users)
+        stores = input('가져올 store 파일명: ')
+        stores = csv_operator.read_dict(stores)
 
         for _ in range(num):
             id = str(uuid.uuid4())
             date = f'{random.randint(2014, 2024)}-{random.randint(1,12):02d}-{random.randint(1,28):02d}'
-            time = f'{random.randint(1,24):02d}-{random.randint(1,60):02d}-{random.randint(1,60):02d}'
-            storeID = random.choice(stores[0])
-            userID = random.choice(users[0])
+            time = f'{random.randint(0,23):02d}-{random.randint(0,59):02d}-{random.randint(1,59):02d}'
+            storeId = random.choice(stores)['Id']
+            userId = random.choice(users)['Id']
 
-            self.lst.append((id, date + ' '+ time, storeID, userID))
+            self.lst.append((id, date + ' '+ time, storeId, userId))
+
+        return self.lst
+    
+
+    def generate_orderItems(self):
+        num = int(input('생성하고 싶은 주문아이템 갯수: '))
+        self.lst = []
+        self.lst.append(('Id', 'OrderId', 'ItemId'))
+        order = input('가져올 order 파일명: ')
+        order = csv_operator.read_dict(order)
+        item = input('가져올 item 파일명: ')
+        item = csv_operator.read_dict(item)
+
+        for _ in range(num):
+            id = str(uuid.uuid4())
+            orderId = random.choice(order)['Id']
+            itemId = random.choice(item)['Id']
+
+            self.lst.append((id, orderId, itemId))
 
         return self.lst
 
 
-class Creater1(Creater):
+class Generator1(Generator):
     printmode= input('원하는 출력모드(csv/screen): ')
     lst = []
-    lst = Creater()
-    lst = lst.creater()
+    lst = Generator()
+    lst = lst.generator()
     
 
-    def creater_print(self):
+    def generator_print(self):
         if self.printmode == 'csv':
             filename = input('파일 이름: ') + '.csv'
             csv_operator.print_csv(self.lst, filename)
         elif self.printmode == 'screen':
             csv_operator.print_screen(self.lst)
         else:
-            print('유효하지 않는 입력값입니다')
+            print('유효하지 않는 입력값입니다.')
 
 
 
 if __name__ == "__main__":
-    create1 = Creater1()
-    create1.creater_print()
+    generate1 = Generator1()
+    generate1.generator_print()
