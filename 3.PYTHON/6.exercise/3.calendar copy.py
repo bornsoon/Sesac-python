@@ -21,52 +21,52 @@ def print_calendar(year, month):
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 28 + 1
     elif month == 3:
-        MDDD = (DDD + 2) % 7 + 1
+        MDDD = (DDD + 3) % 7
         print(f"      March   {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
     elif month == 4:
-        MDDD = (DDD + 5) % 7 + 1
+        MDDD = (DDD + 6) % 7
         print(f"      April   {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 30 + 1
     elif month == 5:
-        MDDD = DDD % 7 + 1
+        MDDD = (DDD + 1) % 7
         print(f"       May    {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
     elif month == 6:
-        MDDD = (DDD + 3) % 7 + 1
+        MDDD = (DDD + 4) % 7
         print(f"      June    {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 30 + 1
     elif month == 7:
-        MDDD = (DDD + 5) % 7 + 1
+        MDDD = (DDD + 6) % 7
         print(f"      July    {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
     elif month == 8:
-        MDDD = (DDD + 1) % 7 + 1
+        MDDD = (DDD + 2) % 7
         print(f"     August   {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
     elif month == 9:
-        MDDD = (DDD + 4) % 7 + 1
+        MDDD = (DDD + 5) % 7
         print(f"    September {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 30 + 1
     elif month == 10:
-        MDDD = (DDD - 1) % 7 + 1
+        MDDD = DDD
         print(f"     October  {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
     elif month == 11:
-        MDDD = (DDD + 2) % 7 + 1
+        MDDD = (DDD + 3) % 7
         print(f"    November  {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 30 + 1
     elif month == 12:
-        MDDD = (DDD + 4) % 7 + 1
+        MDDD = (DDD + 5) % 7
         print(f"    December  {year}")
         print(f"Mo Tu We Th Fr Sa Su")
         lastday = 31 + 1
@@ -74,22 +74,21 @@ def print_calendar(year, month):
     # 윤년 체크
     yun = (year % 4 == 0 and year % 100 != 0) or (year % 4 == 0 and year % 400 == 0)
     if yun == 1 and month != 1 and month != 2:
-        MDDD = MDDD % 7 + 1
+        MDDD = (MDDD + 1) % 7
     if yun == 1 and month == 2:
         lastday += 1
 
-    print("   " * (MDDD - 1), end = "")
+    print("   " * MDDD, end = "")
 
     for i in range(1,lastday):
         if i <10:
             print(f" {i} ", end = "")
         else:
             print(f"{i} ", end = "")
-        if (i + MDDD - 1) % 7 == 0:
-        # if (i + MDDD - 1) % 7 == 0:
+        if (i + MDDD) % 7 == 0:
             print("")
 
-# print("   라이브러리\n", calendar.month(year, month))     # 비교 체크
+print("   라이브러리\n", calendar.month(year, month))     # 비교 체크
 try:
     print_calendar(year, month)
 except ValueError as e:

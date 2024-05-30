@@ -19,15 +19,15 @@ class Generator:
     mode = input('원하는 생성모드(user/store/item/order/orderItem): ')
 
     def generator(self):
-        if self.mode == 'user':
+        if self.mode.lower() == 'user':
             return self.generate_users()
-        elif self.mode == 'store':
+        elif self.mode.lower() == 'store':
             return self.generate_stores()
-        elif self.mode == 'item':
+        elif self.mode.lower() == 'item':
             return self.generate_items()
-        elif self.mode == 'order':
+        elif self.mode.lower() == 'order':
             return self.generate_orders()
-        elif self.mode == 'orderItem':
+        elif self.mode.lower() == 'orderItem':
             return self.generate_orderItems()
         else:
             print('생성모드에서 유효하지 않은 값이 입력되었습니다.')
@@ -153,10 +153,10 @@ class Generator1(Generator):
 
 
     def generator_print(self):
-        if self.printmode == 'csv':
+        if self.printmode.lower() == 'csv':
             filename = input('파일 이름: ') + '.csv'
             csv_operator.print_csv(self.lst, filename)
-        elif self.printmode == 'screen':
+        elif self.printmode.lower() == 'screen':
             csv_operator.print_screen(self.lst)
         else:
             print('출력모드에서 유효하지 않은 값이 입력되었습니다.')
