@@ -4,14 +4,14 @@ from csv_operator import  CsvOperator
 
 csv_operator = CsvOperator()
 
-firstname = csv_operator.read_csv('./csvfiles/firstname.csv')
-lastname = csv_operator.read_csv('./csvfiles/lastname.csv')
-city = csv_operator.read_csv('./csvfiles/city.csv')
-street = csv_operator.read_csv('./csvfiles/street.csv')
-storetype = csv_operator.read_csv('./csvfiles/storetype.csv')
-coffee = csv_operator.read_dict('./csvfiles/coffee.csv')
-beverage = csv_operator.read_dict('./csvfiles/beverage.csv')
-food = csv_operator.read_dict('./csvfiles/food.csv')
+firstname = csv_operator.read_csv('./csvs/firstname.csv')
+lastname = csv_operator.read_csv('./csvs/lastname.csv')
+city = csv_operator.read_csv('./csvs/city.csv')
+street = csv_operator.read_csv('./csvs/street.csv')
+storetype = csv_operator.read_csv('./csvs/storetype.csv')
+coffee = csv_operator.read_dict('./csvs/coffee.csv')
+beverage = csv_operator.read_dict('./csvs/beverage.csv')
+food = csv_operator.read_dict('./csvs/food.csv')
 
 
 class Generator:
@@ -30,7 +30,7 @@ class Generator:
         elif self.mode == 'orderItem':
             return self.generate_orderItems()
         else:
-            print('유효하지 않는 입력값입니다.')
+            print('생성모드에서 유효하지 않은 값이 입력되었습니다.')
             exit()
 
 
@@ -100,10 +100,15 @@ class Generator:
         num = int(input('생성하고 싶은 주문 갯수: '))
         self.lst = []
         self.lst.append(('Id', 'OrderAt', 'StoreId', 'UserId'))
-        users = input('가져올 user 파일명: ')
-        users = csv_operator.read_dict(users)
-        stores = input('가져올 store 파일명: ')
-        stores = csv_operator.read_dict(stores)
+        
+        try:
+            users = input('가져올 user 파일명: ')
+            users = csv_operator.read_dict(users)
+            stores = input('가져올 store 파일명: ')
+            stores = csv_operator.read_dict(stores)
+        except Exception as e:
+            print("파일명이 유효하지 않습니다.")
+            exit()
 
         for _ in range(num):
             id = str(uuid.uuid4())
@@ -121,15 +126,20 @@ class Generator:
         num = int(input('생성하고 싶은 주문아이템 갯수: '))
         self.lst = []
         self.lst.append(('Id', 'OrderId', 'ItemId'))
-        order = input('가져올 order 파일명: ')
-        order = csv_operator.read_dict(order)
-        item = input('가져올 item 파일명: ')
-        item = csv_operator.read_dict(item)
+        
+        try:
+            orders = input('가져올 order 파일명: ')
+            orders = csv_operator.read_dict(orders)
+            items = input('가져올 item 파일명: ')
+            items = csv_operator.read_dict(items)
+        except Exception as e:
+            print("파일명이 유효하지 않습니다.")
+            exit()
 
         for _ in range(num):
             id = str(uuid.uuid4())
-            orderId = random.choice(order)['Id']
-            itemId = random.choice(item)['Id']
+            orderId = random.choice(orders)['Id']
+            itemId = random.choice(items)['Id']
 
             self.lst.append((id, orderId, itemId))
 
@@ -139,9 +149,8 @@ class Generator:
 class Generator1(Generator):
     printmode= input('원하는 출력모드(csv/screen): ')
     lst = []
-    lst = Generator()
-    lst = lst.generator()
-    
+    lst = Generator().generator()
+
 
     def generator_print(self):
         if self.printmode == 'csv':
@@ -150,7 +159,7 @@ class Generator1(Generator):
         elif self.printmode == 'screen':
             csv_operator.print_screen(self.lst)
         else:
-            print('유효하지 않는 입력값입니다.')
+            print('출력모드에서 유효하지 않은 값이 입력되었습니다.')
 
 
 
