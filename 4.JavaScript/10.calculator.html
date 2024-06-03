@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .calculator{
+            display: grid;
+            grid-template-columns: repeat(4, lfr);
+            grid-gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .calculator input {
+            grid-column: span 4;
+            padding: 10px;
+            font-size: 18px;
+        }
+        .calculator button {
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" readonly>
+        <button id="add">+</button>
+        <button id="sub">-</button>
+        <button id="mul">*</button>
+        <button id="sub">/</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button onclick="calculate()" id="calculated">=</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>C</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>0</button>
+    </div>
+    <script>
+        function calculate(){
+            caluculated = document.getElementById()
+        }
+    </script>
+</body>
+</html>

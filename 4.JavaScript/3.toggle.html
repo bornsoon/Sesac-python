@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <p id="myText">이 텍스트의 색상을 토글로 바꾸기</p>
+    <button onClick="toggleTextColor()">텍스트 토글 버튼</button>
+    <script>
+        function toggleTextColor(){
+            var textElement = document.getElementById('myText');
+            // console.log(textElement)
+            if (textElement.style.color == 'red'){
+                textElement.style.color = 'blue';
+            }else{
+                textElement.style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

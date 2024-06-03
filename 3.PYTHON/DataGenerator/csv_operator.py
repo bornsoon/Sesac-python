@@ -26,8 +26,5 @@ class CsvOperator:
         for l in csv_list:
             print(l)
 
-# a=CsvOperator()
-# b=a.read_dict('food.csv')
 
-# print()
-# print(b)
+# CLI 색상 입히기 >> ANSI Color Python

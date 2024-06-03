@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function sayhello() {
+            console.log('hello again');
+        }
+        
+        function add(a, b){
+            return a + b;
+        }
+
+        console.log('hello, world');
+        let a = 5; let b = 7;    // JS는 ;가 끝에 없어도 되지만 이어쓰기 할 때 유용
+        console.log(a+b);
+        sayhello();              // 함수는 호출 전까지 실행되지 않는다.
+        console.log('덧셈함수호출결과: ' + add(5, 6));
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> 오토 리프레쉬 페이지 </h1>
+    <p> 이 페이지는... 3초후에 리프레쉬 됩니다...</p>
+    <script>
+        window.onload = function() {
+            // setTimeout(함수(), 3000); // 3000ms 이후에 함수()를 호출한다.
+            setTimeout(function() {
+                location.reload();
+            }, 3000)
+        }
+
+        console.log('페이지 로딩됨')
+    </script>
+</body>
+</html>

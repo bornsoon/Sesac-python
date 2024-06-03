@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h3>자바스크립트로 switch-case 구문 사용해보기</h3>
+    <select id="fruitSelector" onChange="fruitDisplay()">
+        <option>--선택--</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="orange">Orange</option>
+    </select>
+    <div id="fruitResult"></div>
+    <script>
+        // 1. 빈칸을 만든다
+        // 2. JS에서 내가 기록할 공간을 가져온다(1번 DOM의 노드를 가져온다)
+        // 3. 결과값을 가져와서 해당 노드에 결과를 기록한다.
+        function fruitDisplay(){
+            fruitSelector = document.getElementById("fruitSelector").value;
+            fruitResult = document.getElementById("fruitResult");
+            switch(fruitSelector) {
+                case "apple":
+                    fruitResult.innerHTML = '<B>사과가</B> 선택되었습니다.';  // 태그를 포함하는 글자
+                    break;
+                case "banana":
+                    fruitResult.innerText = '바나나가 선택되었습니다.';     // 순수 글자
+                    break;
+                case "orange":
+                    fruitResult.textContent = '오렌지가 선택되었습니다.';   // 순수 글자
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
