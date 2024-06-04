@@ -11,6 +11,7 @@
             grid-gap: 10px;
             max-width: 300px;
             margin: 0 auto;
+            text-align: center;
         }
         .calculator input {
             grid-column: span 4;
@@ -25,27 +26,72 @@
 </head>
 <body>
     <div class="calculator">
-        <input type="text" readonly>
-        <button id="add">+</button>
-        <button id="sub">-</button>
-        <button id="mul">*</button>
-        <button id="sub">/</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button onclick="calculate()" id="calculated">=</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>C</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>0</button>
+        <input id="result" type="text" readonly>
+        <button onclick="appendSymbol(this.innerText)">+</button>
+        <button onclick="appendSymbol(this.innerText)">-</button>
+        <button onclick="appendSymbol(this.innerText)">*</button>
+        <button onclick="appendSymbol(this.innerText)">/</button>
+        <button onclick="appendNumber(this.innerText)">7</button>
+        <!-- <button onclick="document.getElementById('result').value +='7'">7</button> -->
+        <button onclick="appendNumber(this.innerText)">8</button>
+        <button onclick="appendNumber(this.innerText)">9</button>
+        <button onclick="calculate()">=</button>
+        <button onclick="appendNumber(this.innerText)">4</button>
+        <button onclick="appendNumber(this.innerText)">5</button>
+        <button onclick="appendNumber(this.innerText)">6</button>
+        <button onclick="clearResultId()">C</button>
+        <button onclick="appendNumber(this.innerText)">1</button>
+        <button onclick="appendNumber(this.innerText)">2</button>
+        <button onclick="appendNumber(this.innerText)">3</button>
+        <button onclick="appendNumber(this.innerText)">0</button>
     </div>
     <script>
+        function appendSymbol(symbol){
+            input = document.getElementById('result');
+            lastInput = input.value.slice(-1);
+            // lastInput = input.value.substring(input.value.length -1);
+            // lastInput = input.value.charAt(input.value.length -1);
+            // if (!checkLastSymbol()){
+            //     input.value += symbol;
+            // } else {
+            //     input.value = input.value.slice(0, -1) + symbol;
+            // }
+            checkLastSymbol() ? input.value = input.value.slice(0, -1) + symbol : input.value += symbol
+        }
+        function checkLastSymbol(){
+            input = document.getElementById('result');
+            lastInput = input.value.slice(-1);
+            
+            if (isSymbol(lastInput)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function isSymbol(symbol){
+            // if (lastInput == '+' | lastInput == '-' | lastInput == '*' | lastInput !== '/'){
+            //     return True
+            // }
+            symbols = ['+', '-', '*', '/']
+            checkInput = symbols.includes(symbol);
+
+            return checkInput
+        }
+        function appendNumber(number){
+            document.getElementById('result').value += number;
+        }
+        function clearResultId(){
+            document.getElementById('result').value = "";
+        }
         function calculate(){
-            caluculated = document.getElementById()
+            input = document.getElementById('result');
+            try{
+                result = eval(input.value);
+                input.value = result;
+            } catch(error){
+                // console.log(error);  // 배포할 때는 제거!!!
+                input.value = "ERROR";
+            }
         }
     </script>
 </body>
