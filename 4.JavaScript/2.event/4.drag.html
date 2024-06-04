@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #dragItem1 {
+            width: 100px;
+            height: 100px;
+            background-color: #ea00ff;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        #dragItem2 {
+            width: 100px;
+            height: 100px;
+            background-color: #0099ff;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        #dragItem3 {
+            width: 100px;
+            height: 100px;
+            background-color: #ffcc00;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        #dropZone {
+            width: 200px;
+            height: 200px;
+            border: 2px dashed #cccccc;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div id="dragItem1" draggable="true">드래그 미</div>
+    <div id="dragItem2" draggable="true">드래그 미</div>
+    <div id="dragItem3" draggable="true">드래그 미</div>
+    <div id="dropZone">여기로 드롭</div>
+
+    <script>
+        const dragItem1 = document.getElementById('dragItem1');
+        const dragItem2 = document.getElementById('dragItem2');
+        const dragItem3 = document.getElementById('dragItem3');
+        const dropZone = document.getElementById('dropZone');
+
+        dragItem1.addEventListener('dragstart', function(){
+            // 커스텀 데이터 저장할 수 있음...
+            event.dataTransfer.setData('text', event.target.id);   // {'text': 'dragItem'}
+            console.log('드래그 시작중...');
+        });
+        
+        dragItem2.addEventListener('dragstart', function(){
+            // 커스텀 데이터 저장할 수 있음...
+            event.dataTransfer.setData('text', event.target.id);   // {'text': 'dragItem'}
+            console.log('드래그 시작중...');
+        });
+
+        dragItem3.addEventListener('dragstart', function(){
+            // 커스텀 데이터 저장할 수 있음...
+            event.dataTransfer.setData('text', event.target.id);   // {'text': 'dragItem'}
+            console.log('드래그 시작중...');
+        });
+
+        dropZone.addEventListener('dragover',function(){
+            event.preventDefault(); // 기본 드래그 기능 비활성화...
+            console.log('내 위로 드래그 발생중...');
+        });
+
+        dropZone.addEventListener('drop', function(){
+            event.preventDefault(); // 드롭의 기본 기능 비활성화...
+            const data = event.dataTransfer.getData('text'); // 'text'라는 키값에 할당된 값을 돌려줘.. {'data': 'dragItem'}
+            const draggedElement = document.getElementById(data);
+            dropZone.appendChild(draggedElement);
+            console.log('여기에 드롭중... 아이템이름: ', data);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="myInput" placeholder="pres and key">
+    <div id="myElement" style="width:100px; height: 2000px; background-color: lightblue">여기요~~</div>
+    <script>
+        document.addEventListener('keydown', function(event) {
+            console.log(`눌린 키는: ${event.key}`);
+        })
+
+        document.getElementById('myInput').addEventListener('focus', function(){
+            console.log('입력창 활성화!!!');
+        })
+
+        document.getElementById('myInput').addEventListener('blur', function(){
+            console.log('입력창 비활성화!!!');
+        })
+
+        document.getElementById('myInput').addEventListener('change', function(){
+            console.log('입력창의 값이 변경되었음???')
+        })
+
+        document.getElementById('myElement').addEventListener('mouseover', function() {
+            console.log('마우스가 위에 있음');
+        })
+
+        document.getElementById('myElement').addEventListener('mouseout', function() {
+            console.log('마우스가 나가 있음');
+        })
+        
+        document.getElementById('myElement').addEventListener('contextmenu', function() { // 특정 요소 내부에서 우클릭 금지
+            event.preventDefault();   //이벤트의 기능을 중단시킴
+            alert('우클릭이 금지되어 있습니다.')
+            console.log('마우스 우클릭 실행중~~???');
+        })
+        
+        document.addEventListener('contextmenu', function() { // 창 전체 내부에서 우클릭 금지
+            event.preventDefault();   //이벤트의 기능을 중단시킴
+            alert('우클릭이 금지되어 있습니다.')
+            console.log('마우스 우클릭 실행중~~???');
+        })
+        
+        window.addEventListener('resize', function() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            console.log(`윈도우 크기가 변경되었습니다. 가로: ${width}, 세로: ${height}`);
+        })
+
+        window.addEventListener('scroll', function() {
+            // const scrollPosition = window.pageYOffset;
+            // const scrollPosition = document.documentElement.scrollTop;
+           
+            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+
+            console.log('페이지 스크롤됨, 세로위치는: ' + scrollPosition);
+        })
+
+        document.addEventListener('wheel', function() {
+            console.log(`Mouse wheel moved: ${event.deltaY}`);
+        })
+    </script>
+</body>
+</html>

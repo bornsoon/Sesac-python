@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea id="myTextArea">여기 있는 글자를 복사해 보시오</textarea>
+    <script>
+        document.getElementById('myTextArea').addEventListener('copy', function(){
+            console.log('텍스트 누가 불펌중...');
+            alert('쥔장의 허락없이 무단복제하지 마시오...');
+        });
+
+        document.getElementById('myTextArea').addEventListener('paste', function(){
+            console.log('어디서 불펌한 내용 붙이는 중...')
+            alert('다른 사이트에서 복사된 내용을 붙일 수 없습니다.')    // 경고창은 요즘 지양하는 편
+        });
+
+        window.addEventListener('beforeunload', function(event){  // 변경 후, 사이트에서 나가시게씁니까?
+            event.preventDefault();
+            event.returnValue = "가지마~~";
+        });
+    </script>
+</body>
+</html>

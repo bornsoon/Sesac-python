@@ -89,9 +89,13 @@
                 result = eval(input.value);
                 input.value = result;
             } catch(error){
-                // console.log(error);  // 배포할 때는 제거!!!
-                input.value = "ERROR";
+                if (input.value == 'Infinity'){
+                    input.value = "ERROR: Division by 0"
+                } else {        // console.log(error);  // 배포할 때는 제거!!!
+                input.value = "ERROR: Division by 0";
+                }
             }
+            
         }
     </script>
 </body>
