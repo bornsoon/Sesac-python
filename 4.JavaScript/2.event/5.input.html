@@ -18,9 +18,10 @@
             alert('다른 사이트에서 복사된 내용을 붙일 수 없습니다.')    // 경고창은 요즘 지양하는 편
         });
 
-        window.addEventListener('beforeunload', function(event){  // 변경 후, 사이트에서 나가시게씁니까?
+        window.addEventListener('beforeunload', function(event){  // 변경 후, 사이트에서 나가시겠습니까?
             event.preventDefault();
             event.returnValue = "가지마~~";
+            // console.log(event.returnValue);
         });
     </script>
 </body>
