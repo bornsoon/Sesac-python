@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        li { list-style-type: none;}
+    </style>
 </head>
 <body>
     <!-- h1+input+button+.todo-list -->  <!-- emmet 실행은 마지막 입려 후 Tab-->  
@@ -11,39 +11,48 @@
     <h1>투두 리스트</h1>
     <input type="text" id="new_todo" placeholder="new to-do">
     <button id="add_todo">추가</button>
-    <div id="todo_list"></div>
+    <ul id="todo_list"></div>
     <script>
         // 1. ADD 버튼을 통해서, 입력한 글자를 아래 리스트로 추가한다.
         // 1-1. Add 버튼에 이벤트를 등록한다.
+        
         document.getElementById('add_todo').addEventListener('click', function(){       
             // 1-1-1. 내가 뭔가를 가져오려고 하는데, 해당 DOM의 ID가 없으니.. ID부터 추가하기...
-
+            
             // 1-2. 입력한 글자를 가져온다..
-            const newTodo = document.getElementById('new_todo').value;
+            newTodo = document.getElementById('new_todo');
             // console.log(newTodo);
-
+            
             // 1-3. 가져온 글자를 리스트로 추가한다.
             // 새로운 노드르 만들어야함.. li와 해당 데이터를 갖고 있는 "DON요소(element) = 노드"를 만들어서
             // 위에 있는 todo-list 라는 ul 아래 차일드 등록하기
             const todoList = document.getElementById('todo_list');
             
-            const newItem = document.createElement('div');
-            const deleteIcon = '❌'
-            newItem.innerHTML = `<input type="checkbox"> ${newTodo + ' ' + deleteIcon}`;  // 이전에 가져온 newTodo의 글자를 새로운 li에 입력하기
-            // console.log(newItem);
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `<input type="checkbox"> ${newTodo.value}`;  // 이전에 가져온 newTodo의 글자를 새로운 li에 입력하기
+            
+            const deleteIcon = document.createElement('span');
+            deleteIcon.innerHTML = '❌';
+
             todoList.appendChild(newItem);
+            newItem.appendChild(deleteIcon);
         
             // 불편한 점 해결하기... 노드 추가 이전에, 입력컬럼 초기화하기
-            document.getElementById('new_todo').value="";
+            newTodo.value = "";
+            newTodo.focus();
+        
+            deleteIcon.addEventListener('click', function(){
+                newItem.remove()
+            })
         });
 
         document.addEventListener('change', function(){
-                if (event.target.checked) {
-                    event.target.parentNode.style.textDecoration = "line-through"
-                } else {
-                    event.target.parentNode.style.textDecoration = ""
-                }
-        })      
+            if (event.target.checked) {
+                event.target.parentNode.style.textDecoration = "line-through"
+            } else {
+                event.target.parentNode.style.textDecoration = ""
+            }
+        })
     </script>
 </body>
 </html>
