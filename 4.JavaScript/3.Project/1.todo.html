@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <style>
         li { list-style-type: none;}
@@ -15,7 +14,7 @@
     <script>
         // 1. ADD 버튼을 통해서, 입력한 글자를 아래 리스트로 추가한다.
         // 1-1. Add 버튼에 이벤트를 등록한다.
-        
+    
         document.getElementById('add_todo').addEventListener('click', function(){       
             // 1-1-1. 내가 뭔가를 가져오려고 하는데, 해당 DOM의 ID가 없으니.. ID부터 추가하기...
             
@@ -41,18 +40,18 @@
             newTodo.value = "";
             newTodo.focus();
         
+            document.addEventListener('change', function(){
+                if (event.target.checked) {
+                    event.target.parentNode.style.textDecoration = "line-through"
+                } else {
+                    event.target.parentNode.style.textDecoration = ""
+                }
+            })
+            
             deleteIcon.addEventListener('click', function(){
                 newItem.remove()
             })
         });
-
-        document.addEventListener('change', function(){
-            if (event.target.checked) {
-                event.target.parentNode.style.textDecoration = "line-through"
-            } else {
-                event.target.parentNode.style.textDecoration = ""
-            }
-        })
     </script>
 </body>
 </html>
