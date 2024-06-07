@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        #todo_list li {
+            list-style-type: none;
+            font-size: 20px;
+            }
+            
+        #todo_list ul {
+            padding-left: 0;  /* 기본 패딩 제거 */
+
+        }
+
+        #todo_list li.completed {
+            text-decoration: line-through;
+        }
+
+        .todo_text {
+            margin-left: 10px;
+        }
+
+        .delete-icon {
+            cursor: pointer;
+            color: red;
+            margin-left: 10px;
+        }
+
+        /* 입력박스 키우기 */
+        input[type="text"] {
+            font-size: 20px;
+            padding: 5px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 5px 10px;
+        }
+
+        input[type="checkbox"] {
+            /* width: 20px; height: 20px; */
+            transform: scale(2.0);
+        }
+    </style>
+</head>
+<body>
+    <!-- h1+input+button+.todo-list -->  <!-- emmet 실행은 마지막 입려 후 Tab-->  
+    <!-- h1+div>ul*3>li*3  -->
+    <h1>투두 리스트</h1>
+    <input type="text" id="new_todo" placeholder="new to-do">
+    <button id="add_todo">추가</button>
+    <button id="delete_all">전체 삭제</button>
+    <ul id="todo_list"></div>
+    <script>
+        // 1. ADD 버튼을 통해서, 입력한 글자를 아래 리스트로 추가한다.
+        // 1-1. Add 버튼에 이벤트를 등록한다.
+    
+        document.getElementById('add_todo').addEventListener('click', function(){       
+            // 1-1-1. 내가 뭔가를 가져오려고 하는데, 해당 DOM의 ID가 없으니.. ID부터 추가하기...
+            
+            // 1-2. 입력한 글자를 가져온다..
+            let newTodo = document.getElementById('new_todo').value;
+            // console.log(newTodo);
+            newTodo = newTodo.trim();  // 앞뒤 불필요한 공백 제거
+
+            // 빈 글자는 입력 불가하게 처리
+            if (newTodo === '')return;
+            
+            // 1-3. 가져온 글자를 리스트로 추가한다.
+            // 새로운 노드르 만들어야함.. li와 해당 데이터를 갖고 있는 "DON요소(element) = 노드"를 만들어서
+            // 위에 있는 todo-list 라는 ul 아래 차일드 등록하기
+            const todoList = document.getElementById('todo_list');
+
+            // 새로운 노드 만들기
+            const newItem = document.createElement('li');
+
+            // 체크박스 생성
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('change', function() {
+                newItem.classList.toggle('completed');
+            })
+            newItem.appendChild(checkbox);
+            
+            // 투두 항목 텍스트 글자
+            const todoText = document.createElement('span');
+            todoText.textContent = newTodo;
+            todoText.classList.add('todo_text');
+            newItem.appendChild(todoText);
+
+            // 노드를 list에 삽입
+            todoList.appendChild(newItem);
+
+            // 삭제 아이콘 추가
+            const deleteIcon = document.createElement('span');
+            deleteIcon.textContent = 'X';
+            deleteIcon.classList.add('delete-icon')
+            deleteIcon.addEventListener('click', function(){
+                newItem.remove();
+            })
+            newItem.appendChild(deleteIcon);
+
+            document.getElementById('delete_all').addEventListener('click', function(){
+                todoList.remove();
+            })
+        
+            // 불편한 점 해결하기... 노드 추가 이전에, 입력컬럼 초기화하기
+            document.getElementById('new_todo').value = "";
+        });
+    </script>
+</body>
+</html>

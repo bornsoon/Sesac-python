@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- jQuery 라이브러리 가져오기 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1 id="myHeading">hello, jQuery!</h1>
+    <button id="changeText">Change Text</button>
+
+    <!-- 이 버튼을 클릭해서 H1의 글자를 바꾸는 것... -->
+     <script>
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     // 버튼 클릭 시 텍스트 글자 바꾸기
+        //     document.getElementById('changeText').addEventListener('click', function(){
+        //         document.getElementById('myHeading').textContent = "글자 바꾸기";
+        //     })
+        // })
+
+        $(document).ready(function() {
+            $('#changeText').click(function(){
+                $('#myHeading').text('글자 바꾸기');
+            })
+        })
+     </script>
+</body>
+</html>

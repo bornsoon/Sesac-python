@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* viewport height = 브라우저 화면의 크기 전체, 100vh = 100% */
+            margin: 20px;
+            border-radius: 10px;
+        }
+        
+        button {
+           padding: 10px 20px;
+           font-size: 20px;
+           padding: 50px;
+           font-size: 30px;
+           background-color: white;
+        }
+
+        #fullScreen {
+            position: absolute;
+            top: 10px;
+            left: 10px;   
+            bottom: 10px;
+            right: 10px;
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        #colorCode {
+            border: 2px;
+            background-color: white;
+            padding: 20px 40px;
+            margin: 50px;
+            border-radius: 10px;
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="fullScreen"></div>
+    <button id="changeColor"> backgroundColor Change </button>
+    <div id="colorCode"></div>
+    <script>
+        function getRandomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            console.log(r, g, b);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+
+        document.getElementById('changeColor').addEventListener('click', function(){
+            const randomColor = getRandomColor()
+            document.getElementById('fullScreen').style.background = randomColor;
+            document.getElementById('colorCode').textContent = randomColor;
+        });
+    </script>
+</body>
+</html>

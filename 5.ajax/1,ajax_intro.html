@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 비동기: 요청 등 이벤트에 따른 처리 -->
+    <!-- 동기: 코드 흐름에 따른 처리 -->
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <h1>로딩 From 외부 서버</h1>
+    <div id="contentContainer">
+        <!-- AJAX로 요청한 내용을 담을 공간 -->
+    </div>
+    <button id="loadButton">Load Content</button>
+    <script>
+        // $(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function() {
+            // $('#loadButton').click(function() {
+            document.getElementById('loadButton').addEventListener('click', function() {
+                // // 버튼이 클릭되었을 때 실행할 코드
+                // $.ajax({
+                //     url: 'https://jsonplaceholder.typicode.com/posts/1',
+                //     method: 'GET',
+                //     success: function(data) {
+                //         // 성공했을 때, 그 요청에 대한 응답이 data에 담겨서 옴
+                //         $('#contentContainer').html(
+                //             '<p>Title: ' + data.title + '<p>' +
+                //             '<p>Body: ' + data.body + '<p>' 
+                //         )
+                //     },
+                //     error: function() {
+                //         // 실패했을 때, 수행할 동작 추가
+                //         conosle.error('알 수 없는 오류가 발생했습니다.');
+                //     }
+                // })
+                fetch('https://jsonplaceholder.typicode.com/posts/1')
+                    .then(response => {     //.then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('네트워크 오류??');
+                        }
+                        return response.json();
+                    })
+                    .then(function(data) {  // 위의 response.json()을 받아줄 변수명
+                        console.log(data);
+                        document.getElementById('contentContainer').innerHTML = 
+                            '<p>Title: ' + data.title + '</p>' +
+                            '<p>Body: ' + data.body + '</p>'
+                    })
+                    .catch(function(error) {
+                        console.error('위에 처리하다가 발생한 오류 잡기' + error);
+                    })
+            })
+        })
+    </script>
+</body>
+</html>

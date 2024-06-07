@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #result {
+            border: 2px solid;
+            width: 400px;
+            height: 220px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            font-size: 20px;
+        }
+        input[type="number"] {
+            font-size: 20px;
+            padding: 5px;
+            width:180px;
+        }
+        button {
+            font-size: 18px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>사용자 검색 페이지</h1>
+        <input type="number" id="userId" placeholder="사용자 번호 입력">
+        <button onclick="searchUser()">검색</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function searchUser() {
+            const userId = document.getElementById('userId').value;
+            const url = 'https://jsonplaceholder.typicode.com/users/' + userId;
+
+            // fetch로 요청하기
+            // promise 반납... 지연했다가... 나중에 처리해줄께..
+            // 그 지연된 공간에 응답이 왔을 때.. 처리해주는 함수... .then
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('오류');
+                    }
+                    return response.json();
+                }) // 응답 받아서 확인하기 (response 의 값을 확인)
+                .then(function(user) {  // 데이터 처리하기
+                    displayUser(user);
+                }) 
+                .catch(function(error){
+                    console.error('위에 처리하다가 발생한 오류 잡기' + error);
+                })
+        }
+
+        function displayUser(user){
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML =
+                '<p><b>Name</b>: ' + user.name + '</p>' +
+                '<p><strong>Email</strong>: ' + user.email + '</p>' +
+                '<p><em>Phone</em>: ' + user.phone + '</p>' +
+                '<p><i>Website</i>: ' + user.website + '</p>'
+        }
+    </script>
+</body>
+</html>

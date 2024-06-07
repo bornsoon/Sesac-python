@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         .puzzle{
+            border-radius: 10px;
             background-color: rgba(162, 162, 162, 0.385);
             display: inline-grid;
             grid-template-columns: auto auto auto;
-            grid-gap: 10px;
+            gap: 10px;
             padding: 10px;
         }
         .puzzle > div {
+            border-radius: 10px;
             background-color: white;
             height: 100px;
             width: 100px;
@@ -24,6 +33,7 @@
 </head>
 <body>
     <div class="puzzle">
+        <div id="0"></div>
         <div id="1"></div>
         <div id="2"></div>
         <div id="3"></div>
@@ -32,15 +42,25 @@
         <div id="6"></div>
         <div id="7"></div>
         <div id="8"></div>
-        <div id="9"></div>
     <script>
         
         window.onload = function(){
             let num = new Array();
-            
-            for(i = 1 ; i < 10; i++){
-                document.getElementById(i).innerText = '8';
+            for(i = 0; num.length < 9; i++) {
+                n = Math.floor(Math.random() * 9 ) + 1;
+                if (!num.includes(n)) {
+                    num.push(n);
+                }
             }
+            for(i = 0; i < 9; i++){
+                if (!(num[i] == '9')){
+                    document.getElementById(i).innerText = num[i];
+                } else { document.getElementById(i).innerText = ''; }
+            }
+
+            document.getElementById('0').addEventListener('click', function(){
+                
+            })
         }
     </script>
 </body>
