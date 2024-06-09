@@ -12,22 +12,22 @@
             margin: 20px;
         }
 
-        .gallery {
-            float: left;
-            position: absolute;
-            top: 70px;
-            left: 20px;
-        }
-
-        .gallery img {  
+        .gallery img {
             width: 100px;
             height: 100px;
             margin: 5px;
         }
         
+        #box {
+            border: 1px solid;
+            width: 600px;
+            height: 400px;
+        }
         #large-image {
-            position: relative;
+            position: absolute;
             border: 1px;
+            top: 50%;
+            left: 50%;
             margin: 100px;
             width: 400px;
             height: 400px;
@@ -45,7 +45,7 @@
         <img id="img3" src="../../1.HTML/images/3.jpg">
         <img id="img4" src="../../1.HTML/images/4.jpg">
     </div>
-    <img id="large-image" src="">
+    <div id="box"></div><img id="large-image" src="">
     <script>
         const img1 = document.getElementById('img1');
         const img2 = document.getElementById('img2');
