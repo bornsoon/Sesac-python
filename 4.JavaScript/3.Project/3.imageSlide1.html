@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        .gallery img {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+        
+        #large-image {
+            height: 400px;
+        }
+            
+        #box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 100px;
+            width: 900px;
+            height: 400px;
+        }
+
+        button {
+            width: 90px;
+            height: 40px;
+            font-size: 20px;
+            opacity: 0.6;
+        }
+
+        button#pre {
+            position: relative;
+            float: left;
+            left: -10px;
+        }
+
+        button#next {
+            position: relative;
+            float: right;
+            right: -10px;
+        }
+
+        button:hover {
+            opacity: 1.0;    
+        }
+    </style>
+</head>
+<body>
+    <h1>이미지 갤러리</h1>
+    <div class="gallery">
+        <img id="1" src="../../1.HTML/images/1.jpg">
+        <img id="2" src="../../1.HTML/images/2.jpg">
+        <img id="3" src="../../1.HTML/images/3.jpg">
+        <img id="4" src="../../1.HTML/images/4.jpg">
+    </div>
+    <div id="box">
+        <button id="pre">previous</button>
+        <img id="large-image" src="../../1.HTML/images/1.jpg">
+        <button id="next">next</button>
+    </div>   
+    <script>
+        const prebutton = document.getElementById('pre')
+        const nextbutton = document.getElementById('next')
+        const largeImage = document.getElementById('large-image')
+
+        document.querySelectorAll('.gallery img').forEach(function(image){
+            image.addEventListener('click',function(){
+                largeImage.src = image.src;
+            })
+        })
+
+        prebutton.addEventListener('click', function() {
+            if (largeImage.src === document.getElementById('1').src) {
+                largeImage.src = document.getElementById('4').src;
+            } else { 
+                for (i = 2; i <= 4; i++) {
+                    if (largeImage.src === document.getElementById(i).src) {
+                        const preId = i - 1  ;
+                        largeImage.src = document.getElementById(preId).src;
+                        break;
+                    }
+                }
+            }
+        }) 
+            
+        nextbutton.addEventListener('click', function() {
+            for (i = 1; i <= 4; i++) {
+                if (largeImage.src === document.getElementById(i).src) {
+                    const nextId = i % 4 + 1;
+                    largeImage.src = document.getElementById(nextId).src;
+                    break;
+                }
+            }
+        })      
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>사용자 HTML 파일 만들기</H1>
+    <H1>안녕하세요 {{ username }}님</H1>  <!-- {% %}Jinja2 template 문법: HTML 내부에서 Python 코드를 쓸 수 있게 해줌 -->
+    <P>쓰고 싶은 설명 쓰기....</P>   <!-- 서버사이드 렌더링 -->
+    
+    {% if username = 'admin' %}
+    <h2> 관리자 로그인 !! </h2>
+    {% endif %}
+    <ol>
+    {% for user in content %}
+        {% if user = 'bill' %}
+            <li> <strong> {{ user }} </strong> </li>
+        {% else %}
+            <li> {{ user }} </li>
+        {% endif %}
+    {% endfor %}
+    </ol>
+</body>
+</html>
