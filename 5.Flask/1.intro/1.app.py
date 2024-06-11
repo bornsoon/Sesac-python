@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask  # >>>>>>>>>>> Flask run() 함수에 port 값 5000으로 기본 설정되있음
 
 app = Flask(__name__)
 

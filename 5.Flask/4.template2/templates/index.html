@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            color: rgb(11, 185, 11);
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+        .search-form input[type="text"],
+        .search-form input[type="number"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+        }
+        .search-form input[type="submit"] {
+            padding: 10px 15px;
+            background-color: #429124;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+        }
+        .search-form input[type="submit"]:hover {
+            background-color: #68ee33;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th,td {
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: beige;
+        }
+        tr:hover {
+            background-color: rgb(228, 218, 204);
+        }
+    </style>
+</head>
+<body>
+    <H1>헬로우 플라스크</H1>
+    <form action='/user' method="GET" class="search-form">
+        <input type="text" name="name" placeholder="이름을 입력하시오">
+        <input type="number" name="age" placeholder="나이를 입력하시오">
+        <!-- <input type="number" name="phone" placeholder="전화번호 마지막 4자릿수"> -->
+        <input type="submit" value="검색">
+    </form>
+    <br/>
+    <table>
+        <tr class="myheader">
+            <th> Name </th>
+            <th> Age </th>
+            <th> Phone </th>
+        </tr>
+        {% for u in users %}
+            <tr>
+                <td> {{ u['name'] }} </td>
+                <td> {{ u['age'] }} </td>
+                <td> {{ u['phone'] }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

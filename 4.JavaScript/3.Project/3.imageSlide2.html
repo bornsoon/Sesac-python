@@ -67,6 +67,7 @@
     <script>
         HEIGHT = '400px';
         const prebutton = document.getElementById('pre');
+        const nextbutton = document.getElementById('next')
         const largeImage = document.getElementById('large-image');
         const img1 = document.getElementById('img1');
         const img2 = document.getElementById('img2');
@@ -76,26 +77,53 @@
         imgList = [];
         
         for (i = 0; i < sourceImg.length; i++){
-            imgList[i] = document.createElement('img')
-            imgList[i].src = sourceImg[i].src;
-            imgList[i].style.height = HEIGHT;
+            a = document.createElement('img')
+            a.src = sourceImg[i].src;
+            a.style.height = HEIGHT;
+            imgList.push(a);
+            console.log(a);
         }
 
-            
-        console.log(imgList[0])
         largeImage.appendChild(imgList[0]);
+        console.log(imgList[1]);
 
-        querySelect = document.querySelectorAll('.gallery img').forEach(function(image){
+        prebutton.addEventListener('click', function() {
+            for (i = 1; i < 4; i++) {
+                if (largeImage.firstElmentChild.src === imgList[i].src) {
+                    const preId = i - 1;
+                    largeImage.replaceChildren(largeImage.firstElmentChild, imgList[preId]);
+                    console.log(imgList[preId]);
+                    // console.log(imgList[i]);
+                    break;
+                }
+            }
+        })    
+
+
+        nextbutton.addEventListener('click', function() {
+            for (i = 0; i < 3; i++) {
+                if (largeImage.firstElementChild.src === imgList[i].src) {
+                    const nextId = i + 1;
+                    largeImage.replaceChildren();
+                    largeImage.appendChild(imgList[nextId])
+                    console.log(imgList[nextId]);
+                    // console.log(imgList[i]);
+                    break;
+                }
+            }
+        })    
+
+        document.querySelectorAll('.gallery img').forEach(function(image){
             image.addEventListener('click',function(){
                 for (i = 0; i < sourceImg.length; i++){
-                    if (image.src == imgList[i].src) {
-                    return(imgList[i])
+                    if (image.src === imgList[i].src) {
+                        largeImage.replaceChildren();
+                        largeImage.appendChild(imgList[i]);
+                        // console.log(imgList[i]);
                     }
                 }
             })
         })
-
-        function 
         
     
     </script>
