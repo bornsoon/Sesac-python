@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}
+My user file
+{% endblock %}
+
+{% block content %}
+<!-- 개별 페이지의 내용을 담는 곳 -->
+<h2>유저 페이지 내용</h2>
+<li>user1</li>
+<li>user2</li>
+<li>user3</li>
+<p>유저 페이지 내용이라고...</p>
+<img src="{{ url_for('static', filename='img/image.jpg')}}">
+{% endblock %}

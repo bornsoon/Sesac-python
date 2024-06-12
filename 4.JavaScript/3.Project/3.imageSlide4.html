@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            align-items: center;
+            height: 100vh;
+        }
+        .gallery  {
+            float: left;
+            height: 300px;
+            margin: 5px;
+        }
+        
+        img {
+            height: 300px;
+        }
+
+        #box {
+            display: flex;
+            justify-content: center;
+            margin: 100px;
+            width: 900px;
+            height: 300px;
+        }
+
+        button {
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            padding: 0px;
+            opacity: 0.5;
+        }
+
+        button#pre {
+            position: relative;
+            float: left;
+            left: 40px;
+        }
+
+        button#next {
+            position: relative;
+            float: right;
+            right: 40px;
+        }
+
+        button:hover {
+            opacity: 1.0;    
+        }
+    </style>
+</head>
+<body>
+    <h1>이미지 갤러리</h1>
+    <div id="box">
+        <button id="pre"><</button>
+        <div id="large-image">
+            <img id="img1" src="../../1.HTML/images/4.jpg">
+            <img id="img2" src="../../1.HTML/images/5.jpg">
+            <img id="img3" src="../../1.HTML/images/6.jpg">
+            <img id="img4" src="../../1.HTML/images/7.jpg">
+        </div>
+        <button id="next">></button>
+    </div>   
+    <script>
+        HEIGHT = '300px';
+        const prebutton = document.getElementById('pre');
+        const nextbutton = document.getElementById('next')
+        const lgallery = document.getElementById('gallery');
+        const img1 = document.getElementById('img1');
+        const img2 = document.getElementById('img2');
+        const img3 = document.getElementById('img3');
+        const img4 = document.getElementById('img4');
+        sourceImg = [img1, img2, img3, img4];
+        imgList = [];
+        
+        for (i = 0; i < sourceImg.length; i++){
+            a = document.createElement('img')
+            a.src = sourceImg[i].src;
+            a.style.height = HEIGHT;
+            imgList.push(a);
+            // console.log(a);
+        }
+
+        prebutton.addEventListener('click', function() {
+            
+        })    
+
+        nextbutton.addEventListener('click', function() {
+           
+        })    
+
+    </script>
+</body>
+</html>

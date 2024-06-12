@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>사용자 상세정보</H1>
+    <table border="1">
+        <tr>
+            {% for header in headers %}
+            <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for user in user.values() %}
+            <td> {{ user }} </td>
+            {% endfor %}
+        </tr>
+        <button onclike="wideow.history.back()">뒤로가기</button><br/>
+        <a href="javascript: history.back()"> BACK </a>
+    </table>
+    <script>
+
+    </script>
+</body>
+</html>

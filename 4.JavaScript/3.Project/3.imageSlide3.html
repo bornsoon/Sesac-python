@@ -49,15 +49,35 @@
         button:hover {
             opacity: 1.0;    
         }
+
+        .slideLeft0 {
+            animation-name: left0;
+            animation-duration: 2s;
+        }
+
+        .slideLeft1 {
+            animation-name: left1;
+            animation-duration: 2s;
+        }
+
+        @keyframes left0 {
+            from { width: 100%; }
+            to { width: 100%; }
+        }
+
+        @keyframes left1 {
+            from { width: -100%; }
+            to { width: 100%; }
+        }
     </style>
 </head>
 <body>
     <h1>이미지 갤러리</h1>
     <div class="gallery">
-        <img id="img1" src="../../1.HTML/images/1.jpg">
-        <img id="img2" src="../../1.HTML/images/2.jpg">
-        <img id="img3" src="../../1.HTML/images/3.jpg">
-        <img id="img4" src="../../1.HTML/images/4.jpg">
+        <img id="img1" src="../../1.HTML/images/4.jpg">
+        <img id="img2" src="../../1.HTML/images/5.jpg">
+        <img id="img3" src="../../1.HTML/images/6.jpg">
+        <img id="img4" src="../../1.HTML/images/7.jpg">
     </div>
     <div id="box">
         <button id="pre"><</button>
@@ -91,8 +111,10 @@
             for (i = 1; i < 4; i++) {
                 if (largeImage.firstElementChild.src === imgList[i].src) {
                     const preId = i - 1;
-                    largeImage.replaceChildren();
-                    largeImage.appendChild(imgList[preId])
+                    // largeImage.replaceChildren();
+                    // largeImage.appendChild(imgList[preId])
+                    largeImage.firstElementChild.className = slideLeft0;
+                    imgList[preId].className = slideLeft1;
                     // console.log(imgList[preId]);
                     // console.log(imgList[i]);
                     break;
