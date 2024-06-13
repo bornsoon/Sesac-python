@@ -26,7 +26,23 @@
             scale: 130%;
         }
         tr:hover {
-            
+            background-color: #b8b8b8;
+        }
+        table{
+            table-layout: fixed;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        th {
+            padding: 7px;
+            color : white;
+            background-color: rgb(58, 58, 159);
+        }
+        td {
+            padding: 5px;
+        }
+        tr#a {
+            background-color: #ededed;
         }
     </style>
 </head>
@@ -39,13 +55,14 @@
     </form>
     <table border="1">
     <tr>
+        <th> index </th>
         {% for header in headers %}
         <th>{{ header }}</th>
         {% endfor %}
     </tr>
         {% for user in users %}
-        <tr>
-            {% for value in user.values() %}
+        <tr id="{% if user.index % 2 == 0 %}a{% endif %}">
+            {% for  value in user.values() %}
             <td> {{ value }} </td>
             {% endfor %}
         </tr>

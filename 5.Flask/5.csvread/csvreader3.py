@@ -20,7 +20,6 @@ app = Flask(__name__)
 @app.route("/<int:page>")
 def search1(page=1):
     per_page = 10    # 한 페이지에 보여줄 항목 수
-
     start_index = (page - 1) * per_page
     end_index = page * per_page
 
@@ -30,7 +29,11 @@ def search1(page=1):
 
     current_pages = csv_data[start_index:end_index]
 
-    return render_template('index3.html', headers=headers, users=current_pages, total_pages=total_pages)
+    index_pages = []
+    for i in range(len(current_pages)):
+        index_pages.append({'index': i+1} | current_pages[i])
+
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages)
 
 
 @app.route("/search")
@@ -44,13 +47,20 @@ def search2(page=1):
 
     headers = csv_data[0]
 
+    filtered_csv_data = []
     for u in csv_data:
+        if name in u['Name']:
+            filtered_csv_data.append(u)
 
-    total_pages = math.ceil(len(csv_data) / per_page)
+    total_pages = math.ceil(len(filtered_csv_data) / per_page)
 
-    current_pages = csv_data[start_index:end_index]
+    current_pages = filtered_csv_data[start_index:end_index]
+    
+    index_pages = []
+    for i in range(len(current_pages)):
+        index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=current_pages, total_pages=total_pages)
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages)
 
 
 

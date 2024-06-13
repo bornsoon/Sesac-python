@@ -3,6 +3,7 @@ my_dict = {'name':'Alice', 'age':25, 'phone':'123-456-7890'}
 
 # built-in 함수 = 내장함수
 items = my_dict.items()
+print(items)
 items_list = list(items)    # type casting = 형변환
 # print(items_list[0])
 print(type(items_list[0])) 
