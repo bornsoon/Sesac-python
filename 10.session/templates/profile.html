@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 프로필</title>
+</head>
+<body>
+    <H1>안녕하세요, {{ user.name }}님</H1>
+    <p>ID: {{ user.id }}</p>
+    <p>PW: {{user.pw }}</p>
+
+    <a href="{{url_for('logout')}}">로그아웃</a>
+</body>
+</html>
