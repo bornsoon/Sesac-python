@@ -8,7 +8,7 @@ users = [
     {'name': 'Charlie', 'id':'charlie', 'pw':'hello'}
 ]
 
-@app.route('/', methods=['GET', 'POST'])  # 메소드 지정  GET > header , POST > body
+@app.route('/', methods=['GET', 'POST', 'PUT', 'DELETE', 'PATCH'])  # 메소드 지정  GET > header , POST > body
 def home():
     id = request.args.get('id')   # 이거는 GET방식의 URL 파라미터를 처리할 때만 가능한 방법
 

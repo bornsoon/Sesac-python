@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 프로필</title>
+</head>
+<body>
+    <H1>안녕하세요, {{ user.name }}님</H1>
+    <p>ID: {{ user.id }}</p>
+    <p>PW: {{user.pw }}</p>
+    <form method="POST" action="/profile">
+        <label for="new_password">새로운 암호: </label>
+        <input type="password" name="new_password" require>
+        <br>
+        <input type="submit" value="비밀번호 변경">
+    </form>
+    {% if message %}
+    <p style="color: green">{{ message }}</p>
+    {% endif %}
+
+    <a href="{{url_for('logout')}}">로그아웃</a>
+</body>
+</html>

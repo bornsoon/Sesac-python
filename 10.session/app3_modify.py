@@ -30,12 +30,23 @@ def home():
     # GET 요청일때는, 페이지를 보내줌
     return render_template('index.html')
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     user = session.get('user')   # 위에서 내가 저장한 것 다시 찾아오기
-    # user = {'name': '없음', 'if': '몰랑', 'pw': '진짜몰라'}
+    
+    error = None
+    if request.method == 'POST':
+        new_pw = request.form['new_password']
 
-    return render_template('profile.html', user=user)
+        for u in users:
+            if u['id'] == user['id']:
+                u['pw'] = new_pw
+        
+        # 나의 세션 변경 (해도 안해도 무방)
+        user[id] = new_pw
+        session['user'] = user
+
+    return render_template('profile3.html', user=user, message='비밀번호 변경에 성공하였습니다.')
 
 @app.route('/logout')
 def logout():

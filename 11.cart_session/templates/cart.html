@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>장바구니</H1>
+    <table border="1">
+        <tr>
+            <th>사진</th>
+            <th>상품명</th>
+            <th>수량</th>
+            <th>가격</th>
+        </tr>
+        {% for item_name, item_info in cart_items.items() %}
+        <tr>
+            <td><img src="{{ url_for('static', filename='images/' + item_info.image) }}" width="100px"></td>
+            <td>{{ item_info.name }}</td>
+            <td>{{ item_info.quantity }}</td>
+            <td>{{ item_info.price * item_info.quantity }}원</td>
+            <td><a href="{{ url_for('remove_item_from_cart', item_name=item_name) }}"> 삭제하기 </a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <p>총 가격: {{ total_price}}원</p>
+    <form action="{{ url_for('clear_cart') }}" method="GET">
+        <input type="submit" value="장바구니 비우기">
+    </form>
+</body>
+</html>
