@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+    <h1 style="color:rgb(100, 100, 100)"> 사용자 테이블 검색 </h1>
+    <form action="/search" method="GET" class="search-form">
+        <input type="text" name="name" placeholder="사용자 이름 검색">
+        <input type="submit" value="검색">
+    </form>
+    <form action="/" method="GET">
+        <select onchange="this.form.submit()" name = "per_page">
+            {% for i in range(1,21)%}
+            <option value="{{ i }}" {% if per_page == i %} selected {% endif %}>{{ i }}</option>
+            {% endfor %}
+        </select>
+    </form>
+    <table border="1">
+        <tr>
+            {% for header in headers %}
+            <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for user in user.values() %}
+            <td> {{ user }} </td>
+            {% endfor %}
+        </tr>
+        <button onclike="wideow.history.back()">뒤로가기</button><br/>
+        <a href="javascript: history.back()"> BACK </a>
+    </table>
+    <script>
+
+    </script>
+    </center>
+</body>
+</html>

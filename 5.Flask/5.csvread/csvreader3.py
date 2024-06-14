@@ -19,10 +19,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/<int:page>")
 def search1(page=1):
-    # per_page = request.args.get('per_page')    # 한 페이지에 보여줄 항목 수
-    per_page = 10
-    print('----------------')
-    print(per_page)
+    per_page = int(request.args.get('per_page', default=10))    # 한 페이지에 보여줄 항목 수
     
     start_index = (page - 1) * per_page
     end_index = page * per_page
@@ -37,14 +34,13 @@ def search1(page=1):
     for i in range(len(current_pages)):
         index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages)
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page = per_page)
 
 
 @app.route("/search")
 def search2(page=1):
-    per_page = int(request.args.get('per_page'))
-    print('----------------')
-    print(per_page)
+    per_page = int(request.args.get('per_page', default=10))
+
     start_index = (page - 1) * per_page
     end_index = page * per_page
 
@@ -65,8 +61,16 @@ def search2(page=1):
     for i in range(len(current_pages)):
         index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages)
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page = per_page)
 
+
+@app.route("/user/id")
+def user_detail(id):
+    for u in csv_data:
+        if u['id'] == id:
+            user = u['id']
+
+    return render_template('user_detail.html', headers=headers, users=user)
 
 if __name__ =='__main__':
     load_csv_data('./users.csv')                # 여기에서 로딩해야 한 번만 하고 끝남.
