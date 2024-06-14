@@ -66,11 +66,13 @@ def search2(page=1):
 
 @app.route("/user/id")
 def user_detail(id):
-    for u in csv_data:
-        if u['id'] == id:
-            user = u['id']
+    per_page = int(request.args.get('per_page', default=10))
 
-    return render_template('user_detail.html', headers=headers, users=user)
+    for u in csv_data:
+        if u['Id'] == id:
+            user = u['Id']
+
+    return render_template('user_detail.html', headers=headers, user=user, per_page = per_page)
 
 if __name__ =='__main__':
     load_csv_data('./users.csv')                # 여기에서 로딩해야 한 번만 하고 끝남.

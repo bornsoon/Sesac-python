@@ -78,7 +78,7 @@
         {% for user in users %}
         <tr id="{% if user.index % 2 == 0 %}a{% endif %}">
             {% for  value in user.values() %}
-            <td> <a href="/user/{{user.id}}">{{ value }}</a> </td>
+            <td> <a href="/user/{{ user.Id }}">{{ value }}</a> </td>
             {% endfor %}
         </tr>
         {% endfor %}
