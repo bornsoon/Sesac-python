@@ -19,7 +19,11 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/<int:page>")
 def search1(page=1):
-    per_page = 10    # 한 페이지에 보여줄 항목 수
+    # per_page = request.args.get('per_page')    # 한 페이지에 보여줄 항목 수
+    per_page = 10
+    print('----------------')
+    print(per_page)
+    
     start_index = (page - 1) * per_page
     end_index = page * per_page
 
@@ -38,8 +42,9 @@ def search1(page=1):
 
 @app.route("/search")
 def search2(page=1):
-    per_page = 10
-    
+    per_page = int(request.args.get('per_page'))
+    print('----------------')
+    print(per_page)
     start_index = (page - 1) * per_page
     end_index = page * per_page
 
@@ -61,7 +66,6 @@ def search2(page=1):
         index_pages.append({'index': i+1} | current_pages[i])
 
     return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages)
-
 
 
 if __name__ =='__main__':
