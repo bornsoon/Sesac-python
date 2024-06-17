@@ -10,7 +10,7 @@
     <center>
     <h1 style="color:rgb(100, 100, 100)"> 사용자 테이블 검색 </h1>
     <form action="/search" method="GET" class="search-form">
-        <input type="text" name="name" placeholder="사용자 이름 검색">
+        <input type="text" name="name" placeholder="사용자 이름 검색" value="{{ search_name }}">
         <input type="submit" value="검색">
         <select onchange="this.form.submit()" name = "per_page">
             {% for i in range(1,21)%}
@@ -33,11 +33,13 @@
         </tr>
         {% endfor %}
     </table>
+    <div id="box1">
     <!-- 페이지 번호 출력하기 -->
     {% for page_num in range(1, total_pages + 1) %}
-    <div id="box">
+    <div class="box">
     <a href="/{{ page_num }}">{{ page_num }}</a>
     </div>
     {% endfor %}
+    </div>
     </center>
 </html>
