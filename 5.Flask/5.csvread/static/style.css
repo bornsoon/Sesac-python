@@ -49,21 +49,22 @@ a {
     text-decoration-line: none;
 }
 #box1 {
-    width: 100%;
+    width: 35%;
     display: flex;
     flex-wrap: wrap;
     /* flex-flow: wrap; */ /* flex-direction과 flex-wrap이 자주 같이 사용되기 때문에, flex-flow가 이를 대신할 수 있음. 이 속성은 공백문자를 이용하여 두 속성의 값들을 인자로 받음. */
-    margin: 15px;
-    gap: 15px;
-    /* align-items: center;
-    text-align: center; */ /* align-content는 여러 줄들 사이의 간격을 지정하며, align-items는 컨테이너 안에서 어떻게 모든 요소들이 정렬하는지를 지정함. 한 줄만 있는 경우, align-content는 효과를 보이지 않음. */
+    margin: 20px;
+    gap: 20px;
+    /* align-content: center; */
+    justify-content: center;
+   /* align-content는 여러 줄들 사이의 간격을 지정하며, align-items는 컨테이너 안에서 어떻게 모든 요소들이 정렬하는지를 지정함. 한 줄만 있는 경우, align-content는 효과를 보이지 않음. */
 }
 #box1 > .box {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
     border: solid black 1px;
     /* margin: 20px 15px; */
     padding: 2px;

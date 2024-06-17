@@ -34,7 +34,7 @@ def search1(page=1):
     for i in range(len(current_pages)):
         index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page = per_page)
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page=per_page, current_page=page)
 
 
 @app.route("/search")
@@ -61,7 +61,7 @@ def search2(page=1):
     for i in range(len(current_pages)):
         index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page = per_page, search_name=name)
+    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page=per_page, search_name=name)
 
 
 @app.route("/user/<id>")
