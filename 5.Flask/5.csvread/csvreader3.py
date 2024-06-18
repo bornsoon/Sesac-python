@@ -19,7 +19,7 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/<int:page>")
 def search1(page=1):
-    per_page = 10    # 한 페이지에 보여줄 항목 수
+    per_page = int(request.args.get('per_page', default=10))    # 한 페이지에 보여줄 항목 수
     
     start_index = (page - 1) * per_page
     end_index = page * per_page
