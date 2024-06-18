@@ -26,6 +26,13 @@ def search1(page=1):
 
     headers = csv_data[0]
 
+    name = request.args.get('name')
+    if name:
+        csv_data = []
+        for u in csv_data:
+            if name in u['Name']:
+                csv_data.append(u)
+
     total_pages = math.ceil(len(csv_data) / per_page)
 
     current_pages = csv_data[start_index:end_index]
@@ -34,34 +41,7 @@ def search1(page=1):
     for i in range(len(current_pages)):
         index_pages.append({'index': i+1} | current_pages[i])
 
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page=per_page, current_page=page)
-
-
-@app.route("/search")
-def search2(page=1):
-    per_page = int(request.args.get('per_page', default=10))
-
-    start_index = (page - 1) * per_page
-    end_index = page * per_page
-
-    name = request.args.get('name')
-
-    headers = csv_data[0]
-
-    filtered_csv_data = []
-    for u in csv_data:
-        if name in u['Name']:
-            filtered_csv_data.append(u)
-
-    total_pages = math.ceil(len(filtered_csv_data) / per_page)
-
-    current_pages = filtered_csv_data[start_index:end_index]
-    
-    index_pages = []
-    for i in range(len(current_pages)):
-        index_pages.append({'index': i+1} | current_pages[i])
-
-    return render_template('index3.html', headers=headers, users=index_pages, total_pages=total_pages, per_page=per_page, search_name=name,current_page=page)
+    return render_template('index4.html', headers=headers, users=index_pages, total_pages=total_pages, per_page=per_page, current_page=page, search_name=name)
 
 
 @app.route("/user/<id>")

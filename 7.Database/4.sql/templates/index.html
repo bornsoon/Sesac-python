@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}HOME PAGE{% endblock %}
+
+{% block content %}
+<H1>HOME Page</H1>
+{% if session.user %}
+<p>Welcome, {{ session.user }}님</p>
+{% else %}
+<p>로그인이 안된 상태입니다.</p>
+{% endif %}
+{% endblock %}
