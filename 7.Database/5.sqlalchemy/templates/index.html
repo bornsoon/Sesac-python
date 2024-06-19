@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>사용자 페이지</h1>
+    <form action="/add" method="post">
+        <input type="text" name="name" placeholder="이름을...">
+        <input type="number" name="age" placeholder="나이를...">
+        <button type="submit">사용자 추가</button>
+    </form>
+    <ul>
+        {% for user in users %}
+            <li>사용자 아이디는 {{ user.id }}이고 이름은 {{ user.name }}의 나이는 {{ user.age }}입니다.
+                <a href="{{ url_for('delete_user', id=user.id)}}">삭제</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <form action="/update" method="post">
+        <label for="id"> 변경할 프로필 ID: </label>
+        <input type="text" name="id" placeholder="아이디를...">
+        <input type="text" name="name" placeholder="이름을...">
+        <input type="number" name="age" placeholder="나이를...">
+        <button type="submit">프로필 업데이트</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p style="color: green">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+</body>
+</html>

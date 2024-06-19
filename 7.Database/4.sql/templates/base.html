@@ -10,6 +10,8 @@
         <a href="{{ url_for('home') }}">HOME</a>
         {% if 'user' in session %}
         <a href="{{ url_for('logout') }}">LOGOUT</a>
+        <a href="{{ url_for('user') }}">USER</a>
+        <a href="{{ url_for('view') }}">VIEW</a>
         {% else %}
         <a href="{{ url_for('login') }}">LOGIN</a>
         {% endif %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from datetime import timedelta
 
 app = Flask(__name__)
@@ -29,10 +29,12 @@ def login():
             session['user'] = username
             session.permanent = True
             print('패스워드 맞음!!')
+            flash('로그인에 성공하였습니다.')    # 버퍼에 담김
             return redirect(url_for("home"))
         else:
             print('패스워드 틀림!!')
             # 메세지가 있으면 전달하고, 없으면 그냥 재 로그인
+            flash('아이디/패스워드가 일치하지 않습니다.')
             return redirect(url_for("login"))
     
     else:
@@ -45,7 +47,8 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)                                  
+    session.pop('user', None)
+    flash('로그아웃 되었습니다')                                  
     return redirect(url_for('login'))
 
 if __name__=='__main__':

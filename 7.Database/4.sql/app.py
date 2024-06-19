@@ -1,50 +1,11 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from datetime import timedelta
-import sqlite3
+import database as db
 
 app = Flask(__name__)
 app.secret_key = 'hello1234'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
-# 사용자 DB
-DATABASE = 'users.db'
-
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row  # 행을 sqlite3.Row라는 객체 타입으로 반환
-                                    #이걸 설정하면 각 Row의 결과는 Dict유형으로 반환됨.
-    return conn
-
-def init_db():
-    with app.app_context():
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute('''
-            CREATE TABLE IF NOT EXISTS users(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    username TEXT NOT NULL,
-                    password TEXT NOT NULL)
-        ''')
-
-        # 기본 계정 추가  - 계정이 비어있을 때만...
-        cur.execute("SELECT COUNT(*) as count FROM users")
-        count = cur.fetchone()["count"]
-        # count = cur.fetchone()[0]  # 이건 Row 타입이 아닌 기본값 (즉 튜플로) 반납될 때..
-        if count == 0:
-            cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('user1', 'password1'))
-            cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", ('user2', 'password2'))
-            conn.commit()
-
-        #데이터 조회
-        cur.execute('SELECT * FROM users')
-        rows = cur.fetchall()
-
-        print('-' * 30)
-        for row in rows:
-            print(row['id'], row['username'], row['password']) # 열 이름을 사용(Dict)해서 접근 가능함
-        print('-' * 30)
-
-        conn.close()
 
 @app.route('/')
 def home():
@@ -56,21 +17,21 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        conn = get_db_connection()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM users WHERE username = ?", (username, ))
-        user_data = cur.fetchone()
+        query = "SELECT * FROM users WHERE username = ? AND password = ?"
+        user_data = db.get_query(query, (username, password))
         print(f'조회된 사용자: ', user_data)
-        conn.close()
+        print([dict(row) for row in user_data])
 
-        if user_data and user_data['password'] == password:
-            session['user'] = username
+        if len(user_data) == 1:     #and user_data['password'] == password:
+            session['user'] = user_data[0]["username"]
+            if "email" in user_data[0]:
+                session['email'] = user_data[0]["email"]
             session.permanent = True
-            print('패스워드 맞음!!')
+            flash('로그인에 성공하였습니다.')  
             return redirect(url_for("home"))
         else:
             print('패스워드 틀림!!')
-
+            flash('아이디/패스워드가 일치하지 않습니다.')
             return redirect(url_for("login"))
     
     else:
@@ -80,12 +41,58 @@ def login():
         
     return render_template('login.html')
 
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    if request.method == 'POST':
+        action = request.form['action']
+        if 'user' in session:
+            username = session['user']
+            if 'email' in session:
+                email = session['email']
+        
+            if action == 'submit':
+                email = request.form.get('email')
+                password = request.form.get('password')
+
+                if email:
+                    session['email'] = email
+                    query = "UPDATE users SET email = ? WHERE username = ?"
+                    db.execute_query(query, (email, username))
+                    print('-----')
+
+                if password:
+                    query = "UPDATE users SET password = ? WHERE username = ?"
+                    db.execute_query(query, (password, username))
+                    print(password)
+                    
+                flash('프로필 업데이트 완료')
+                
+            elif action == 'delete':
+                query = "DELETE FROM users WHERE username = ?"
+                db.execute_query(query, (username, ""))
+                
+            return render_template('user.html', email=email)
+    
+    # GET 요청일때는, 페이지를 보내줌
+    return render_template('user.html')
+
+@app.route('/view')
+def view():
+    users = db.get_query("SELECT * FROM users")        
+    return render_template('view.html', users=users)
+
+@app.route('/signin')
+def signin():
+    users = []
+    return render_template('signin.html', users=users)
+
 @app.route('/logout')
 def logout():
     session.pop('user', None)
-                                   
+    session.pop('email', None)
+    flash('로그아웃에 성공하였습니다.')           
     return redirect(url_for('login'))
 
 if __name__=='__main__':
-    init_db()   # 시스템 부팅(?)시에 DB 초기화 하기..
+    db.init_db()   # 시스템 부팅(?)시에 DB 초기화 하기..
     app.run(debug=True)

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}HOME PAGE{% endblock %}
+{% block title %}USER PAGE{% endblock %}
 
 {% block content %}
-<H1>Login Page</H1>
+<H1>Sign Page</H1>
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
@@ -19,5 +19,4 @@
     <br>
     <button type="submit">Login</button>
 </form>
-<p> 계정이 없나요? 여기를 <a href="{{ url_for('signin') }}">클릭</a>하세요</p>
 {% endblock %}

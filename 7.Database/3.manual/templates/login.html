@@ -3,8 +3,15 @@
 
 {% block content %}
 <H1>Login Page</H1>
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p style="color: green">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <form method="POST">
-    <labe for="username">Username:</labe>
+    <label for="username">Username:</label>
     <input type="text" name="username" required>
     <br>
     <label for="password">Password:</label>

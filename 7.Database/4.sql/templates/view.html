@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}View PAGE{% endblock %}
+
+{% block content %}
+<H1>View Page</H1>
+<table  border="1" style="border-collapse: collapse">
+    <tr>
+        <td>ID</td>
+        <td>User Name</td>
+        <td>Password</td>
+        <td>Email</td>
+    </tr>
+    {% for row in users %}
+    <tr>
+        <td>{{ row['id'] }}</td>
+        <td>{{ row['username'] }}</td>
+        <td>{{ row['password'] }}</td>
+        <td>{{ row['email'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
