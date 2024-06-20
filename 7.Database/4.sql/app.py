@@ -61,12 +61,12 @@ def user():
                     session['email'] = email
                     query = "UPDATE users SET email = ? WHERE username = ?"
                     db.execute_query(query, (email, username))
-                    print('-----')
+                    # print('-----')
 
                 if password:
                     query = "UPDATE users SET password = ? WHERE username = ?"
                     db.execute_query(query, (password, username))
-                    print(password)
+                    # print(password)
                     
                 flash('프로필 업데이트 완료')
                 
@@ -92,12 +92,19 @@ def view():
 
 @app.route('/post', methods=['GET', 'POST'])
 def post():
-    if request.method == 'POST': 
+    if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
-        print(title)   
-        print('---------------')   
-        print(content)  
+        if not 'user' in session:
+            flash('로그인을 해주세요')
+        else:
+            username = session['user']
+            query = "UPDATE users SET title = ?, content = ? WHERE username = ?"
+            db.execute_query(query, (title, content, username))
+            
+            print(title)   
+            print('---------------')   
+            print(content) 
     
     return render_template('post.html')
 

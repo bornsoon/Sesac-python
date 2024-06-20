@@ -37,6 +37,15 @@ def init_db():
                 password TEXT NOT NULL,
                 email TEXT)
     ''')
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS posts(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                password TEXT NOT NULL,
+                title TEXT,
+                content TEXT,
+                FOREIGN KEY (id) REFERENCES users(id))
+    ''')
 
     # 기본 계정 추가  - 계정이 비어있을 때만...
     cur.execute("SELECT COUNT(*) as count FROM users")
