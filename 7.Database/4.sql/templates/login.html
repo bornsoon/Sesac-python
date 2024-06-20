@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}HOME PAGE{% endblock %}
+{% block title %}LOGIN PAGE{% endblock %}
 
 {% block content %}
 <H1>Login Page</H1>
@@ -19,5 +19,5 @@
     <br>
     <button type="submit">Login</button>
 </form>
-<p> 계정이 없나요? 여기를 <a href="{{ url_for('signin') }}">클릭</a>하세요</p>
+<p> 계정이 없나요? 여기를 <a href="{{ url_for('signup') }}">클릭</a>하세요</p>
 {% endblock %}

@@ -15,6 +15,7 @@
         {% else %}
         <a href="{{ url_for('login') }}">LOGIN</a>
         {% endif %}
+        <a href="{{ url_for('post') }}">POST</a>
     </nav>
     <div>
         {% block content %}{% endblock %}

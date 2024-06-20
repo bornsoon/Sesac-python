@@ -11,6 +11,7 @@ app.permanent_session_lifetime = timedelta(minutes=5)
 def home():
     return render_template('index.html')
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -35,11 +36,13 @@ def login():
             return redirect(url_for("login"))
     
     else:
+         # GET 요청이라서 로그인 폼 보여주기
         if "user" in session:
             print('이전에 로그인 했음!!')
             return redirect(url_for("home"))
         
     return render_template('login.html')
+
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
@@ -67,28 +70,61 @@ def user():
                     
                 flash('프로필 업데이트 완료')
                 
+                return render_template('user.html', email=email)
+
+
             elif action == 'delete':
                 query = "DELETE FROM users WHERE username = ?"
-                db.execute_query(query, (username, ""))
-                
-            return render_template('user.html', email=email)
-    
-    # GET 요청일때는, 페이지를 보내줌
-    return render_template('user.html')
+                db.execute_query(query, (username,))
+                session.pop('user', None)
+                return redirect(url_for('login'))
+
+    else:         
+        # GET 요청일때는, 페이지를 보내줌
+        return render_template('user.html')
+
 
 @app.route('/view')
 def view():
     users = db.get_query("SELECT * FROM users")        
     return render_template('view.html', users=users)
 
-@app.route('/signin')
-def signin():
-    users = []
-    return render_template('signin.html', users=users)
+
+@app.route('/post', methods=['GET', 'POST'])
+def post():
+    if request.method == 'POST': 
+        title = request.form['title']
+        content = request.form['content']
+        print(title)   
+        print('---------------')   
+        print(content)  
+    
+    return render_template('post.html')
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form["username"]
+        password = request.form["password"]
+        email = request.form["email"]
+
+        query = "SELECT username FROM users WHERE username = ?"
+        isUser = db.get_query(query, (username,))
+        if isUser:
+            flash('Username이 중복되었습니다. 다른 입력값을 넣어주세요')
+        else:
+            query = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)"
+            db.execute_query(query, (username, password, email))
+            session['user'] = username
+            return redirect(url_for('login'))
+        
+    return render_template('signup.html')
+
 
 @app.route('/logout')
 def logout():
-    session.pop('user', None)
+    session.pop('user', None)      # 세션에 user가 존재하면 삭제하고 없으면 None을 반환
     session.pop('email', None)
     flash('로그아웃에 성공하였습니다.')           
     return redirect(url_for('login'))

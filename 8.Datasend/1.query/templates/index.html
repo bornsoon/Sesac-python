@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', sednData);
+        
+        function sednData(event) {
+            event.preventDefault();   // 폼의 기본 본연의 기능을 비활성화 하기
+
+            const data = {
+                name: document.getElementById('name').value,
+                age: document.getElementById('age').value
+            }
+
+            // console.log("이름:" + name + ", 나이:" + age);
+
+            fetch('/user_json', {
+                method: 'GET',
+                headers: {
+                    'Content - Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+        }
+    </script>
+</head>
+<body>
+    <h1>쿼리 파라미터(GET 방식)를 통한 데이터 전달</h1>
+    <form action="/user" method="GET">
+        <input type="text" name="name" placeholder="이름">
+        <input type="number" name="age" placeholder="나이">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>폼 파라미터(POST 방식)를 통한 데이터 전달</h1>
+    <form action="/user" method="post">
+        <input type="text" name="name" placeholder="이름">
+        <input type="number" name="age" placeholder="나이">
+        <input type="submit" value="Submit">
+    </form>
+
+    <h1>폼을 JS를 통해서 전달하는 방식</h1>
+    <form action="/user" method="post" id="myForm">
+        <input type="text" id="name" name="name" placeholder="이름">
+        <input type="number" id="age" name="age" placeholder="나이">
+        <button onclick="sednData()">JS로 전송</button>
+    </form>
+</body>
+</html>
