@@ -11,3 +11,6 @@ __pycache__/
 *.db
 *.sqlite
 *.sqlite3
+
+# 실행파일 제외
+*.exe
