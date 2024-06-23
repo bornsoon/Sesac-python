@@ -2,16 +2,27 @@
 {% block title %}Post Detail{% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p style="color: red">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <H1>Post Detail</H1>
 <table  border="1" style="border-collapse: collapse">
     <tr>
         <td>&nbsp;Title&nbsp;</td>
-        <td>{{ post.title }}</td>
+        <td>{{ post[0]['title'] }}</td>
         
     </tr>
     <tr>
         <td>&nbsp;Content&nbsp;</td>
-        <td>{{ post.content }}</td>
+        <td>{{ post[0]['content'] }}</td>
     </tr>
 </table>
+<form method="GET">
+    <button type="submit" name="post" value="update">Update Post</button>
+    <button type="submit" name="post" value="delete">Delete Post</button>
+</form>
 {% endblock %}

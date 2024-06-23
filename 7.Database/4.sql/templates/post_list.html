@@ -2,15 +2,22 @@
 {% block title %}postVIEW PAGE{% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for msg in messages %}
+            <p style="color: red">{{ msg }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <H1>postVIEW PAGE</H1>
 <table  border="1" style="border-collapse: collapse">
     <tr>
         <td>&nbsp;Title&nbsp;</td>
-        <td>&nbsp;Usere&nbsp;</td>
+        <td>&nbsp;Usre&nbsp;</td>
     </tr>
     {% for row in posts %}
     <tr>
-        <td><a href = "{{ url_for('post_detail/row['username']') }}">{{ row['title'] }}</a></td>
+        <td><a href = "{{ url_for('post_detail', id = row['id']) }}">{{ row['title'] }}</a></td>
         <td>{{ row['username'] }}</td>
     </tr>
     {% endfor %}
