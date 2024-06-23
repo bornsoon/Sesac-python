@@ -2,15 +2,15 @@
 {% block title %}postVIEW PAGE{% endblock %}
 
 {% block content %}
-<H1>View Page</H1>
+<H1>postVIEW PAGE</H1>
 <table  border="1" style="border-collapse: collapse">
     <tr>
-        <td><a href = "{{ url_for('post_detail') }}">title</a></td>
-        <td>User Name</td>
+        <td>&nbsp;Title&nbsp;</td>
+        <td>&nbsp;Usere&nbsp;</td>
     </tr>
-    {% for row in users %}
+    {% for row in posts %}
     <tr>
-        <td>{{ row['title'] }}</td>
+        <td><a href = "{{ url_for('post_detail/row['username']') }}">{{ row['title'] }}</a></td>
         <td>{{ row['username'] }}</td>
     </tr>
     {% endfor %}

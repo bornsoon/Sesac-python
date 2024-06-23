@@ -2,17 +2,16 @@
 {% block title %}Post Detail{% endblock %}
 
 {% block content %}
-<H1>View Page</H1>
+<H1>Post Detail</H1>
 <table  border="1" style="border-collapse: collapse">
     <tr>
-        <td><a href = "{{ url_for('post_detail') }}">title</a></td>
-        <td>User Name</td>
+        <td>&nbsp;Title&nbsp;</td>
+        <td>{{ post.title }}</td>
+        
     </tr>
-    {% for row in users %}
     <tr>
-        <td>{{ row['title'] }}</td>
-        <td>{{ row['username'] }}</td>
+        <td>&nbsp;Content&nbsp;</td>
+        <td>{{ post.content }}</td>
     </tr>
-    {% endfor %}
 </table>
 {% endblock %}
