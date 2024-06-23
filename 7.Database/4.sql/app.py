@@ -95,19 +95,59 @@ def post():
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
-        if not 'user' in session:
-            flash('로그인을 해주세요')
-        else:
-            username = session['user']
-            query = "UPDATE users SET title = ?, content = ? WHERE username = ?"
-            db.execute_query(query, (title, content, username))
-            
-            print(title)   
-            print('---------------')   
-            print(content) 
+        password = request.form['password']
+        # if not 'user' in session:
+        #     flash('로그인을 해주세요')
+        # else:
+        username = session['username']
+        query = "UPDATE posts SET title = ?, content = ?, password = ? WHERE username = ?"
+        db.execute_query(query, (title, content, password, username))
+        
+        print(title)   
+        print('---------------')   
+        print(content) 
     
     return render_template('post.html')
 
+
+@app.route('/post_list')
+def post_list():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        password = request.form['password']
+        # if not 'user' in session:
+        #     flash('로그인을 해주세요')
+        # else:
+        username = session['username']
+        query = "UPDATE posts SET title = ?, content = ?, password = ? WHERE username = ?"
+        db.execute_query(query, (title, content, password, username))
+        
+        print(title)   
+        print('---------------')   
+        print(content) 
+    
+    return render_template('post_list.html')
+
+
+@app.route('/post_detail')
+def post_detail():
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        password = request.form['password']
+        # if not 'user' in session:
+        #     flash('로그인을 해주세요')
+        # else:
+        username = session['username']
+        query = "UPDATE posts SET title = ?, content = ?, password = ? WHERE username = ?"
+        db.execute_query(query, (title, content, password, username))
+        
+        print(title)   
+        print('---------------')   
+        print(content) 
+    
+    return render_template('post_list.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

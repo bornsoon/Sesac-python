@@ -44,7 +44,7 @@ def init_db():
                 password TEXT NOT NULL,
                 title TEXT,
                 content TEXT,
-                FOREIGN KEY (id) REFERENCES users(id))
+                FOREIGN KEY (username) REFERENCES users(username))
     ''')
 
     # 기본 계정 추가  - 계정이 비어있을 때만...
