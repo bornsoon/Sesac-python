@@ -1,0 +1,1 @@
+SELECT t.id, u.name, s.name, i.name FROM users u JOIN orders o ON u.id=o.userid JOIN stores s ON o.storeid=s.id JOIN orderitems oi ON o.id=oi.orderid JOIN items i ON oi.itemid = i.id WHERE u.id="6da2aec9-5aa2-4cc4-aba1-df81cef0cc02";
