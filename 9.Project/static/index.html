@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>상점 정보 HLLEE</H1>
+    <input type="text" id="search-input" placeholder="검색할 상점이름">
+    <button onclick="searchStores()">검색</button>
+    <table border="1" id="store-table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Address</th>
+        </tr>
+    </table>
+
+    <script>
+        function searchStores() {
+            const name = document.getElementById('sesarch-input').value;
+            fetch(`/api/stores?name=${encodeURIComponent(name)}`)
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('store-table');
+                // 기존 테이블 내용을 지운다
+                data.forEach(store => {
+                    const row = table.insertRow();
+                    row.insertCell(0).textContent = store.Id;
+                    row.insertCell(1).textContent = store.Name;
+                    row.insertCell(2).textContent = store.Type;
+                    row.insertCell(3).textContent = store.Address;
+                })
+            });
+        }
+
+        function clearTable() {
+            const table = document.getElementById('store-table');
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+        }
+
+        function fertchStores() {
+            fetch('/api/stores')
+            .then(response => response.json())
+            .then(data => {
+                // 여기에서 fetch를 해서 받아온 데이터를 처리하는 코드를 작성
+                const table = document.getElementById('store-table');
+                data.forEach(store => {
+                    const row = table.insertRow();
+                    row.insertCell(0).textContent = store.Id;
+                    row.insertCell(1).textContent = store.Name;
+                    row.insertCell(2).textContent = store.Type;
+                    row.insertCell(3).textContent = store.Address;
+                })
+            })
+            .catch(error => console.error('데이터 처리중 오류 발생'))
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchStores();
+        })
+    </script>
+</body>
+</html>

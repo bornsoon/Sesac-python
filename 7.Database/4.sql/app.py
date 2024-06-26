@@ -90,28 +90,37 @@ def view():
     return render_template('view.html', users=users)
 
 
-@app.route('/post', methods=['GET', 'POST'])
-def post(username=""):
-    if request.method == 'POST':
-        title = request.form['title']
-        content = request.form['content']
-        password = request.form['password']
-        # if not 'user' in session:
-        #     flash('로그인을 해주세요')
-        # else:
+@app.route('/post')
+def post():
+    title = request.args.get('title')
+    content = request.args.get('content')
+    password = request.args.get('password')
+    if not 'user' in session:
+        flash('로그인을 해주세요')
+    else:
         user = session['user']
         query = "INSERT INTO posts (username, title, content, password) VALUES (?,?,?,?)"
         db.execute_query(query, (user, title, content, password))
-        if username == user:
-            post = db.get_query('SELECT * FROM posts WHERE username = ?', user)
-            return render_template('post.html', title=post[0]['title'],  content=post[0]['content'])
-            if password == post[0]['password']:
-                query = "UPDATE posts INTO contents WHERE username = ? and password = ?"
-                db.execute_query(query, (user, password))
-            else:
-                flash('비밀번호가 틀렸습니다.')
-
+ 
     return render_template('post.html')
+
+
+@app.route('/post_update/<id>')
+def post_update(id):
+    password = request.args.get('password')
+    content = request.args.get('content')
+    post = db.get_query('SELECT * FROM posts WHERE id = ?', (id,))
+    if request.args.get('action')=='update':
+        print('update')
+        if password == post[0]['password']:
+            query = "UPDATE posts SET content = ? WHERE id = id and password = ?"
+            db.execute_query(query, (content, id, password))
+            print(1)
+            return render_template('post_detail.html', post=post)
+        else:
+            flash('비밀번호가 틀렸습니다.')
+
+    return render_template('post_update.html', post=post)
 
 
 @app.route('/post_list')
@@ -123,18 +132,23 @@ def post_list():
 @app.route('/post_detail/<id>')
 def post_detail(id):
     post = db.get_query("SELECT * FROM posts WHERE id = ?", (id,))
-    if request.method == 'GET':
-        if request.args.get('post') == "update":
+    if request.args.get('btn') == "update":
+        if 'user' in session:
             if session['user'] == post[0]['username']:
-                return redirect(url_for('post', username=session['user'], title=post[0]['title'],  content=post[0]['content']))
+                return redirect(url_for('post_update', id=id))
             else:
                 flash('수정 권한이 없습니다.')
-        if request.args.get('post') == "delete":
+        else:
+            flash('수정 권한이 없습니다.')
+    if request.args.get('btn') == "delete":
+        if 'user' in session:
             if session['user'] == post[0]['username']:
                 db.execute_query("DELETE FROM posts WHERE id = ?", (id,))
                 return redirect(url_for('post_list'))
             else:
                 flash('삭제 권한이 없습니다.')
+        else:
+            flash('삭제 권한이 없습니다.')
     return render_template('post_detail.html', post=post)
 
 

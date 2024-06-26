@@ -2,7 +2,7 @@
 {% block title %}POST PAGE{% endblock %}
 
 {% block content %}
-<H1>Post Page</H1>
+<H1>Post Update</H1>
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for msg in messages %}
@@ -10,16 +10,16 @@
         {% endfor %}
     {% endif %}
 {% endwith %}
-<form action="/post">
+<form action="/post_update">
     <label for="title">Title &nbsp;&nbsp;&nbsp;&nbsp;:</label>
-    <input type="text" name="title">
+    <input type="text" name="title" value="{{ post[0].title }}" required>
     <br><br>
     <label for="content" style="vertical-align: top;">Content:</label>
-    <textarea name="content" rows="5" cols="30"></textarea>
+    <textarea name="content" rows="5" cols="30">{{ post[0].content }}</textarea>
     <br><br>
     <label for="password">Post password &nbsp;:</label>
-    <input type="password" name="password" required>
+    <input type="password" name="password" value="{{ password }}">
     <br>
-    <button type="submit">Add Post</button>
+    <input type="button" name="action" value="update"></button>
 </form>
 {% endblock %}

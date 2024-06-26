@@ -13,16 +13,17 @@
 <table  border="1" style="border-collapse: collapse">
     <tr>
         <td>&nbsp;Title&nbsp;</td>
-        <td>{{ post[0]['title'] }}</td>
-        
+        <td>&nbsp;&nbsp;{{ post[0]['title'] }}&nbsp;&nbsp;</td>
+        <td>&nbsp;UserName&nbsp;</td>
+        <td>&nbsp;&nbsp;{{ post[0]['username'] }}&nbsp;&nbsp;</td>
     </tr>
     <tr>
         <td>&nbsp;Content&nbsp;</td>
-        <td>{{ post[0]['content'] }}</td>
+        <td colspan="3">{{ post[0]['content'] }}</td>
     </tr>
 </table>
-<form method="GET">
-    <button type="submit" name="post" value="update">Update Post</button>
-    <button type="submit" name="post" value="delete">Delete Post</button>
+<form>
+    <button type="submit" name="btn" value="update">Update Post</button>
+    <button type="submit" name="btn" value="delete">Delete Post</button>
 </form>
 {% endblock %}

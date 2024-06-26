@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        {% block style %}{% endblock %}
+        nav {
+            background-color: rgb(60, 76, 133);
+            height: 50px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        a {
+            color: rgb(230, 230, 230);
+            text-decoration: none;
+            font-size: 18px;
+        }
+        a:link {
+            color: white;
+        }
+        a:hover {
+            color: white;
+            font: bold 20px sans-serif;
+            text-decoration: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table tbody {
+            display: block;
+            overflow-y: scroll;
+            max-height: 60vh;
+        }
+        table thead tr, table tbody tr {
+            display: table;
+            width: 100%;
+        }
+        table * {
+            padding : 15px;
+            border-bottom: 1px solid rgb(140, 140, 140);
+            border-top: 1px solid rgb(140, 140, 140);
+        }
+        th {
+            text-align: left;
+        }
+        .pointer {
+            cursor: pointer;
+        }
+        tr:hover {
+            background-color: #8a8a8a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <nav>
+            <a href="{{ url_for('user')}}">User</a>
+            <a href="{{ url_for('user')}}">Order</a>
+            <a href="{{ url_for('user')}}">Order Item</a>
+            <a href="{{ url_for('user')}}">Item</a>
+            <a href="{{ url_for('user')}}">Store</a>
+        </nav>
+        {% block content %}{% endblock %}
+    </center>
+</body>
+</html>
