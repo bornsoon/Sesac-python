@@ -30,15 +30,6 @@
             width: 100%;
             border-collapse: collapse;
         }
-        table tbody {
-            display: block;
-            overflow-y: scroll;
-            max-height: 60vh;
-        }
-        table thead tr, table tbody tr {
-            display: table;
-            width: 100%;
-        }
         table * {
             padding : 15px;
             border-bottom: 1px solid rgb(140, 140, 140);
@@ -46,13 +37,16 @@
         }
         th {
             text-align: left;
+            background-color: #969696;
+            position: relative fixed;
+            top: 0;
+        }
+        tbody > tr:hover {
+            background-color: #afafaf;
+            color: white;
         }
         .pointer {
             cursor: pointer;
-        }
-        tr:hover {
-            background-color: #8a8a8a;
-            color: white;
         }
     </style>
 </head>

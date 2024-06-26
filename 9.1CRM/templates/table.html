@@ -3,26 +3,24 @@
 
 {% block content %}
 {% block bar %}{% endblock %}
+<div style="overflow: auto; max-height: 70vh">
     <table>
-        <thead>
-            <tr>
-                {% for key in keys %}
-                <th>
-                    {{ key }}
-                </th>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody style="display:block; overflow-y:scroll; max-height:60vh">
-            {% for value in values %}
-            <tr>
-                {% for v in value %}
-                <td> {{ v }} </td>
-                {% endfor %}
-            </tr>
+        <tr>
+            {% for key in keys %}
+            <th>
+                {{ key }}
+            </th>
             {% endfor %}
-        </tbody>
+        </tr>
+        {% for value in values %}
+        <tr>
+            {% for v in value %}
+            <td> {{ v }} </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
     </table>
+</div>
 <div id="page_box">
     <div class="page">
         <a href="/?{{page}}">{{ page }}</a>
