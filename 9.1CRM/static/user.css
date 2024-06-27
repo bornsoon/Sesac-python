@@ -1,0 +1,18 @@
+form {
+    padding: 5px;
+}
+form * {
+    margin: 5px;
+    height: 25px;
+    font-weight: bold;
+}
+input[type='submit'] {
+    background-color: rgb(189, 215, 255);
+    height: 30px;
+    border-radius: 5px;
+}
+input[type='submit']:hover {
+    background-color: rgb(156, 195, 255);
+    color: white;
+    scale: 120%;
+}

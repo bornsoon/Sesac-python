@@ -1,23 +1,18 @@
 {% extends "table.html" %}
-{% block style %}
-    form {
-        padding: 5px;
-    }
-    form * {
-        margin: 5px;
-        height: 25px;
-        font-weight: bold;
-    }
+
+{% block style1 %}
+<link rel="stylesheet" href="{{ url_for('static', filename='user.css') }}"/>
 {% endblock %}
+
 {% block bar %}
-<form action="/user-detail">
+<form action="/user" method="GET">
     <label for="name"> Name: </label>
-    <input type="text" name="name" value="">
+    <input type="text" name="name" value="{{ name }}">
     <label for="gender"> Gender: </label>
     <select name="gender" class="pointer">
         <option selected></option>
-        <option>Male</option>
-        <option>FeMale</option>
+        <option value="{{ Male }}">Male</option>
+        <option value="{{ Fale }}">FeMale</option>
     </select>
     <input type="submit" value="Search" class="pointer">
 </form>

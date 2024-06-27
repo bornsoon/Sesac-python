@@ -1,5 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Main Page{% endblock %}
+{% block title %}Main [{{ paging.category }}]{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='paging.css') }}"/>
+{% endblock %}
 
 {% block content %}
 {% block bar %}{% endblock %}
@@ -13,17 +17,57 @@
             {% endfor %}
         </tr>
         {% for value in values %}
-        <tr>
+        <tr class="pointer" onclick="location.href='/{{ value.Id }}'">
             {% for v in value %}
             <td> {{ v }} </td>
+            <td> {{ v.index() }} </td>
             {% endfor %}
         </tr>
         {% endfor %}
     </table>
 </div>
-<div id="page_box">
-    <div class="page">
-        <a href="/?{{page}}">{{ page }}</a>
+
+    <!-- 페이징 처리 -->
+    <div id="page_box" class="pointer">
+        {% if page > 1 %}
+            <div><a href="/{{ paging.category }}/{{page - 1 }}"> Previous </a></div>
+        {% endif %}
+
+        {% if paging.pre == True %}
+            {% for i in range(1, page) %}
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+        {% endif %}
+        
+        {% if paging.pre == False %}
+            {% for i in range(1, 4) %}
+                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+            <div> ... </div>
+            {% for i in range(page - 3, page) %}
+                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+        {% endif %}
+
+        {% if paging.next == False %}
+            {% for i in range(page, paging.total + 1) %}
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+        {% endif %}
+
+        {% if paging.next == True %}
+            {% for i in range(page, page + 4) %}
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+            <div> ... </div>
+            {% for i in range(paging.total - 2, paging.total + 1) %}
+                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+            {% endfor %}
+        {% endif %}
+       
+        {% if page < paging.total %}
+            <div><a href="/{{ paging.category }}/{{page + 1}}"> Next </a></div>
+        {% endif %}
     </div>
-</div>
+
 {% endblock %}
