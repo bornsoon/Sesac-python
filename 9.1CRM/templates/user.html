@@ -5,15 +5,20 @@
 {% endblock %}
 
 {% block bar %}
-<form action="/user" method="GET">
-    <label for="name"> Name: </label>
+<form action="/user" method="POST">
+    <label for="name" value=""> Name: </label>
     <input type="text" name="name" value="{{ name }}">
-    <label for="gender"> Gender: </label>
-    <select name="gender" class="pointer">
-        <option selected></option>
-        <option value="{{ Male }}">Male</option>
-        <option value="{{ Fale }}">FeMale</option>
+    <label for="gender" value=""> Gender: </label>
+    <select name="gender" class="pointer" value="{{ gender }}">
+        <option value=""></option>
+        <option value="Male" {%if gender=="Male"%}selected{%endif%}>Male</option>
+        <option value="Female" {%if gender=="Female"%}selected{%endif%}>Female</option>
     </select>
     <input type="submit" value="Search" class="pointer">
+    <select onchange="this.form.submit()" name = "per_page">
+        {% for i in range(1,41)%}
+        <option value="{{ i }}" {% if per_page == i %} selected {% endif %}>{{ i }}</option>
+        {% endfor %}
+    </select>
 </form>
 {% endblock %}

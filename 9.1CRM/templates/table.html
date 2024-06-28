@@ -17,10 +17,9 @@
             {% endfor %}
         </tr>
         {% for value in values %}
-        <tr class="pointer" onclick="location.href='/{{ value.Id }}'">
+        <tr class="pointer" id="{% if values.index(value) % 2 ==0 %}even{% endif %}" onclick="location.href='/{{ value.Id }}'">
             {% for v in value %}
             <td> {{ v }} </td>
-            <td> {{ v.index() }} </td>
             {% endfor %}
         </tr>
         {% endfor %}
@@ -30,43 +29,43 @@
     <!-- 페이징 처리 -->
     <div id="page_box" class="pointer">
         {% if page > 1 %}
-            <div><a href="/{{ paging.category }}/{{page - 1 }}"> Previous </a></div>
+            <div><a href="/{{ paging.category }}/{{page - 1 }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> Previous </a></div>
         {% endif %}
 
         {% if paging.pre == True %}
             {% for i in range(1, page) %}
-                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
         {% endif %}
         
         {% if paging.pre == False %}
             {% for i in range(1, 4) %}
-                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
             <div> ... </div>
             {% for i in range(page - 3, page) %}
-                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
         {% endif %}
 
         {% if paging.next == False %}
             {% for i in range(page, paging.total + 1) %}
-                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
         {% endif %}
 
         {% if paging.next == True %}
             {% for i in range(page, page + 4) %}
-                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div id="{% if i == page %}current{% endif %}"><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
             <div> ... </div>
             {% for i in range(paging.total - 2, paging.total + 1) %}
-                <div><a href="/{{ paging.category }}/{{ i }}"> {{ i }} </a></div> 
+                <div><a href="/{{ paging.category }}/{{ i }}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> {{ i }} </a></div> 
             {% endfor %}
         {% endif %}
        
         {% if page < paging.total %}
-            <div><a href="/{{ paging.category }}/{{page + 1}}"> Next </a></div>
+            <div><a href="/{{ paging.category }}/{{page + 1}}{% if name or gender or per_page %}?name={{ name }}&gender={{ gender }}&per_page={{ per_page }}{% endif %}"> Next </a></div>
         {% endif %}
     </div>
 

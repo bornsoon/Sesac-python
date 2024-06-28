@@ -35,9 +35,12 @@ th {
     text-align: left;
     background-color: rgb(189, 215, 255);
 }
-tr:not(:first-child):hover {
+tr:not(:first-child):hover ,tr#even:not(:first-child):hover {
     background-color: #afafaf;
     color: white;
+}
+#even {
+    background-color: #dddddd;
 }
 .pointer {
     cursor: pointer;
