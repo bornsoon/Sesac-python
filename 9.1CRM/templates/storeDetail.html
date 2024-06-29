@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Main[Store Detail]{% endblock %}
+
+{% block style %}
+<style>
+    tr * {
+        padding: 10px;
+    }
+    #div1 {
+        display: flex;
+        justify-content: space-around;
+    }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:10px;">
+    매장 정보
+</div>
+<table>
+    <tr>
+        {% for key in keys %}
+        <th> {{ key }} </th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for u in store %}
+        <td> {{ u }} </td>
+        {% endfor %}
+    </tr>        
+</table>
+<br>
+<div style="padding:10px;">
+    월간 매출액
+</div>
+<div style="overflow: auto; max-height: 35vh">
+    <table>
+        <tr>
+            <th> Month </th>
+            <th> Revenue </th>
+            <th> Count </th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            {% for o in order %}
+            <td> {{ o }} </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}        
+    </table>
+</div>
+<div style="padding:10px;">
+    단골 고객
+</div>
+<div style="overflow: auto; max-height: 35vh">
+    <table>
+        <tr>
+            <th> User Id </th>
+            <th> Name </th>
+            <th> Frequency </th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            {% for o in order %}
+            <td> {{ o }} </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}        
+    </table>
+</div>
+{% endblock %}

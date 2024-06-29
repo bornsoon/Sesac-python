@@ -10,13 +10,17 @@
         display: flex;
         justify-content: space-around;
     }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div style="padding:7px;">
-    [  고객 정보  ]
+<div style="padding:10px;">
+    고객 정보
 </div>
 <table>
     <tr>
@@ -30,21 +34,22 @@
         {% endfor %}
     </tr>        
 </table>
-<div style="padding:7px;">
-    [  주문 정보  ]
+<br>
+<div style="padding:10px;">
+    주문 정보
 </div>
 <div style="overflow: auto; max-height: 35vh">
     <table>
         <tr>
-            <th> Purchased Item </th>
+            <th> Order Id </th>
             <th> Purchased Date </th>
             <th> Purchased Store </th>
         </tr>
-        {% for order in orders %}
+        {% for o in orders %}
         <tr>
-            {% for o in order %}
-            <td> {{ o }} </td>
-            {% endfor %}
+            <td> {{ o.id }} </td>
+            <td> {{ o.orderAt }} </td>
+            <td class="pointer" onclick="location.href='/storeDetail/{{ o.storeId }}'"> {{ o.name }} </td>
         </tr>
         {% endfor %}        
     </table>
@@ -55,7 +60,7 @@
         <h2>자주 방문한 매장 Top5</h2>
         <ol>
             {% for i in topStores %}
-            <li>{{ i.name }}</li><br>
+            <li> {{ i.name }} ({{ i.count }}번 방문) </li>
             {% endfor %}
         </ol>
     </div>
@@ -63,7 +68,7 @@
         <h2>자주 주문한 상품 Top5</h2>
         <ol>
             {% for i in topItems %}
-            <li>{{ i.item }}</li><br>
+            <li> {{ i.item }}  ({{ i.count }}번 구매) </li>
             {% endfor %}
         </ol>
     </div>

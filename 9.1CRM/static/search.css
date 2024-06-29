@@ -3,23 +3,22 @@ form {
 }
 form * {
     margin: 5px;
-    height: 25px;
     color: rgb(80, 80, 80);
 }
 input[type='submit'] {
-    background-color: rgb(189, 215, 255);
-    height: 30px;
-    border: solid 1px rgb(70, 70, 70);
+    background-color: rgb(127, 200, 224);
+    padding: 8px;
+    border: solid 0px rgb(70, 70, 70);
     border-radius: 10px;
 }
 input[type='submit']:hover {
-    background-color: rgb(156, 195, 255);
+    background-color: rgb(156, 212, 255);
     color: white;
     scale: 120%;
 }
 input, select {
     background-color: rgb(240, 240, 240);
-    height: 30px;
+    padding: 5px;
     border: solid 1px rgb(80, 80, 80);
     border-radius: 10px;
 }
