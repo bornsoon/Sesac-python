@@ -11,17 +11,21 @@ div#page_box {
     border-width: 1px 1px 1px 0px;
     border-color: rgb(120, 120, 120);
 }
-#page_box > div:first-child {
+#page_box > div:first-child:not(last-child) {
     border-width: 1px;
     border-radius: 5px 0px 0px 5px;
 }
-#page_box > div:last-child {
+#page_box > div:last-child:not(first-child) {
     border-radius: 0px 5px 5px 0px;
 }
-#page_box a{
+#page_box > div:first-child:last-child {
+    border-width: 1px;
+    border-radius: 5px 5px 5px 5px;
+}
+#page_box a {
     color: rgb(90, 90, 90);
 }
-#current {
-    background-color: rgb(169, 169, 169);
-    color: white
+#current a, #current {
+    background-color: rgb(200, 200, 200);
+    color: white;
 }

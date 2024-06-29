@@ -5,16 +5,7 @@
 {% endblock %}
 
 {% block bar %}
-<form action="/user" method="POST">
-    <label for="name"> Name: </label>
-    <input type="text" name="name" value="{{ name }}">
-    <label for="gender"> Gender: </label>
-    <select name="gender" class="pointer" value="{{ gender }}">
-        <option value=""></option>
-        <option value="Male" {%if gender=="Male"%}selected{%endif%}>Male</option>
-        <option value="Female" {%if gender=="Female"%}selected{%endif%}>Female</option>
-    </select>
-    <input type="submit" value="Search" class="pointer">
+<form action="/order" method="POST">
     <lable for="per_page">표시할 항목 수:</lable>
     <select onchange="this.form.submit()" name = "per_page" class="pointer">
         {% for i in range(1,41)%}
@@ -26,7 +17,7 @@
 
 {% block table_tr %}
     {% for value in values %}
-    <tr class="pointer" onclick="location.href='/userDetail/{{ value.Id }}'">
+    <tr class="pointer" onclick="location.href='/{{ value.Id }}'">
         {% for v in value %}
         <td> {{ v }} </td>
         {% endfor %}

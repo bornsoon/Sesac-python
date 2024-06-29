@@ -11,11 +11,11 @@
 <body>
     <center>
         <nav>
-            <a href="{{ url_for('user')}}">User</a>
-            <a href="{{ url_for('user')}}">Order</a>
-            <a href="{{ url_for('user')}}">Order Item</a>
-            <a href="{{ url_for('user')}}">Item</a>
-            <a href="{{ url_for('user')}}">Store</a>
+            <a href="{{ url_for('user')}}" {%if paging.category=="user"%} id="bold" {% endif %}>User</a>
+            <a href="{{ url_for('order')}}" {%if paging.category=="order"%} id="bold" {% endif %}>Order</a>
+            <a href="{{ url_for('orderItem')}}" {%if paging.category=="orderItem"%} id="bold" {% endif %}>Order Item</a>
+            <a href="{{ url_for('item')}}" {%if paging.category=="item"%} id="bold" {% endif %}>Item</a>
+            <a href="{{ url_for('store')}}" {%if paging.category=="store"%} id="bold" {% endif %}>Store</a>
         </nav>
         {% block content %}{% endblock %}
     </center>

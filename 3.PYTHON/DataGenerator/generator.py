@@ -12,7 +12,8 @@ class Generator:
     def __init__(self):
         self.csv_operator = CsvOperator()
         self.firstname = self.csv_operator.read_csv('./csvs/firstname.csv')
-        self.lastname = self.csv_operator.read_csv('./csvs/lastname.csv')
+        self.lastnameF = self.csv_operator.read_csv('./csvs/lastnameF.csv')
+        self.lastnameM = self.csv_operator.read_csv('./csvs/lastnameM.csv')
         self.city = self.csv_operator.read_csv('./csvs/city.csv')
         self.street = self.csv_operator.read_csv('./csvs/street.csv')
         self.storetype = self.csv_operator.read_csv('./csvs/storetype.csv')
@@ -43,13 +44,16 @@ class Generator:
 
         for _ in range(num):
             id = str(uuid.uuid4())
-            name = random.choice(self.firstname) + random.choice(self.lastname)
+            gender = random.choice(['Male', 'Female'])
+            if gender == 'Male':
+                name = random.choice(self.firstname) + random.choice(self.lastnameM)
+            else:
+                name = random.choice(self.firstname) + random.choice(self.lastnameF)
             year = random.randint(MIN_YEAR, MAX_YEAR)
             month = random.randint(1,12)
             day = random.randint(1,28)
             birthdate = f'{year}-{month:02d}-{day:02d}'
             age = THIS_YEAR - year
-            gender = random.choice(['Male', 'Female'])
             address = random.choice(self.city) + '시 ' + random.choice(self.street) + ' ' + str(random.randint(1,99)) + '길 ' + str(random.randint(1,99))
 
             lst.append((id, name, gender, age, birthdate, address))

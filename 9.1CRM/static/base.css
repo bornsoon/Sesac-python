@@ -3,21 +3,18 @@ a {
     font-size: 18px;
 }
 nav {
-    background-color: rgb(60, 76, 133);
+    background-color: rgb(40, 49, 80);
     height: 50px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
 }
 nav a {
-    color: rgb(190, 190, 190);
+    color: rgb(240, 240, 240);
     text-decoration: none;
     font-size: 18px;
 }
-nav > a:link {
-    color: white;
-}
-nav > a:hover {
+nav > a:hover, #bold {
     color: white;
     font: bold 20px sans-serif;
     text-decoration: none;
@@ -33,14 +30,14 @@ table * {
 }
 th {
     text-align: left;
-    background-color: rgb(189, 215, 255);
+    border-bottom: 5px #afafaf;
 }
-tr:not(:first-child):hover ,tr#even:not(:first-child):hover {
-    background-color: #afafaf;
+tr.pointer:not(:first-child):hover ,tr.pointer:nth-child(even):not(:first-child):hover {
+    background-color: rgb(200, 200, 200);
     color: white;
 }
-#even {
-    background-color: #dddddd;
+tr:nth-child(even) {
+    background-color: rgb(240, 240, 240);
 }
 .pointer {
     cursor: pointer;
