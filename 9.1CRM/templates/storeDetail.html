@@ -45,11 +45,9 @@
             <th> Revenue </th>
             <th> Count </th>
         </tr>
-        {% for order in orders %}
+        {% for i in revenue %}
         <tr>
-            {% for o in order %}
-            <td> {{ o }} </td>
-            {% endfor %}
+            <td> {{ i }} </td>
         </tr>
         {% endfor %}        
     </table>

@@ -60,13 +60,13 @@ def userDetail(id):
     user = db.get_query(user_query, (id,))
     keys = user[0].keys()
 
-    order_query = "SELECT o.id, o.orderAt, s.name FROM orders o JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? ORDER BY o.orderAt DESC"
+    order_query = "SELECT o.id, o.orderAt, s.name, o.storeId FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? ORDER BY o.orderAt DESC"
     orders = db.get_query(order_query, (id,))
 
     store_query = "SELECT s.name, count(s.id) AS 'count' FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? GROUP BY s.Id ORDER BY count(s.Id) DESC LIMIT 5"
     topStores = db.get_query(store_query, (id,))
 
-    item_query = "SELECT i.item, count(i.item) AS 'count' FROM items i INNER JOIN orderItems oi ON i.Id=oi.itemId INNER JOIN orders o ON oi.orderId=o.id WHERE o.userId = ? GROUP BY i.Id ORDER BY count(i.id) DESC LIMIT 5"
+    item_query = "SELECT i.item, count(i.item) AS 'count' FROM orderItems oi INNER JOIN items i ON oi.itemId=i.Id INNER JOIN orders o ON oi.orderId=o.id WHERE o.userId = ? GROUP BY i.Id ORDER BY count(i.id) DESC LIMIT 5"
     topItems = db.get_query(item_query, (id,))
 
     return render_template('userDetail.html', keys=keys, paging=paging, user=user[0], orders=orders, topStores=topStores, topItems=topItems)
@@ -155,16 +155,13 @@ def storeDetail(id):
     store = db.get_query(store_query, (id,))
     keys = store[0].keys()
 
-    order_query = "SELECT o.id, o.orderAt, s.name, o.storeId FROM orders o JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? ORDER BY o.orderAt DESC"
-    orders = db.get_query(order_query, (id,))
+    revenue_query = "SELECT SUM(price) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY strftime('%m') ORDER BY strftime('%m') DESC"
+    revenue = db.get_query(revenue_query, (id,))
 
-    store_query = "SELECT s.name, count(s.id) AS 'count' FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? GROUP BY s.Id ORDER BY count(s.Id) DESC LIMIT 5"
-    topStores = db.get_query(store_query, (id,))
+    customer_query = "SELECT s.name, count(s.id) AS 'count' FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? GROUP BY s.Id ORDER BY count(s.Id) DESC LIMIT 5"
+    topCustomers = db.get_query(customer_query, (id,))
 
-    item_query = "SELECT i.item, count(i.item) AS 'count' FROM items i INNER JOIN orderItems oi ON i.Id=oi.itemId INNER JOIN orders o ON oi.orderId=o.id WHERE o.userId = ? GROUP BY i.Id ORDER BY count(i.id) DESC LIMIT 5"
-    topItems = db.get_query(item_query, (id,))
-
-    return render_template('storeDetail.html', keys=keys, paging=paging, store=store[0], orders=orders, topStores=topStores, topItems=topItems)
+    return render_template('storeDetail.html', keys=keys, paging=paging, store=store[0], revenue=revenue, topCustomers=topCustomers)
 
 if __name__ == '__main__':
     app.run(debug=True)
