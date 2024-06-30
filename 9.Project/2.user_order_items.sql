@@ -9,3 +9,4 @@ SELECT * FROM users WHERE birthdate <= '2000-01-01';
 
 SELECT * FROM users WHERE strftime('%m',BirthDate)='06';   -- 빌트인 함수 strftime  %m -> 월
 SELECT * FROM users WHERE strftime('%d',BirthDate)='24';   -- 빌트인 함수 strftime  %d -> 일
+                                                           -- 빌트인 함수 strftime  %Y -> 년

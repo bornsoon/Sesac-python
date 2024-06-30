@@ -34,15 +34,20 @@ def user(page=1):
         name = request.args.get('name')
         gender = request.args.get('gender')
 
-    if gender:
+    if gender and name:
         query= "SELECT id, name, gender, age, birthdate FROM users WHERE name LIKE ?||'%' AND gender = ?"
-        params = (name, gender)
+        params = (name.strip(), gender)
     else:
-        gender = ""
-        if not name:
+        if gender:
+            query= "SELECT id, name, gender, age, birthdate FROM users WHERE gender = ?"
             name = ""
-        query= "SELECT id, name, gender, age, birthdate FROM users WHERE name LIKE ?||'%'"
-        params = (name, )
+            params = (gender, )
+        else:
+            if not name:
+                name = ""
+            query= "SELECT id, name, gender, age, birthdate FROM users WHERE name LIKE ?||'%'"
+            gender = ""
+            params = (name.strip(), )
 
     user = db.get_query(query, params)
 
@@ -75,7 +80,7 @@ def userDetail(id):
 @app.route('/order', methods=['GET', 'POST'])
 @app.route('/order/<int:page>', methods=['GET', 'POST'])
 def order(page=1):
-    query= "SELECT * FROM orders"
+    query= "SELECT * FROM orders ORDER BY orderAt DESC"
     order = db.get_query(query)
     keys = order[0].keys()
     
@@ -89,7 +94,6 @@ def order(page=1):
     paging = pagings(order, 'order', page, per_page)
 
     return render_template('order.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging)
-
 
 
 @app.route('/orderItem', methods=['GET', 'POST'])
@@ -114,20 +118,30 @@ def orderItem(page=1):
 @app.route('/item', methods=['GET', 'POST'])
 @app.route('/item/<int:page>', methods=['GET', 'POST'])
 def item(page=1):
-    query= "SELECT * FROM items"
+    query = "SELECT * FROM items ORDER BY type, price"
     item = db.get_query(query)
     keys = item[0].keys()
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
+        name = request.form['name']
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
+        name =request.args.get('name')
+
+    if name:
+        query = "SELECT * FROM items WHERE item LIKE '%'||?||'%'"
+        param = (name.strip(),)
+        item = db.get_query(query, param)
+    else:
+        name = ""
 
     firstIndex = (page - 1) * per_page
     values = item[firstIndex : firstIndex + per_page]
     paging = pagings(item, 'item', page, per_page)
 
-    return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging)
+    return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name)
+
 
 @app.route('/store', methods=['GET', 'POST'])
 @app.route('/store/<int:page>', methods=['GET', 'POST'])
@@ -138,14 +152,22 @@ def store(page=1):
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
+        name = request.form['name']
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
+        name = request.args.get('name')
+
+    if name:
+        query = "SELECT * FROM stores WHERE name LIKE '%'||?||'%'"
+        store = db.get_query(query, (name.strip(),))
+    else:
+        name = ""
 
     firstIndex = (page - 1) * per_page
     values = store[firstIndex : firstIndex + per_page]
-    paging = pagings(store, 'Store', page, per_page)
+    paging = pagings(store, 'store', page, per_page)
 
-    return render_template('store.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging)
+    return render_template('store.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name)
 
 
 @app.route('/storeDetail/<id>')
@@ -155,7 +177,7 @@ def storeDetail(id):
     store = db.get_query(store_query, (id,))
     keys = store[0].keys()
 
-    revenue_query = "SELECT SUM(price) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY strftime('%m') ORDER BY strftime('%m') DESC"
+    revenue_query = "SELECT SUM(price) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY strftime('%m',orderAt) ORDER BY strftime('%m') DESC"
     revenue = db.get_query(revenue_query, (id,))
 
     customer_query = "SELECT s.name, count(s.id) AS 'count' FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? GROUP BY s.Id ORDER BY count(s.Id) DESC LIMIT 5"
