@@ -3,7 +3,7 @@ a {
     font-size: 18px;
 }
 nav {
-    background-color: rgb(190, 190, 190);
+    background-color: rgb(170, 170, 170);
     height: 50px;
     display: flex;
     justify-content: space-evenly;
@@ -37,7 +37,7 @@ tr.pointer:not(:first-child):hover, tr.pointer:nth-child(even):not(:first-child)
     color: white;
 }
 tr:nth-child(even) {
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(220, 220, 220);
 }
 .pointer {
     cursor: pointer;

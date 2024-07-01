@@ -19,7 +19,7 @@
 
 {% block content %}
 
-<div style="padding:10px;">
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
     고객 정보
 </div>
 <table>
@@ -35,7 +35,7 @@
     </tr>        
 </table>
 <br>
-<div style="padding:10px;">
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
     주문 정보
 </div>
 <div style="overflow: auto; max-height: 35vh">
@@ -58,6 +58,7 @@
 <div id="div1" style="color: rgb(99, 96, 93); margin: 10px;">
     <div>
         <h2>자주 방문한 매장 Top5</h2>
+        <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
         <ol>
             {% for i in topStores %}
             <li> {{ i.name }} ({{ i.count }}번 방문) </li>
@@ -66,6 +67,7 @@
     </div>
     <div>
         <h2>자주 주문한 상품 Top5</h2>
+        <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
         <ol>
             {% for i in topItems %}
             <li> {{ i.item }}  ({{ i.count }}번 구매) </li>

@@ -197,10 +197,10 @@ def storeDetail(id):
     store = db.get_query(store_query, (id,))
     keys = store[0].keys()
 
-    revenue_query = "SELECT SUM(price) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY strftime('%m',orderAt) ORDER BY strftime('%m') DESC"
+    revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY perMonth ORDER BY perMonth DESC"
     revenue = db.get_query(revenue_query, (id,))
 
-    customer_query = "SELECT s.name, count(s.id) AS 'count' FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? GROUP BY s.Id ORDER BY count(s.Id) DESC LIMIT 5"
+    customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
     topCustomers = db.get_query(customer_query, (id,))
 
     return render_template('storeDetail.html', keys=keys, paging=paging, store=store[0], revenue=revenue, topCustomers=topCustomers)
