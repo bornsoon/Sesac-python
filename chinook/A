@@ -1,0 +1,13 @@
+1. SELECT FirstName||' '||LastName AS 'Full Name', CustomerId, Country from customers WHERE Country != 'USA';
+
+2. SELECT FirstName||' '||LastName AS 'Full Name', CustomerId, Country from customers WHERE Country = 'Brazil';
+
+3. SELECT c.FirstName||' '||c.LastName AS 'Full Name', i.InvoiceId, i.InvoiceDate, i.BillingCountry from invoices i INNER JOIN customers c ON i.CustomerId=c.CustomerId WHERE Country = 'Brazil';
+
+4. SELECT FirstName||' '||LastName AS 'Sales Employee' FROM employees WHERE Title LIKE 'Sales%';
+
+5. SELECT DISTINCT BillingCountry FROM invoices;
+
+6. SELECT i.*, e.FirstName||' '||e.LastName AS 'Sales Employee' FROM invoices i JOIN customers c ON i.CustomerId=c.CustomerId JOIN employees e ON c.SupportRepId=e.EmployeeId WHERE Title LIKE 'Sales%';
+
+7. SELECT i.Total AS 'Invoice Total', c.FirstName||' '||c.LastName AS 'Customer Name', c.Country, e.FirstName||' '||c.LastName AS 'Sale Agent Name' FROM invoices i JOIN customers c ON i.CustomerId = c.CustomerId JOIN employees e ON c.SupportRepId = e.EmployeeId;

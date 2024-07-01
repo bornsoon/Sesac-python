@@ -9,6 +9,13 @@
     <label for="name"> Name: </label>
     <input type="text" name="name" value="{{ name }}">
     <input type="submit" value="검색" class="pointer">
+    <lable for="per_page"> Type: </lable>
+    <select onchange="this.form.submit()" name = "arg" class="pointer">
+        <option value=""></option>
+        <option value="beverage" {%if arg=="beverage"%}selected{%endif%}>Beverage</option>
+        <option value="coffee" {%if arg=="coffee"%}selected{%endif%}>Coffee</option>
+        <option value="food" {%if arg=="food"%}selected{%endif%}>Food</option>
+    </select>
     <lable for="per_page">표시할 항목 수:</lable>
     <select onchange="this.form.submit()" name = "per_page" class="pointer">
         {% for i in range(1,41)%}

@@ -28,26 +28,26 @@ def user(page=1):
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
         name = request.form['name']
-        gender = request.form['gender']
+        arg = request.form['arg']
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
         name = request.args.get('name')
-        gender = request.args.get('gender')
+        arg = request.args.get('arg')
 
-    if gender and name:
+    if arg and name:
         query= "SELECT id, name, gender, age, birthdate FROM users WHERE name LIKE ?||'%' AND gender = ?"
-        params = (name.strip(), gender)
+        params = (name.strip(), arg)
     else:
-        if gender:
-            query= "SELECT id, name, gender, age, birthdate FROM users WHERE gender = ?"
+        if arg:
+            query = "SELECT id, name, gender, age, birthdate FROM users WHERE gender = ?"
             name = ""
-            params = (gender, )
+            params = (arg,)
         else:
             if not name:
                 name = ""
             query= "SELECT id, name, gender, age, birthdate FROM users WHERE name LIKE ?||'%'"
-            gender = ""
-            params = (name.strip(), )
+            arg = ""
+            params = (name.strip(),)
 
     user = db.get_query(query, params)
 
@@ -55,7 +55,7 @@ def user(page=1):
     values = user[firstIndex : firstIndex + per_page]
     paging = pagings(user, 'user', page, per_page)
 
-    return render_template('user.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, gender=gender)
+    return render_template('user.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, arg=arg)
 
 
 @app.route('/userDetail/<id>')
@@ -86,14 +86,21 @@ def order(page=1):
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
+        arg = request.form['arg']
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
+        arg = request.args.get('arg')
+    print(arg)
+
+    if arg:
+        query = "SELECT * FROM orders WHERE orderAt LIKE ?||'%' ORDER BY orderAt DESC"
+        order = db.get_query(query, (arg,))
 
     firstIndex = (page - 1) * per_page
     values = order[firstIndex : firstIndex + per_page]
     paging = pagings(order, 'order', page, per_page)
 
-    return render_template('order.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging)
+    return render_template('order.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, arg=arg)
 
 
 @app.route('/orderItem', methods=['GET', 'POST'])
@@ -118,29 +125,42 @@ def orderItem(page=1):
 @app.route('/item', methods=['GET', 'POST'])
 @app.route('/item/<int:page>', methods=['GET', 'POST'])
 def item(page=1):
-    query = "SELECT * FROM items ORDER BY type, price"
-    item = db.get_query(query)
-    keys = item[0].keys()
+    query = "SELECT * FROM items ORDER BY type, price LIMIT 1"
+    item1 = db.get_query(query)
+    keys = item1[0].keys()
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
         name = request.form['name']
+        arg = request.form['arg']
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
         name =request.args.get('name')
+        arg = request.args.get('arg')
 
-    if name:
-        query = "SELECT * FROM items WHERE item LIKE '%'||?||'%'"
-        param = (name.strip(),)
-        item = db.get_query(query, param)
+    if arg and name:
+        query = "SELECT * FROM items WHERE item LIKE '%'||?||'%' and type = ?"
+        params = (name.strip(), arg)
+        item = db.get_query(query, params)
     else:
-        name = ""
+        if arg:
+            query = "SELECT * FROM items WHERE type = ?"
+            name = ""
+            params = (arg,)
+        else:
+            if not name:
+                name =""
+            query = "SELECT * FROM items WHERE item LIKE '%'||?||'%'"
+            args = ""
+            params = (name.strip(),)
+        
+    item = db.get_query(query, params)
 
     firstIndex = (page - 1) * per_page
     values = item[firstIndex : firstIndex + per_page]
     paging = pagings(item, 'item', page, per_page)
 
-    return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name)
+    return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, arg=arg)
 
 
 @app.route('/store', methods=['GET', 'POST'])

@@ -118,7 +118,7 @@ class Generator:
 
         for _ in range(num):
             id = str(uuid.uuid4())
-            date = f'{random.randint(2014, 2024)}-{random.randint(1,12):02d}-{random.randint(1,28):02d}'
+            date = f'{random.randint(2022, 2023)}-{random.randint(1,12):02d}-{random.randint(1,28):02d}'
             time = f'{random.randint(0,23):02d}:{random.randint(0,59):02d}:{random.randint(1,59):02d}'
             storeId = random.choice(stores)['Id']
             userId = random.choice(users)['Id']

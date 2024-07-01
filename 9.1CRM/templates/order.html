@@ -6,6 +6,7 @@
 
 {% block bar %}
 <form action="/order" method="POST">
+    <input type="date" name="arg" value="{{ arg }}" min="2022-01-01" max="2023-12-28" onchange="this.form.submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <lable for="per_page">표시할 항목 수:</lable>
     <select onchange="this.form.submit()" name = "per_page" class="pointer">
         {% for i in range(1,41)%}
