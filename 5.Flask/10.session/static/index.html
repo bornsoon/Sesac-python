@@ -9,9 +9,9 @@
     <script>
         function login(event){
             console.log('버튼이 클릭됨 :');
-            event.preventDefaul();
+            event.preventDefault();
 
-            fetch('api/login', {
+            fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'appilcation/json'},
                 body: JSON.stringify({'id':'abcd'}, {'password':'12345'})
@@ -21,15 +21,14 @@
                         throw new Error('네트워크 오류');
                     }
                     return respose.json();
-                })
+            })
                 .then(function(data){
                     console.log(data);
                 })
                 .catch(function(error) {
                         console.error('위에 처리하다가 발생한 오류 잡기' + error);
                         document.getElementById('error').textContent = error.message;
-                    })
-        })
+                })
         }
     </script>
     <H1>로그인</H1>
