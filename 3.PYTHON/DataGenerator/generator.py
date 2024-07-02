@@ -118,7 +118,7 @@ class Generator:
 
         for _ in range(num):
             id = str(uuid.uuid4())
-            date = f'{random.randint(2023, 2023)}-{random.randint(1,12):02d}-{random.randint(1,28):02d}'
+            date = f'{random.randint(2022, 2023)}-{random.randint(1,12):02d}-{random.randint(1,28):02d}'
             time = f'{random.randint(0,23):02d}:{random.randint(0,59):02d}:{random.randint(1,59):02d}'
             storeId = random.choice(stores)['Id']
             userId = random.choice(users)['Id']
@@ -129,7 +129,6 @@ class Generator:
     
 
     def generate_orderItems(self):
-        num = int(input('생성하고 싶은 주문아이템 갯수: '))
         lst = [('Id', 'OrderId', 'ItemId')]
         
         try:
@@ -144,11 +143,39 @@ class Generator:
             print("파일이 존재하지 않습니다.")
             exit()
 
-        for _ in range(num):
-            id = str(uuid.uuid4())
-            orderId = random.choice(orders)['Id']
-            itemId = random.choice(items)['Id']
+        for order in orders:
+            time = random.randint(1,4)
+            for i in range(time):
+                id = str(uuid.uuid4())
+                orderId = order['Id']
+                itemId = random.choice(items)['Id']
 
-            lst.append((id, orderId, itemId))
+                lst.append((id, orderId, itemId))
 
         return lst
+
+
+    # def generate_orderItems(self):
+    #     num = int(input('생성하고 싶은 주문아이템 갯수: '))
+    #     lst = [('Id', 'OrderId', 'ItemId')]
+        
+    #     try:
+    #         orders = input('가져올 order 파일명: ')
+    #         orders = self.csv_operator.read_dict(orders)
+    #         items = input('가져올 item 파일명: ')
+    #         items = self.csv_operator.read_dict(items)
+    #     except IndexError:
+    #         print("파일 내용이 잘못되어있습니다.")
+    #         exit()
+    #     except FileNotFoundError:
+    #         print("파일이 존재하지 않습니다.")
+    #         exit()
+
+    #     for _ in range(num):
+    #         id = str(uuid.uuid4())
+    #         orderId = random.choice(orders)['Id']
+    #         itemId = random.choice(items)['Id']
+
+    #         lst.append((id, orderId, itemId))
+
+    #     return lst

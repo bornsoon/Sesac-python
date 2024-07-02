@@ -6,7 +6,7 @@
 
 {% block bar %}
 <form action="/order" method="POST">
-    <input type="date" name="arg" value="{{ arg }}" min="2023-01-01" max="2023-12-28" onchange="this.form.submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="date" name="arg" value="{{ arg }}" min="2022-01-01" max="2023-12-31" onchange="this.form.submit()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <lable for="per_page">표시할 항목 수:</lable>
     <select onchange="this.form.submit()" name = "per_page" class="pointer">
         {% for i in range(1,41)%}
@@ -18,10 +18,11 @@
 
 {% block table_tr %}
     {% for value in values %}
-    <tr class="pointer" onclick="location.href='/{{ value.Id }}'">
-        {% for v in value %}
-        <td> {{ v }} </td>
-        {% endfor %}
+    <tr>
+        <td class="pointer" onclick="location.href='/orderItemDetail/{{ value[0] }}'"> {{ value[0] }} </td>
+        <td> {{ value[1] }} </td>
+        <td class="pointer" onclick="location.href='/storeDetail/{{ value[2] }}'"> {{ value[2] }} </td>
+        <td class="pointer" onclick="location.href='/userDetail/{{ value[3] }}'"> {{ value[3] }} </td>
     </tr>
     {% endfor %}
 {% endblock %}

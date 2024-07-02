@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Detail [ {{paging.category}} ]{% endblock %}
+
+{% block style %}
+<style>
+    tr * {
+        padding: 10px;
+    }
+    #div1 {
+        display: flex;
+        justify-content: space-around;
+    }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    상품 주문 정보
+</div>
+<table>
+    <tr>
+        <th> Id </th>
+        <th> Order Id </th>
+        <th> Item Id </th>
+        <th> Item Name </th>
+        <th> Price </th>
+    </tr>
+    {% for i in values %}
+    <tr>
+        <td> {{ i.Id }} </td>
+        <td class="pointer" onclick="location.href='/orderDetail/{{ i.orderId }}'"> {{ i.orderId }} </td>
+        <td class="pointer" onclick="location.href='/itemDetail/{{ i.itemId }}'"> {{ i.itemId }} </td>
+        <td> {{ i.item }} </td>
+        <td> {{ i.price }} </td>
+    </tr>
+    {% endfor %}  
+    <tr style="background-color: white; font-weight: bold;">
+        <td colspan="4" style="text-align: center"> [  Total  ]</td>
+        <td> {{ sum }}원 </td>
+    </tr>
+</table>
+{% endblock %}

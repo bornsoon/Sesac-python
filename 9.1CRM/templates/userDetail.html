@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Main[User Detail]{% endblock %}
+{% block title %}Detail [ {{paging.category}} ]{% endblock %}
 
 {% block style %}
 <style>
@@ -47,7 +47,7 @@
         </tr>
         {% for o in orders %}
         <tr>
-            <td> {{ o.id }} </td>
+            <td class="pointer" onclick="location.href='/orderItemDetail/{{ o.id }}'"> {{ o.id }} </td>
             <td> {{ o.orderAt }} </td>
             <td class="pointer" onclick="location.href='/storeDetail/{{ o.storeId }}'"> {{ o.name }} </td>
         </tr>
@@ -61,7 +61,7 @@
         <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
         <ol>
             {% for i in topStores %}
-            <li> {{ i.name }} ({{ i.count }}번 방문) </li>
+            <li class="pointer" onclick="location.href='/storeDetail/{{ i.id }}'"> {{ i.name }} ({{ i.count }}번 방문) </li>
             {% endfor %}
         </ol>
     </div>
@@ -70,7 +70,7 @@
         <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
         <ol>
             {% for i in topItems %}
-            <li> {{ i.item }}  ({{ i.count }}번 구매) </li>
+            <li class="pointer" onclick="location.href='/itemDetail/{{ i.id }}'"> {{ i.item }}  ({{ i.count }}번 구매) </li>
             {% endfor %}
         </ol>
     </div>

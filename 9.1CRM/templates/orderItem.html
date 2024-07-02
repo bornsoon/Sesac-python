@@ -17,10 +17,10 @@
 
 {% block table_tr %}
     {% for value in values %}
-    <tr class="pointer" onclick="location.href='/{{ value.Id }}'">
-        {% for v in value %}
-        <td> {{ v }} </td>
-        {% endfor %}
+    <tr>
+        <td> {{ value[0] }} </td>
+        <td class="pointer" onclick="location.href='/orderDetail/{{ value[1] }}'"> {{ value[1] }} </td>
+        <td class="pointer" onclick="location.href='/itemDetail/{{ value[2] }}'"> {{ value[1]}} </td>
     </tr>
     {% endfor %}
 {% endblock %}

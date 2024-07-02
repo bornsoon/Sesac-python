@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Detail[ {{paging.category}} ]{% endblock %}
+
+{% block style %}
+<style>
+    tr * {
+        padding: 10px;
+    }
+    #div1 {
+        display: flex;
+        justify-content: space-around;
+    }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    상품 정보
+</div>
+<table>
+    <tr>
+        {% for key in keys %}
+        <th> {{ key }} </th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for i in item %}
+        <td> {{ i }} </td>
+        {% endfor %}
+    </tr>        
+</table>
+<br>
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    월간 매출액
+</div>
+<div style="overflow: auto; max-height: 35vh">
+    <table>
+        <tr>
+            <th> Month </th>
+            <th> Revenue </th>
+            <th> Item Count </th>
+        </tr>
+        {% for month in revenues %}
+        <tr>
+            {% for i in month %}
+            <td> {{ i }} </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}        
+    </table>
+</div>
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    월별 매출액 그래프
+</div>
+<div style="overflow: auto; max-height: 35vh">
+
+</div>
+{% endblock %}
