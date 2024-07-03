@@ -1,5 +1,4 @@
 from flask import Flask, session, request, json, jsonify, send_from_directory
-from flask import redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = 'this-is-another-my-secret-hahaha'

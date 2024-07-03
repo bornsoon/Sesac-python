@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
-    <link rel="stylesheet" href="search.css"/>
+    <title>Main[ User ]</title>
+    <link rel="stylesheet" href="./static/base.css"/>
+    <link rel="stylesheet" href="./static/search.css"/>
 </head>
 <body>
+    <nav>
+        <a href="/user">User</a>
+        <a href="/order">Order</a>
+        <a href="/orderItem">Order Item</a>
+        <a href="/item">Item</a>
+        <a href="/store">Store</a>
+    </nav>
+
 <form action="/user" method="POST">
     <label for="name"> Name: </label>
     <input type="text" name="name" value="{{ name }}">

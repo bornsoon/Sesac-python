@@ -22,4 +22,5 @@ def api_stores():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)  # 외부의 접속을 허용
+    app.run(debug=True)
+    # app.run(host="0.0.0.0", debug=True)  # 외부의 접속을 허용

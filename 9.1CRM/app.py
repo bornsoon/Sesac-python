@@ -61,9 +61,13 @@ def user(page=1):
 @app.route('/userDetail/<id>')
 def userDetail(id):
     paging = {'category': "user"}
+    query = "SELECT name, gender, age, birthdate, address FROM users LIMIT 1"
+    user1 = db.get_query(query)
+    keys = user1[0].keys()
     user_query = "SELECT name, gender, age, birthdate, address FROM users WHERE id = ?"
     user = db.get_query(user_query, (id,))
-    keys = user[0].keys()
+    if user:
+        user = user[0]
 
     order_query = "SELECT o.id, o.orderAt, s.name, o.storeId FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? ORDER BY o.orderAt DESC"
     orders = db.get_query(order_query, (id,))
@@ -74,15 +78,15 @@ def userDetail(id):
     item_query = "SELECT i.item, i.id, count(i.item) AS 'count' FROM orderItems oi INNER JOIN items i ON oi.itemId=i.Id INNER JOIN orders o ON oi.orderId=o.id WHERE o.userId = ? GROUP BY i.Id ORDER BY count(i.id) DESC LIMIT 5"
     topItems = db.get_query(item_query, (id,))
 
-    return render_template('userDetail.html', keys=keys, paging=paging, user=user[0], orders=orders, topStores=topStores, topItems=topItems)
+    return render_template('userDetail.html', keys=keys, paging=paging, user=user, orders=orders, topStores=topStores, topItems=topItems)
 
 
 @app.route('/order', methods=['GET', 'POST'])
 @app.route('/order/<int:page>', methods=['GET', 'POST'])
 def order(page=1):
-    query = "SELECT * FROM orders ORDER BY orderAt DESC"
-    order = db.get_query(query)
-    keys = order[0].keys()
+    query = "SELECT * FROM orders ORDER BY orderAt DESC LIMIT 1"
+    order1 = db.get_query(query)
+    keys = order1[0].keys()
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
@@ -90,11 +94,14 @@ def order(page=1):
     elif request.method == "GET":
         per_page = int(request.args.get('per_page', default=20))
         arg = request.args.get('arg')
-    print(arg)
 
     if arg:
-        query = "SELECT * FROM orders WHERE orderAt LIKE ?||'%' ORDER BY orderAt DESC"
+        print(arg)
+        query = "SELECT * FROM orders WHERE SUBSTR(orderAt,0,11) = ? ORDER BY orderAt DESC"
         order = db.get_query(query, (arg,))
+    else:
+        query = "SELECT * FROM orders ORDER BY orderAt DESC"
+        order = db.get_query(query)
 
     firstIndex = (page - 1) * per_page
     values = order[firstIndex : firstIndex + per_page]
@@ -106,19 +113,25 @@ def order(page=1):
 @app.route('/orderDetail/<id>')
 def orderDetail(id):
     paging = {'category': "order"}
-    query = "SELECT * FROM orders WHERE Id = ?"
-    value = db.get_query(query, (id,))
-    keys = value[0].keys()
+    query = "SELECT * FROM orders LIMIT 1"
+    order1 = db.get_query(query)
+    keys = order1[0].keys()
+    order_query = "SELECT * FROM orders WHERE Id = ?"
+    value = db.get_query(order_query, (id,))
+    if value:
+        value = value[0]
 
-    return render_template('orderDetail.html', paging=paging, value=value[0], keys=keys)
+    return render_template('orderDetail.html', paging=paging, value=value, keys=keys)
 
 
 @app.route('/orderItem', methods=['GET', 'POST'])
 @app.route('/orderItem/<int:page>', methods=['GET', 'POST'])
 def orderItem(page=1):
+    query = "SELECT * FROM orderItems LIMIT 1"
+    orderItem1 = db.get_query(query)
+    keys = orderItem1[0].keys()
     query = "SELECT * FROM orderItems"
     orderItem = db.get_query(query)
-    keys = orderItem[0].keys()
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
@@ -140,7 +153,8 @@ def orderItemDetail(id):
     
     sum_query = "SELECT CAST(SUM(i.price) AS INTEGER) FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ? GROUP BY oi.orderId"
     sum = db.get_query(sum_query, (id,))
-    sum = f"{sum[0][0]:,}"
+    if sum:
+        sum = f"{sum[0][0]:,}"
 
     # 인덱스 에러 >> 빈 값 확인하기(SELECT COUNT(*) FROM orders LEFT JOIN orderitems ON orderitems.orderId=orders.Id WHERE orderitems.Id IS NULL;)
 
@@ -164,52 +178,74 @@ def item(page=1):
         arg = request.args.get('arg')
 
     if arg and name:
-        query = "SELECT * FROM items WHERE item LIKE '%'||?||'%' and type = ?"
+        query = "SELECT Id, Item, Type, CAST(Price AS INTEGER) FROM items WHERE item LIKE '%'||?||'%' and type = ?"
         params = (name.strip(), arg)
         item = db.get_query(query, params)
     else:
         if arg:
-            query = "SELECT * FROM items WHERE type = ?"
+            query = "SELECT Id, Item, Type, CAST(Price AS INTEGER) FROM items WHERE type = ?"
             name = ""
             params = (arg,)
         else:
             if not name:
                 name =""
-            query = "SELECT * FROM items WHERE item LIKE '%'||?||'%'"
-            args = ""
+            query = "SELECT Id, Item, Type, CAST(Price AS INTEGER) FROM items WHERE item LIKE '%'||?||'%'"
+            arg = ""
             params = (name.strip(),)
         
     item = db.get_query(query, params)
+    items = []
+    if item:
+        for i in item:
+            items.append([i[0], i[1], i[2], f"{i[3]:,}원"])
 
     firstIndex = (page - 1) * per_page
-    values = item[firstIndex : firstIndex + per_page]
+    values = items[firstIndex : firstIndex + per_page]
     paging = pagings(item, 'item', page, per_page)
 
     return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, arg=arg)
 
 
 @app.route('/itemDetail/<id>')
-def itemDetail(id):
+@app.route('/itemDetail/<id>/<date>')
+def itemDetail(id,date=None):
     paging = {'category': "item"}
-    query = "SELECT * FROM items WHERE id = ?"
-    item = db.get_query(query, (id,))
-    keys = item[0].keys()
+    query = "SELECT * FROM items LIMIT 1"
+    item1 = db.get_query(query)
+    keys = item1[0].keys()
+    query = "SELECT Id, Item, Type, CAST(Price AS INTEGER) FROM items WHERE id = ?"
+    item2 = db.get_query(query, (id,))
+    if item2:
+        item = [item2[0][0], item2[0][1], item2[0][2], f"{item2[0][3]:,}원"]
+    else:
+        item = []
 
-    revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE i.id= ? GROUP BY perMonth ORDER BY perMonth DESC"
-    revenue = db.get_query(revenue_query, (id,))
-    revenues = []
-    for i in revenue:
-        revenues.append([i[0], f"{i[1]:,}원", i[2]])
+    revenue_date = []
+    revenue_month = []
+    if date:
+        revenue_query = "SELECT strftime('%m-%d', OrderAt) AS perDate, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE i.id= ? AND strftime('%Y-%m', OrderAt) = ?  GROUP BY perDate ORDER BY perDate DESC"
+        revenue = db.get_query(revenue_query, (id, date,))
+        if revenue:
+            for i in revenue:
+                revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0][:2]+'월'+i[0][3:]+'일'])
+    else:
+        revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE i.id= ? GROUP BY perMonth ORDER BY perMonth DESC"
+        revenue = db.get_query(revenue_query, (id,))
+        if revenue:
+            for i in revenue:
+                revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0][:4]+'년'+i[0][6:]+'월'])
 
-    return render_template('itemDetail.html', keys=keys, paging=paging, item=item[0], revenues=revenues)
+    return render_template('itemDetail.html', keys=keys, paging=paging, item=item, revenue_month=revenue_month, revenue_date = revenue_date)
 
 
 @app.route('/store', methods=['GET', 'POST'])
 @app.route('/store/<int:page>', methods=['GET', 'POST'])
 def store(page=1):
+    query = "SELECT * FROM stores LIMIT 1"
+    store1 = db.get_query(query)
+    keys = store1[0].keys()
     query = "SELECT * FROM stores"
     store = db.get_query(query)
-    keys = store[0].keys()
     
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
@@ -232,22 +268,41 @@ def store(page=1):
 
 
 @app.route('/storeDetail/<id>')
-def storeDetail(id):
+@app.route('/storeDetail/<id>/<date>')
+def storeDetail(id, date=None):
     paging = {'category': "store"}
+    query = "SELECT * FROM stores LIMIT 1"
+    store1 = db.get_query(query)
+    keys = store1[0].keys()
     query = "SELECT * FROM stores WHERE id = ?"
     store = db.get_query(query, (id,))
-    keys = store[0].keys()
+    if store:
+        store = store[0]
 
-    revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY perMonth ORDER BY perMonth DESC"
-    revenue = db.get_query(revenue_query, (id,))
-    revenues = []
-    for i in revenue:
-        revenues.append([i[0], f"{i[1]:,}원", i[2]])
+    revenue_date = []
+    revenue_month = []
+    topCustomers = []
+    if date:
+        revenue_query = "SELECT strftime('%m-%d', OrderAt) AS perDate, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? AND strftime('%Y-%m', OrderAt) = ?  GROUP BY perDate ORDER BY perDate DESC"
+        revenue = db.get_query(revenue_query, (id, date,))
+        if revenue:
+            for i in revenue:
+                revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0][:2]+'월'+i[0][3:]+'일'])
+                
+        customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
+        topCustomers = db.get_query(customer_query, (id,))
+    else:
+        revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY perMonth ORDER BY perMonth DESC"
+        revenue = db.get_query(revenue_query, (id,))
+        if revenue:
+            for i in revenue:
+                revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0][:4]+'년'+i[0][6:]+'월'])
 
-    customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
-    topCustomers = db.get_query(customer_query, (id,))
+        customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
+        topCustomers = db.get_query(customer_query, (id,))
 
-    return render_template('storeDetail.html', keys=keys, paging=paging, store=store[0], revenues=revenues, topCustomers=topCustomers)
+    return render_template('storeDetail.html', keys=keys, paging=paging, store=store, revenue_month=revenue_month, revenue_date = revenue_date, topCustomers=topCustomers)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

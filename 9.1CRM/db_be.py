@@ -17,7 +17,6 @@ def get_query(query, params=None):
         cur.execute(query)
     result = cur.fetchall()
     conn.close()
-    
     return result
 
 def exectue_query(query, params):
@@ -26,3 +25,10 @@ def exectue_query(query, params):
     cur.execute(query, params)
     conn.commit()
     conn.close()
+
+def get_all(category):
+    value = get_query("SELECT * FROM ?", (category,))
+    values = [dict(row) for row in value]
+
+    return values
+
