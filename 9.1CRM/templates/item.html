@@ -6,22 +6,28 @@
 
 {% block bar %}
 <form action="/item" method="POST">
-    <label for="name"> Name: </label>
-    <input type="text" name="name" value="{{ name }}">
-    <lable for="per_page"> Type: </lable>
-    <select name = "arg" class="pointer">
-        <option value=""></option>
-        <option value="beverage" {%if arg=="beverage"%}selected{%endif%}>Beverage</option>
-        <option value="coffee" {%if arg=="coffee"%}selected{%endif%}>Coffee</option>
-        <option value="food" {%if arg=="food"%}selected{%endif%}>Food</option>
-    </select>
-    <input type="submit" value="검색" class="pointer">
-    <lable for="per_page" style="float: right">표시할 항목 수:</lable>
-    <select onchange="this.form.submit()" name = "per_page" class="pointer">
-        {% for i in range(1,41)%}
-        <option value="{{ i }}" {% if per_page == i %} selected {% endif %}>{{ i }}</option>
-        {% endfor %}
-    </select>
+    <div class="wrap">
+        <div class="form_box">
+            <label for="name"> Name: </label>
+            <input type="text" name="name" value="{{ name }}">
+            <lable for="per_page"> Type: </lable>
+            <select name = "arg" class="pointer">
+                <option value=""></option>
+                <option value="beverage" {%if arg=="beverage"%}selected{%endif%}>Beverage</option>
+                <option value="coffee" {%if arg=="coffee"%}selected{%endif%}>Coffee</option>
+                <option value="food" {%if arg=="food"%}selected{%endif%}>Food</option>
+            </select>
+            <input type="submit" value="검색" class="pointer">
+        </div>
+        <div class="select_box">
+            <lable for="per_page" >표시할 항목 수:</lable>
+            <select onchange="this.form.submit()" name = "per_page" class="pointer">
+                {% for i in range(1,41)%}
+                <option value="{{ i }}" {% if per_page == i %} selected {% endif %}>{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
 </form>
 {% endblock %}
 

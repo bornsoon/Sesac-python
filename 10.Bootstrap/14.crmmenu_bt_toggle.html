@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic HTML Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light" id="nav_bar">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">SESAC CRM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+            
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="#">User</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Order Item</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Item</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Store</a></li>
+            </ul>
+            <button class="btn btn-outline-secondary" id="theme-toggle">테마변경</button>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+    <table class="table table-striped" id="table">
+        <thead>
+            <tr>
+                <th>Column 1</th>
+                <th>Column 2</th>
+                <th>Column 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Data 1</td>
+                <td>Data 2</td>
+                <td>Data 3</td>
+            </tr>
+            <tr>
+                <td>Data 4</td>
+                <td>Data 5</td>
+                <td>Data 6</td>
+            </tr>
+            <tr>
+                <td>Data 7</td>
+                <td>Data 8</td>
+                <td>Data 9</td>
+            </tr>
+            <tr>
+                <td>Data 10</td>
+                <td>Data 11</td>
+                <td>Data 12</td>
+            </tr>
+            <tr>
+                <td>Data 13</td>
+                <td>Data 14</td>
+                <td>Data 15</td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
+<div class="pagination" id="page">
+    <ul class="pagination justify-content-center">
+       <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+       <li class="page-item"><a class="page-link" href="#">1</a></li>
+       <li class="page-item"><a class="page-link" href="#">2</a></li>
+       <li class="page-item"><a class="page-link" href="#">3</a></li>
+       <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+    </ul>
+</div>
+<script>
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+        const isDarkMode = document.body.classList.contains('bg-dark');
+
+        console.log('다크모드',isDarkMode)
+        // Body Class 를 찾아서.. 다크 모드 옵션을 추가한다
+        document.body.classList.toggle('bg-dark', !isDarkMode);
+        document.body.classList.toggle('text-light', !isDarkMode);
+        document.body.classList.toggle('bg-light', isDarkMode);
+        document.body.classList.toggle('text-dark', isDarkMode);
+
+        const navbar = document.querySelector('.navbar');
+        navbar.classList.toggle('navbar-dark', !isDarkMode);
+        navbar.classList.toggle('bg-dark', !isDarkMode);
+        navbar.classList.toggle('navbar-light', isDarkMode);
+        navbar.classList.toggle('bg-light', isDarkMode);
+
+        const table = document.querySelector('.table');
+        table.classList.toggle('table-dark')
+
+        document.querySelectorAll('.page-link').forEach(link => {
+            link.classList.toggle('bg-dark', !isDarkMode);
+            link.classList.toggle('text-light', !isDarkMode);
+        })
+
+        // 버튼 내용도 업데이트...
+        themeToggleBtn.textContent = isDarkMode ? ' 다크모드로전환' : '라이트로전환'
+    })
+</script>
+</body>
+</html>
