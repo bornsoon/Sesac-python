@@ -1,0 +1,47 @@
+a {
+    text-decoration: none;
+    font-size: 18px;
+}
+nav {
+    background-color: rgb(170, 170, 170);
+    height: 50px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+nav a {
+    color: rgb(240, 240, 240);
+    text-decoration: none;
+    font-size: 18px;
+}
+nav > a:hover, #bold {
+    color: white;
+    font: bold 20px sans-serif;
+    text-decoration: none;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table * {
+    padding : 15px;
+    border-bottom: 1px solid rgb(140, 140, 140);
+    border-top: 1px solid rgb(140, 140, 140);
+}
+th {
+    text-align: left;
+    border-bottom: 5px #afafaf;
+}
+tr.pointer:not(:first-child):hover, tr.pointer:nth-child(even):not(:first-child):hover, td.pointer:hover, td.pointer:nth-child(even):hover {
+    background-color: rgb(200, 200, 200);
+    color: white;
+}
+tr:nth-child(even) {
+    background-color: rgb(220, 220, 220);
+}
+li.pointer:hover {
+    font-size: larger;
+}
+.pointer {
+    cursor: pointer;
+}

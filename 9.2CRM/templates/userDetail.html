@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Detail [ {{paging.category}} ]{% endblock %}
+
+{% block style %}
+<style>
+    tr * {
+        padding: 10px;
+    }
+    #div1 {
+        display: flex;
+        justify-content: space-around;
+    }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    고객 정보
+</div>
+<table>
+    <tr>
+        {% for key in keys %}
+        <th> {{ key }} </th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for u in user %}
+        <td> {{ u }} </td>
+        {% endfor %}
+    </tr>        
+</table>
+<br>
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    주문 정보
+</div>
+<div style="overflow: auto; max-height: 30vh">
+    <table>
+        <tr>
+            <th> Order Id </th>
+            <th> Purchased Date </th>
+            <th> Purchased Store </th>
+        </tr>
+        {% for o in orders %}
+        <tr>
+            <td class="pointer" onclick="location.href='/orderItemDetail/{{ o.id }}'"> {{ o.id }} </td>
+            <td> {{ o.orderAt }} </td>
+            <td class="pointer" onclick="location.href='/storeDetail/{{ o.storeId }}'"> {{ o.name }} </td>
+        </tr>
+        {% endfor %}        
+    </table>
+</div>
+
+<div id="div1" style="color: rgb(99, 96, 93); margin: 10px;">
+    <div>
+        <h2>자주 방문한 매장 Top5</h2>
+        <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
+        <ol>
+            {% for i in topStores %}
+            <li class="pointer" onclick="location.href='/storeDetail/{{ i.id }}'"> {{ i.name }} ({{ i.count }}번 방문) </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div>
+        <h2>자주 주문한 상품 Top5</h2>
+        <hr style="border-bottom: solid 1px rgb(130, 130, 130);">
+        <ol>
+            {% for i in topItems %}
+            <li class="pointer" onclick="location.href='/itemDetail/{{ i.id }}'"> {{ i.item }}  ({{ i.count }}번 구매) </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}

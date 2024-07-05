@@ -1,16 +1,8 @@
 from flask import Flask, render_template, redirect, request, url_for
 import db as db
-import math
+from app_paging import pagings
 
 app = Flask(__name__)
-
-
-def pagings(category, str, page, per_page):
-    total_page = math.ceil(len(category) / per_page)
-    prePage = True if page < 8 else False
-    nextPage = True if page < (total_page - 6) else False
-
-    return {"category": str, "total": total_page, "pre": prePage, "next": nextPage }
 
 
 @app.route('/')
@@ -55,7 +47,14 @@ def user(page=1):
     values = user[firstIndex : firstIndex + per_page]
     paging = pagings(user, 'user', page, per_page)
 
-    return render_template('user.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, arg=arg)
+    return render_template('user.html',       ## diff 확인이 쉬움 , 하지만 줄이 너무 길어지면 적절한 선에서 판단
+                            keys=keys,
+                            values=values,
+                            page=page,
+                            per_page=per_page,
+                            paging=paging,
+                            name=name,
+                            arg=arg )
 
 
 @app.route('/userDetail/<id>')
@@ -67,7 +66,7 @@ def userDetail(id):
     user_query = "SELECT name, gender, age, birthdate, address FROM users WHERE id = ?"
     user = db.get_query(user_query, (id,))
     if user:
-        user = user[0]     ## fetchone
+        user = user[0]
 
     order_query = "SELECT o.id, o.orderAt, s.name, o.storeId FROM orders o INNER JOIN stores s ON o.storeId=s.Id WHERE o.userId = ? ORDER BY o.orderAt DESC"
     orders = db.get_query(order_query, (id,))
@@ -78,10 +77,17 @@ def userDetail(id):
     item_query = "SELECT i.item, i.id, count(i.item) AS 'count' FROM orderItems oi INNER JOIN items i ON oi.itemId=i.Id INNER JOIN orders o ON oi.orderId=o.id WHERE o.userId = ? GROUP BY i.Id ORDER BY count(i.id) DESC LIMIT 5"
     topItems = db.get_query(item_query, (id,))
 
-    return render_template('userDetail.html', keys=keys, paging=paging, user=user, orders=orders, topStores=topStores, topItems=topItems)
+    return render_template('userDetail.html',
+                            keys=keys,
+                            paging=paging,
+                            user=user,
+                            orders=orders,
+                            topStores=topStores,
+                            topItems=topItems )
 
 
-@app.route('/order', methods=['GET', 'POST'])
+@app.route('/order',
+methods=['GET', 'POST'])
 @app.route('/order/<int:page>', methods=['GET', 'POST'])
 def order(page=1):
     query = "SELECT * FROM orders ORDER BY orderAt DESC LIMIT 1"
@@ -96,6 +102,7 @@ def order(page=1):
         arg = request.args.get('arg')
 
     if arg:
+        print(arg)
         query = "SELECT * FROM orders WHERE SUBSTR(orderAt,0,11) = ? ORDER BY orderAt DESC"
         order = db.get_query(query, (arg,))
     else:
@@ -106,7 +113,13 @@ def order(page=1):
     values = order[firstIndex : firstIndex + per_page]
     paging = pagings(order, 'order', page, per_page)
 
-    return render_template('order.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, arg=arg)
+    return render_template('order.html',
+                            keys=keys,
+                            values=values,
+                            page=page,
+                            per_page=per_page,
+                            paging=paging,
+                            arg=arg )
 
 
 @app.route('/orderDetail/<id>')
@@ -120,7 +133,10 @@ def orderDetail(id):
     if value:
         value = value[0]
 
-    return render_template('orderDetail.html', paging=paging, value=value, keys=keys)
+    return render_template('orderDetail.html',
+                           paging=paging,
+                           value=value,
+                           keys=keys)
 
 
 @app.route('/orderItem', methods=['GET', 'POST'])
@@ -141,18 +157,19 @@ def orderItem(page=1):
     values = orderItem[firstIndex : firstIndex + per_page]
     paging = pagings(orderItem, 'orderItem', page, per_page)
 
-    return render_template('orderItem.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging)
+    return render_template('orderItem.html',
+                            keys=keys,
+                            values=values,
+                            page=page,
+                            per_page=per_page,
+                            paging=paging )
 
 
 @app.route('/orderItemDetail/<id>')
 def orderItemDetail(id):
     paging = {'category': "orderItem"}
-    query = "SELECT oi.*, i.item, CAST(i.price AS INTEGER) FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ?"
-    orderItem = db.get_query(query, (id,))
-    orderItems = []
-    if orderItem:
-        for i in orderItem:
-            orderItems.append([i[0], i[1], i[2], i[3], f"{i[4]:,}원"])
+    query = "SELECT oi.*, i.item, i.price FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ?"
+    orderItems = db.get_query(query, (id,))
     
     sum_query = "SELECT CAST(SUM(i.price) AS INTEGER) FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ? GROUP BY oi.orderId"
     sum = db.get_query(sum_query, (id,))
@@ -161,7 +178,10 @@ def orderItemDetail(id):
 
     # 인덱스 에러 >> 빈 값 확인하기(SELECT COUNT(*) FROM orders LEFT JOIN orderitems ON orderitems.orderId=orders.Id WHERE orderitems.Id IS NULL;)
 
-    return render_template('orderItemDetail.html', paging=paging, values=orderItems, sum=sum)
+    return render_template('orderItemDetail.html',
+                            paging=paging,
+                            values=orderItems,
+                            sum=sum )
 
 
 @app.route('/item', methods=['GET', 'POST'])
@@ -206,7 +226,14 @@ def item(page=1):
     values = items[firstIndex : firstIndex + per_page]
     paging = pagings(item, 'item', page, per_page)
 
-    return render_template('item.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name, arg=arg)
+    return render_template('item.html',
+                            keys=keys,
+                            values=values,
+                            page=page,
+                            per_page=per_page,
+                            paging=paging,
+                            name=name,
+                            arg=arg )
 
 
 @app.route('/itemDetail/<id>')
@@ -238,7 +265,13 @@ def itemDetail(id,date=None):
             for i in revenue:
                 revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0][:4]+'년'+i[0][6:]+'월'])
 
-    return render_template('itemDetail.html', keys=keys, paging=paging, item=item, revenue_month=revenue_month, revenue_date = revenue_date)
+    return render_template(
+        'itemDetail.html',
+        keys=keys,
+        paging=paging,
+        item=item,
+        revenue_month=revenue_month,
+        revenue_date = revenue_date )
 
 
 @app.route('/store', methods=['GET', 'POST'])
@@ -267,7 +300,13 @@ def store(page=1):
     values = store[firstIndex : firstIndex + per_page]
     paging = pagings(store, 'store', page, per_page)
 
-    return render_template('store.html', keys=keys, values=values, page=page, per_page=per_page, paging=paging, name=name)
+    return render_template('store.html',
+                            keys=keys,
+                            values=values,
+                            page=page,
+                            per_page=per_page,
+                            paging=paging,
+                            name=name )
 
 
 @app.route('/storeDetail/<id>')
@@ -285,8 +324,7 @@ def storeDetail(id, date=None):
     revenue_date = []
     revenue_month = []
     topCustomers = []
- #try
-    if date:      ## build_query
+    if date:
         revenue_query = "SELECT strftime('%m-%d', OrderAt) AS perDate, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? AND strftime('%Y-%m', OrderAt) = ?  GROUP BY perDate ORDER BY perDate DESC"
         revenue = db.get_query(revenue_query, (id, date,))
         if revenue:
@@ -305,9 +343,15 @@ def storeDetail(id, date=None):
         customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
         topCustomers = db.get_query(customer_query, (id,))
 
-    return render_template('storeDetail.html', keys=keys, paging=paging, store=store, revenue_month=revenue_month, revenue_date = revenue_date, topCustomers=topCustomers)
+    return render_template('storeDetail.html',
+                            keys=keys,
+                            paging=paging,
+                            store=store,
+                            revenue_month=revenue_month,
+                            revenue_date = revenue_date,
+                            topCustomers=topCustomers )
 
 if __name__ == '__main__':
     app.debug=True
-    app.run()
+    app.run
     # app.run(host="0.0.0.0", debug=True)

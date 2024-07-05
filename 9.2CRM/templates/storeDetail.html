@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Detail[ {{paging.category}} ]{% endblock %}
+
+{% block style %}
+<style>
+    tr * {
+        padding: 10px;
+    }
+    #div1 {
+        display: flex;
+        justify-content: space-around;
+    }
+    li {
+        text-align: left;
+        margin: 13px;
+    }
+    
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    매장 정보
+</div>
+<table>
+    <tr>
+        {% for key in keys %}
+        <th> {{ key }} </th>
+        {% endfor %}
+    </tr>
+    <tr>
+        {% for i in store %}
+        <td> {{ i }} </td>
+        {% endfor %}
+    </tr>        
+</table>
+<br>
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    {% if revenue_month %} 월간 매출액 {% endif %}
+    {% if revenue_date %} 일간 매출액 {% endif %}
+</div>
+<div style="overflow: auto; max-height: 30vh">
+    <table>
+        {% if revenue_month %}
+        <tr>
+            <th> Month </th>
+            <th> Revenue </th>
+            <th> Count </th>
+        </tr>
+            {% for i in revenue_month %}
+            <tr class="pointer" onclick="location.href='./{{ store[0] }}/{{ i[0] }}'">
+                <td> {{ i[3] }} </td>
+                <td> {{ i[1] }} </td>
+                <td> {{ i[2] }} </td>
+            </tr>
+            {% endfor %}
+        {% endif %}
+
+        {% if revenue_date %}
+        <tr>
+            <th> Date </th>
+            <th> Revenue </th>
+            <th> Count </th>
+        </tr>
+            {% for i in revenue_date %}
+            <tr>
+                <td> {{ i[3] }} </td>
+                <td> {{ i[1] }} </td>
+                <td> {{ i[2] }} </td>
+            </tr>
+            {% endfor %}
+        {% endif %}      
+    </table>
+</div>
+
+<div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
+    단골 고객
+</div>
+<div style="overflow: auto; max-height: 30vh">
+    <table>
+        <tr>
+            <th> User Id </th>
+            <th> Name </th>
+            <th> Frequency </th>
+        </tr>
+        {% for i in topCustomers %}
+        <tr class="pointer" onclick="location.href='/userDetail/{{ i.userId }}'">
+            <td> {{ i['userId'] }} </td>
+            <td> {{ i['Name'] }} </td>
+            <td> {{ i['Visit'] }} </td>
+        </tr>
+        {% endfor %}        
+    </table>
+</div>
+{% endblock %}

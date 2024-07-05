@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Main[ User ]</title>
-    <link rel="stylesheet" href="./static/base.css"/>      <!-- html/xss/js/img  정적 리소스(공개용)-->
-    <link rel="stylesheet" href="./static/search.css"/>
-</head>
-<body>
-    <nav>
-        <a href="/user">User</a>
-        <a href="/order">Order</a>
-        <a href="/orderItem">Order Item</a>
-        <a href="/item">Item</a>
-        <a href="/store">Store</a>
-    </nav>
+{% extends "table.html" %}
 
+{% block style1 %}
+<link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}"/>
+{% endblock %}
+
+{% block bar %}
 <form action="/user" method="POST">
     <label for="name"> Name: </label>
     <input type="text" name="name" value="{{ name }}">
@@ -40,9 +31,5 @@
         <td> {{ v }} </td>
         {% endfor %}
     </tr>
-</body>
-
-<script>
-    
-</script>
-</html>
+    {% endfor %}
+{% endblock %}

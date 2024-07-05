@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Table</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .table-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background-color: #2a3f54;
+            color: #ffffff;
+        }
+        thead th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 16px;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #dddddd;
+        }
+        .pagination {
+            padding: 15px;
+            text-align: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .pagination a:hover {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>OrderId</th>
+                    <th>ItemId</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>5c9c35cf-0b86-4b34-90c9-087ab1a4ac9f</td>
+                    <td>f72e5c61-3e61-4d8d-b48b-60363d82d6bc</td>
+                    <td>4bbd5a3d-2adf-464b-9569-af34943f7ae7</td>
+                </tr>
+                <tr>
+                    <td>dec8ab92-1833-4db6-9854-5ae2c0f6d89b</td>
+                    <td>6c50cb79-2c5b-40b3-a862-f0ba03f2b5f6</td>
+                    <td>cc69d18a-e963-4fb3-b0ee-6a7951888536</td>
+                </tr>
+                <tr>
+                    <td>e48f050b-40c6-4b4d-9cda-c717e467fc38</td>
+                    <td>af682080-2e5c-4b95-a71d-3dd37e555733</td>
+                    <td>6620de0e-704d-4ed9-856b-415969632326</td>
+                </tr>
+                <tr>
+                    <td>a64c48fc-19ab-4d18-8e4e-7c41b012fe0d</td>
+                    <td>220a1645-b180-423f-bc99-29a21b79ac91</td>
+                    <td>b1b8ed76-587e-45ca-ae20-5293afb3be72</td>
+                </tr>
+                <tr>
+                    <td>e05ed26f-2ea3-4968-9e23-e9e05df29cae</td>
+                    <td>5e42b06d-d310-476a-9df3-5ac79df45147</td>
+                    <td>979d33a2-c7f4-4d2c-ae18-900320184925</td>
+                </tr>
+                <tr>
+                    <td>88320064-5d6f-43b0-af53-50a758429bdb</td>
+                    <td>1d8c31dc-7c61-4e46-acc4-36f6f04b422f</td>
+                    <td>6620de0e-704d-4ed9-856b-415969632326</td>
+                </tr>
+                <tr>
+                    <td>471cb9c3-87eb-4a0e-a2e2-fae1bda5c5a5</td>
+                    <td>e82f2e8d-6141-48b3-9a18-4514d42359ec</td>
+                    <td>44262dd7-4ed1-469e-aa9d-615f6e678049</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <a href="#">&laquo;</a>
+            <a href="#">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">…</a>
+            <a href="#">1498</a>
+            <a href="#">1499</a>
+            <a href="#">1500</a>
+            <a href="#">&raquo;</a>
+        </div>
+    </div>
+</body>
+</html>

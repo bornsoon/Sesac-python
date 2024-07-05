@@ -28,7 +28,3 @@ input, select {
     border: solid 1px rgb(80, 80, 80);
     border-radius: 10px;
 }
-#r {
-    clear: both;
-    float: right;
-}

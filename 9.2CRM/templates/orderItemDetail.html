@@ -32,11 +32,11 @@
     </tr>
     {% for i in values %}
     <tr>
-        <td> {{ i[0] }} </td>
-        <td class="pointer" onclick="location.href='/orderDetail/{{ i[1] }}'"> {{ i[1] }} </td>
-        <td class="pointer" onclick="location.href='/itemDetail/{{ i[2] }}'"> {{ i[2] }} </td>
-        <td> {{ i[3] }} </td>
-        <td> {{ i[4] }} </td>
+        <td> {{ i.Id }} </td>
+        <td class="pointer" onclick="location.href='/orderDetail/{{ i.orderId }}'"> {{ i.orderId }} </td>
+        <td class="pointer" onclick="location.href='/itemDetail/{{ i.itemId }}'"> {{ i.itemId }} </td>
+        <td> {{ i.item }} </td>
+        <td> {{ i.price }} </td>
     </tr>
     {% endfor %}  
     <tr style="background-color: white; font-weight: bold;">

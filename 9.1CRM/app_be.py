@@ -2,8 +2,8 @@ from flask import Flask, jsonify, request
 from db_be import get_all
 import math
 
-app = Flask(__name__)
-
+app = Flask(__name__)   ## Flask(__name__, static folder="hello")로 static폴더명 변경하기
+                        ## /static  <== 정적 리소스            /templete <== 템플릿 엔진
 
 def pagings(category, str, page, per_page):
     total_page = math.ceil(len(category) / per_page)
@@ -15,7 +15,7 @@ def pagings(category, str, page, per_page):
 
 @app.route('/')
 def home():
-    return app.send_static_file('user.html')
+    return app.send_static_file('user.html')   # (루트 지정하지 않더라도) 루트에서는 기본으로 index.html으로 줌
 
 
 @app.route('/user', methods=['GET', 'POST'])

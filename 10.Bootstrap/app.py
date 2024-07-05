@@ -147,12 +147,12 @@ def orderItem(page=1):
 @app.route('/orderItemDetail/<id>')
 def orderItemDetail(id):
     paging = {'category': "orderItem"}
-    query = "SELECT oi.*, i.item, CAST(i.price AS INTEGER) FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ?"
+    query = "SELECT oi.*, i.item, i.price FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ?"
     orderItem = db.get_query(query, (id,))
     orderItems = []
-    if orderItem:
-        for i in orderItem:
-            orderItems.append([i[0], i[1], i[2], i[3], f"{i[4]:,}원"])
+    print(orderItem[0][0], orderItem[0][1], orderItem[0][2], orderItem[0][3], orderItem[0][4])
+    # if orderItem:
+    #     orderItems = [orderItem[0][0], orderItem[0][1], orderItem[0][2], orderItem[0][3], f"{orderItem[0][4]:,}원"]
     
     sum_query = "SELECT CAST(SUM(i.price) AS INTEGER) FROM orderitems oi JOIN items i ON oi.ItemId=i.Id WHERE oi.orderId = ? GROUP BY oi.orderId"
     sum = db.get_query(sum_query, (id,))
