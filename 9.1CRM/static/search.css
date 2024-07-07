@@ -10,7 +10,7 @@
     width: 100%;
 }
 .input_box {
-    width: clac(100% - );
+    width: clac(100% - 500px);
 }
 form * {   
     color: rgb(80, 80, 80);
