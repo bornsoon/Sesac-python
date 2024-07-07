@@ -16,6 +16,22 @@ def get_query(query, params=None):
     else:
         cur.execute(query)
     result = cur.fetchall()
+    result = [dict(row) for row in result]
+    
+    conn.close()
+    return result
+
+
+def get_query_one(query, params=None):
+    conn = get_db_connection()
+    cur = conn.cursor()
+    if params:
+        cur.execute(query, params)
+    else:
+        cur.execute(query)
+    result = cur.fetchone()
+    result = dict(result)
+    
     conn.close()
     return result
 

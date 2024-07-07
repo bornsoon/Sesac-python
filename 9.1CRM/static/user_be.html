@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Main[ User ]</title>
+    <link rel="stylesheet" href="./static/base.css"/>      <!-- html/xss/js/img  정적 리소스(공개용)-->
+    <link rel="stylesheet" href="./static/search.css"/>
+</head>
+<body>
+    <nav>
+        <a href="/user">User</a>
+        <a href="/order">Order</a>
+        <a href="/orderItem">Order Item</a>
+        <a href="/item">Item</a>
+        <a href="/store">Store</a>
+    </nav>
+
+    <div class="wrap">
+        <form action="/user" method="POST">
+            <div class="form_container">
+                <div class="input_box">
+                    <label for="name"> Name: </label>
+                    <input type="text" name="name" value="">
+                    <label for="gender"> Gender: </label>
+                    <select name="arg" class="pointer" value="">
+                        <option value=""></option>
+                        <option value="Male" {%if arg=="Male"%}selected{%endif%}>Male</option>
+                        <option value="Female" {%if arg=="Female"%}selected{%endif%}>Female</option>
+                    </select>
+                    <input type="submit" value="검색" class="pointer">
+                </div>
+                <div class="select_box">
+                    <lable for="per_page">표시할 항목 수:</lable>
+                    <select onchange="this.form.submit()" name="per_page" class="pointer">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20" selected>20</option>
+                        <option value="25">25</option>
+                        <option value="30">30</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+</form>
+
+    <table id="user_table">
+        <tr>
+            <th> Id </th>
+            <th> Name </th>
+            <th> Gender </th>
+            <th> Age </th>
+            <th> Birthdate </th>
+        </tr>
+    </table>
+    
+    <script>
+        function fetchUsers() {
+            fetch('/user')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('table')
+                data.forEach(user => {
+                    const row = table.insertRow();
+                    row.insertCell(0).textContent = user.Id;
+                    row.insertCell(1).textContent = user.Name;
+                    row.insertCell(2).textContent = user.Gender;
+                    row.insertCell(3).textContent = user.Age;
+                    row.insertCell(4).textContent = user.Birthdate;
+                })
+            })
+            .catch(error => console.error('데이터 처리중 오류 발생'))
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchUsers();
+        })
+    </script>
+</body>
+
+</html>

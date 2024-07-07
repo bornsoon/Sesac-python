@@ -10,9 +10,15 @@
     width: 100%;
 }
 .input_box {
-    width: clac(100% - 500px);
+    width: calc(100% - 700px);
+    padding-left: 200px;
 }
-form * {   
+.select_box {
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-right: 30px;
+}
+form * {
     color: rgb(80, 80, 80);
 }
 input[type='submit'] {
