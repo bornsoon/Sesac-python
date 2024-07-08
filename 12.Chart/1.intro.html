@@ -20,7 +20,7 @@
         context.fillRect(50, 50, 200, 80); // (x, y, width, height)
 
         context.fillStyle = '#00ff00'
-        context.fillRect(100, 100, 200, 80); // (x, y, width, height)
+        context.fillRect(50, 200, 200, 80); // (x, y, width, height)
 
         // 원 그리기
         context.fillStyle = '#0000ff' // 파란색
@@ -32,6 +32,24 @@
         context.arc(350, 200, 30, 0, Math.PI)  // (x, y, radius, 출발각도, 끝각도(radian))
         context.fill();
 
+        // 선 그리기
+        context.strokeStyle = '#FF00FF'
+        context.linewidth = 5;
+        context.beginPath();
+        context.moveTo(200,50);
+        context.lineTo(300,130);
+        context.lineTo(400,130);
+        context.lineTo(400,50);
+        context.stroke();
+
+        // 텍스트 입력
+        context.font = '30px Arial'; // 폰트 크기 및 종류
+        context.fillStyle = '#0095DD';
+        context.fillText('헬로우, hello', 50, 100);
+
+        context.font = 'italic 40px Times New Roman';
+        context.fillStyle = 'red';
+        context.fillText('헬로우, hello', 50, 250);
     </script>
 </body>
 </html>

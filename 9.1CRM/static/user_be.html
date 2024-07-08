@@ -58,10 +58,10 @@
     
     <script>
         function fetchUsers() {
-            fetch('/user')
+            fetch('/api/user')
             .then(response => response.json())
             .then(data => {
-                const table = document.getElementById('table')
+                const table = document.getElementById('user_table')
                 data.forEach(user => {
                     const row = table.insertRow();
                     row.insertCell(0).textContent = user.Id;
@@ -79,5 +79,4 @@
         })
     </script>
 </body>
-
 </html>

@@ -14,13 +14,14 @@ def pagings(category, str, page, per_page):
 
 
 @app.route('/')
+@app.route('/user')
 def home():
     return app.send_static_file('user_be.html')   # (루트 지정하지 않더라도) 루트에서는 기본으로 index.html으로 줌
 
 
-@app.route('/user', methods=['GET', 'POST'])
-@app.route('/user/<int:page>', methods=['GET', 'POST'])
-def user(page=1):  
+@app.route('/api/user', methods=['GET', 'POST'])
+@app.route('/api/user/<int:page>', methods=['GET', 'POST'])
+def user(page=1):
     if request.method == 'POST':
         per_page = int(request.form['per_page'])
         name = request.form['name']
@@ -48,6 +49,7 @@ def user(page=1):
     values = get_query(query, params)
 
     return jsonify({'values': values}, {'page': page}, {'name': name}, {'arg': arg})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

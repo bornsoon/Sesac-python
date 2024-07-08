@@ -16,6 +16,7 @@
     }
     
 </style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -40,7 +41,7 @@
     {% if revenue_month %} 월간 매출액 {% endif %}
     {% if revenue_date %} 일간 매출액 {% endif %}
 </div>
-<div style="overflow: auto; max-height: 30vh">
+<div style="overflow: auto; max-height: 25vh">
     <table>
         {% if revenue_month %}
         <tr>
@@ -77,7 +78,45 @@
 <div style="padding:10px; border-bottom: solid 1px rgb(130, 130, 130);">
     월별 매출액 그래프
 </div>
-<div style="overflow: auto; max-height: 35vh">
+    <canvas id="barChart" width="450" height= "90"></canvas>
 
-</div>
+    <script>
+        const ctx = document.getElementById('barChart').getContext('2d');
+        let per = '{{ per }}'.replace('[','').replace(']','').split(",")
+        per = per.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
+        let per_revenue = '{{ per_revenue }}'.replace('[','').replace(']','').split(",")
+        per_revenue = per_revenue.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
+        let per_count = '{{ per_count }}'.replace('[','').replace(']','').split(", ")
+        console.log(per_count)
+        per_count = per_count.map(x => parseInt(x)).reverse()
+        console.log(per_count)
+        const mixedChart = new Chart(ctx, {
+            data: {
+                datasets: [{
+                        type: 'bar',
+                        label: 'BarDataset',
+                        yAxisID: 'y-left',
+                        data: per_revenue,
+                        backgroundColor: ['pink', 'skyblue']
+                    } , {
+                        type: 'line',
+                        label: 'Line Dataset',
+                        yAxisID: 'y-right',
+                        data: per_count,
+                        fill: false,
+                        borderColor: 'rgb(54, 162, 235)'
+                    }],
+                    labels: per
+            },
+            options: {
+                    'y-left': {
+                        position: 'left'
+                    },
+                    'y-right': {
+                        position: 'right'
+                    }  
+                }
+            });
+    </script>
+
 {% endblock %}

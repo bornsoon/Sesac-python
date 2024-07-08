@@ -225,20 +225,30 @@ def itemDetail(id,date=None):
 
     revenue_date = []
     revenue_month = []
+    per = []
+    per_revenue = []
+    per_count = []
     if date:
         revenue_query = "SELECT strftime('%m-%d', OrderAt) AS perDate, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE i.id= ? AND strftime('%Y-%m', OrderAt) = ?  GROUP BY perDate ORDER BY perDate DESC"
         revenue = db.get_query(revenue_query, (id, date,))
         if revenue:
             for i in revenue:
-                revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0][:2]+'월'+i[0][3:]+'일'])
+                revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0].replace('-','월') + '일'])
+                per.append(i[0].replace('-','월') + '일')
+                per_revenue.append(i[1])
+                per_count.append(i[2])
+
     else:
         revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE i.id= ? GROUP BY perMonth ORDER BY perMonth DESC"
         revenue = db.get_query(revenue_query, (id,))
         if revenue:
             for i in revenue:
-                revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0][:4]+'년'+i[0][6:]+'월'])
+                revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0].replace('-','년') + '월'])
+                per.append(i[0].replace('-','년') + '월')
+                per_revenue.append(i[1])
+                per_count.append(i[2])
 
-    return render_template('itemDetail.html', keys=keys, paging=paging, item=item, revenue_month=revenue_month, revenue_date = revenue_date)
+    return render_template('itemDetail.html', keys=keys, paging=paging, item=item, revenue_date = revenue_date, revenue_month=revenue_month, per=per, per_revenue=per_revenue, per_count=per_count)
 
 
 @app.route('/store', methods=['GET', 'POST'])
@@ -293,8 +303,8 @@ def storeDetail(id, date=None):
             for i in revenue:
                 revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0][:2]+'월'+i[0][3:]+'일'])
                 
-        customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
-        topCustomers = db.get_query(customer_query, (id,))
+        customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? AND strftime('%Y-%m', OrderAt) = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
+        topCustomers = db.get_query(customer_query, (id,date,))
     else:
         revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY perMonth ORDER BY perMonth DESC"
         revenue = db.get_query(revenue_query, (id,))

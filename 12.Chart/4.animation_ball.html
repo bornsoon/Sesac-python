@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mycanvas" width="400" height="200"></canvas>
+
+    <script>
+        const canvas = document.getElementById('mycanvas');
+        const context = canvas.getContext('2d')  
+        let x = 50;
+        let y = 50;
+        let speed = 3
+        let dx = speed;
+        let dy = speed;
+        radius = 20;
+
+        function drawBall() {
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.beginPath();
+            context.arc(x, y, radius, 0, Math.PI * 2);
+            context.fillStyle = 'blue';
+            context.fill();
+            context.closePath();
+
+            requestAnimationFrame(drawBall);  // 반복 호출
+
+            x += dx;
+            y += dy;
+            if (x > canvas.width - radius || x < radius){
+                dx = -dx;
+            }
+            if (y > canvas.height - radius || y < radius){
+                dy = -dy;
+            }
+        }
+
+        drawBall(); // 최초 함수 호출
+
+    </script>
+</body>
+</html>
