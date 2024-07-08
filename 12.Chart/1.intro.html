@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> 차트/그래프를 그리기 위한 캔버스 </h1>
+    <canvas id="mycanvas" width="480" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('mycanvas');
+        const context = canvas.getContext('2d')  // 2D 그래픽 캔버스 컨텍스트 가져오기
+
+        // 여기서부터는 내가 그리고 싶은 그림을 그리면 됨..
+
+        // 직사각형 그리기
+        context.fillStyle = '#ff0000' // 빨간색 = RGB = Red FF, Green 00, Blue 00 
+        context.fillRect(50, 50, 200, 80); // (x, y, width, height)
+
+        context.fillStyle = '#00ff00'
+        context.fillRect(100, 100, 200, 80); // (x, y, width, height)
+
+        // 원 그리기
+        context.fillStyle = '#0000ff' // 파란색
+        context.beginPath();  // 연결성 초기화
+        context.arc(350, 100, 30, 0, 2 * Math.PI)  // (x, y, radius, 출발각도, 끝각도(radian))
+        context.fill();  // 실제로 그리기
+
+        context.beginPath();  // 연결성 초기화
+        context.arc(350, 200, 30, 0, Math.PI)  // (x, y, radius, 출발각도, 끝각도(radian))
+        context.fill();
+
+    </script>
+</body>
+</html>
