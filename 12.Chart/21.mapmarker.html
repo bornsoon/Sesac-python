@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        #map { height: 600px; }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // var map = L.map('map').setView([51.505, -0.09], 13); // GPS 좌표 lat, lng, 13=줌레벨(1~19)
+        var map = L.map('map').setView([37.532600, 127.024612], 13); // GPS 좌표 lat, lng, 13=줌레벨(1~19)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+       var touristSpots = [
+            {
+                name: '경복궁',
+                location: [37.578, 126.977],
+                description: '경복궁은 조선 시대의 법궁이자 서울의 대표적인 궁궐입니다.',
+                imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAxODA0MDVfMTU5/MDAxNTIyOTA0MDczNDgx.9XbBJvQC0Cjd0_vRovae7PCd_96zzyNyQyc1nEtDVuAg.Xn7MGvNx5yiUOFsJUHzs8EBXTRiNvo5igzpZZ9NSYCYg.PNG.royalculture/%EA%B2%BD%EB%B3%B5%EA%B6%81%EC%82%AC%EC%A7%84.png?type=w800'
+            },
+            {
+                name: '명동',
+                location: [37.5635, 126.981],
+                description: '명동은 서울의 대표적인 쇼핑 거리로, 다양한 상점과 식당이 위치해 있습니다.',
+                imageUrl: 'https://www.agoda.com/wp-content/uploads/2019/01/Myeongdong-Seoul-Myeongdong-Cathedral.jpg'
+            },
+            {
+                name: '남산 타워',
+                location: [37.5515, 126.988],
+                description: '남산 타워는 서울의 랜드마크 중 하나로, 멋진 서울 전경을 감상할 수 있는 곳입니다.',
+                imageUrl: 'https://mono.aks.ac.kr/s/media/da/da2261da-8010-4b0a-a99e-9fd909c3234d.jpg?preset=page'
+            }
+        ]
+
+        touristSpots.forEach(function (spot) {
+            var marker = L.marker(spot.location).addTo(map).bindPopup(spot.name);
+
+            // marker.on('click', function() {
+            //     map.flyTo(spot.location, 19);  // 쭉~ 줌인 시켜주는 기능...
+            // })
+
+            marker.on('click', function() {
+                var popupContent =`
+                    <div>
+                        <h3>${spot.name}</h3>
+                        <p>${spot.description}</p>
+                        <img src="${spot.imageUrl}" alt="${spot.name}" width="100%">
+                `
+
+                var popup = L.popup()
+                        .setLatLng(spot.location)
+                        .setContent(popupContent)
+                        .openOn(map);
+            })
+        })
+        
+    </script>
+</body>
+</html>

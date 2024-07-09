@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="mycanvas" width="600" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('mycanvas')
+        const ctx = canvas.getContext('2d');
+
+        const player = {
+            x: 0,
+            y: 0,
+            speed: 1,
+            directionX: 0
+        }
+
+        const meteor = {
+            x: 200,
+            y: 0,
+            speed: 1,
+        }
+        // JS에서는 이 형태를 Object라고 부름. player.x, player.y, player.speed
+        // const x = 150
+        // const y = 100
+        // const speed = 10
+
+        const image = new Image();
+        image.src = 'ship.png';
+        image.onload = function() {
+            player.x = (canvas.width - image.width) / 2;
+            player.y = (canvas.height - image.height);
+            draw();
+            // ctx.drawIamge(image, 0, 0);  // (image, x, y) 캔바스의 가장 좌상단
+            // ctx.drawIamge(image, 0, 0, 200, 200);  // (image, x, y, w, h) 캔바스의 가장 좌상단
+        }
+
+        const meteorImage = new Image();
+        meteorImage.src = 'meteor.png';
+        meteorImage.onload = function() {
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, player.x, player.y);
+            ctx.drawImage(meteorImage, meteor.x, meteor.y);
+
+            player.x += player.speed * player.directionX;
+            meteor.y += meteor.speed;
+            
+            // if (player.x > 0 || player.x < canvas.width) {
+            //     player.x += player.speed * player.directionX;
+            // }
+
+            if (player.x < 0) {
+                player.x = 0;
+                // player.x = canvas.width;
+            }
+
+            if (player.x > canvas.width - image.width) {
+                player.x = canvas.width - image.width;
+                // player.x = 0 - canvas.width;
+            }
+
+            if (meteor.y > canvas.height) {
+                meteor.y = 0;
+                meteor.x = Math.round(Math.random() * (canvas.width - meteorImage.width));
+            }
+
+            if ((meteor.x > player.x) && (meteor.x > player.x - image.width) && (meteor.y < player.y -image.height) && (meteor.y > player.y)) {
+                console.log('충돌!!!')
+            }
+            console.log(meteor.x, meteor.y, player.x, player.y);
+
+            requestAnimationFrame(draw);
+        }
+
+        // 키보드 이벤트 추가
+        window.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'a':
+                    player.directionX = -1;
+                    break;
+                case 'b':
+                    player.directionX = +1;
+                    break;
+            }
+        })
+    </script>
+</body>
+</html>

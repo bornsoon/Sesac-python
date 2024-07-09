@@ -92,20 +92,22 @@
         console.log(per_count)
         const mixedChart = new Chart(ctx, {
             data: {
-                datasets: [{
-                        type: 'bar',
-                        label: 'BarDataset',
-                        yAxisID: 'y-left',
-                        data: per_revenue,
-                        backgroundColor: ['pink', 'skyblue']
-                    } , {
+                datasets: [
+                    {
                         type: 'line',
-                        label: 'Line Dataset',
+                        label: 'Count',
                         yAxisID: 'y-right',
                         data: per_count,
                         fill: false,
                         borderColor: 'rgb(54, 162, 235)'
-                    }],
+                    } , {
+                        type: 'bar',
+                        label: 'Revenue',
+                        yAxisID: 'y-left',
+                        data: per_revenue,
+                        backgroundColor: ['pink', 'skyblue']
+                    } , 
+                ],
                     labels: per
             },
             options: {
