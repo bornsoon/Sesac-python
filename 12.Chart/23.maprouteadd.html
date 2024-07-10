@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+        #map { height: 600px; }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div>
+        <label for="start">출발지</label>
+        <input id="start" type="text" placeholder="예: 63빌딩"><br>
+        <label for="end">도착지</label>
+        <input id="end" type="text" placeholder="예: 남산타워"><br>
+        <button onclick="findRoute()">경로 찾기</button>
+    </div>
+    <div id="map"></div>
+    <script>
+        function findRoute() {
+            var startInput = document.getElementById('start').value;
+            var endInput = document.getElementById('end').value;
+
+            // 온갖 에러체크를 다 해줘야함..
+            if (!startInput || !endInput) {
+                alert('출발지와 도착지 위치를 모두 입력해주세요');
+                return;
+            }
+
+            // 좌표를 물어다 할당할 빈 변수
+            var startCoord, endCoord;
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + startInput)
+                .then((response) => response.json())
+                .then((data) => {
+                    startCoord = [data[0].lat, data[0].lon]
+
+                    // 출발지를 잘 가져왔으니, 이제는 다음 목표지 요청하기
+                    return fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + endInput)
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    endCoord = [data[0].lat, data[0].lon]
+
+                    console.log(startCoord, endCoord)
+
+                    
+                    // 경로를 지도에 표시하기
+                    var route = L.polyline([startCoord, endCoord], {color: 'blue'}).addTo(map);
+
+                    // 지도를 자동 센터화하기
+                    map.fitBounds(route.getBounds())
+                })
+
+            // 최신 방법
+            // async function findRoute() {
+            //     await fetch(1번);
+            //     await fetch(2번);
+
+            //     var route = L.polyline()
+            // }
+        }
+
+        // var map = L.map('map').setView([51.505, -0.09], 13); // GPS 좌표 lat, lng, 13=줌레벨(1~19)
+        var map = L.map('map').setView([37.532600, 127.024612], 13); // GPS 좌표 lat, lng, 13=줌레벨(1~19)
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+       var touristSpots = [
+            {
+                name: '경복궁',
+                location: [37.578, 126.977],
+                description: '경복궁은 조선 시대의 법궁이자 서울의 대표적인 궁궐입니다.',
+                imageUrl: 'https://mblogthumb-phinf.pstatic.net/MjAxODA0MDVfMTU5/MDAxNTIyOTA0MDczNDgx.9XbBJvQC0Cjd0_vRovae7PCd_96zzyNyQyc1nEtDVuAg.Xn7MGvNx5yiUOFsJUHzs8EBXTRiNvo5igzpZZ9NSYCYg.PNG.royalculture/%EA%B2%BD%EB%B3%B5%EA%B6%81%EC%82%AC%EC%A7%84.png?type=w800'
+            },
+            {
+                name: '명동',
+                location: [37.5635, 126.981],
+                description: '명동은 서울의 대표적인 쇼핑 거리로, 다양한 상점과 식당이 위치해 있습니다.',
+                imageUrl: 'https://www.agoda.com/wp-content/uploads/2019/01/Myeongdong-Seoul-Myeongdong-Cathedral.jpg'
+            },
+            {
+                name: '남산 타워',
+                location: [37.5515, 126.988],
+                description: '남산 타워는 서울의 랜드마크 중 하나로, 멋진 서울 전경을 감상할 수 있는 곳입니다.',
+                imageUrl: 'https://mono.aks.ac.kr/s/media/da/da2261da-8010-4b0a-a99e-9fd909c3234d.jpg?preset=page'
+            }
+        ]
+
+        touristSpots.forEach(function (spot) {
+            var marker = L.marker(spot.location).addTo(map).bindPopup(spot.name);
+
+            // marker.on('click', function() {
+            //     map.flyTo(spot.location, 19);  // 쭉~ 줌인 시켜주는 기능...
+            // })
+
+            marker.on('click', function() {
+                var popupContent =`
+                    <div>
+                        <h3>${spot.name}</h3>
+                        <p>${spot.description}</p>
+                        <img src="${spot.imageUrl}" alt="${spot.name}" width="100%">
+                    </div>    
+                `
+
+                var popup = L.popup()
+                        .setLatLng(spot.location)
+                        .setContent(popupContent)
+                        .openOn(map);
+            })
+        })
+    </script>
+</body>
+</html>

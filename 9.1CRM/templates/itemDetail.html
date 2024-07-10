@@ -82,14 +82,19 @@
 
     <script>
         const ctx = document.getElementById('barChart').getContext('2d');
-        let per = '{{ per }}'.replace('[','').replace(']','').split(",")
-        per = per.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
-        let per_revenue = '{{ per_revenue }}'.replace('[','').replace(']','').split(",")
-        per_revenue = per_revenue.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
-        let per_count = '{{ per_count }}'.replace('[','').replace(']','').split(", ")
-        console.log(per_count)
-        per_count = per_count.map(x => parseInt(x)).reverse()
-        console.log(per_count)
+
+        // let per = '{{ per }}'.replace('[','').replace(']','').split(",")
+        // per = per.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
+
+        // let per_revenue = '{{ per_revenue }}'.replace('[','').replace(']','').split(",")
+        // per_revenue = per_revenue.map(x => x.replace('&#39;', '').replace('&#39;', '')).reverse()
+
+        // let per_count = '{{ per_count }}'.replace('[','').replace(']','').split(", ")
+        // per_count = per_count.map(x => parseInt(x)).reverse()
+
+        const per = {{ per | tojson }}
+        const per_revenue = {{ per_revenue | tojson }}
+        const per_count = {{ per_count | tojson }}
         const mixedChart = new Chart(ctx, {
             data: {
                 datasets: [

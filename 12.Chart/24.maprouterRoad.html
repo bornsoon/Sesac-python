@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <style>
+        #map { height: 600px; }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="start">출발지</label>
+        <input id="start" type="text" placeholder="예: 63빌딩"><br>
+        <label for="end">도착지</label>e
+        <input id="end" type="text" placeholder="예: 남산타워"><br>
+    </div>
+    <div id="map"></div>
+    <script>
+        var map = L.map('map').setView([37.5199, 126.9406], 14); // 63빌딩좌표
+
+        // OpenStreetMap 타일 레이어 추가
+        L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        // 출발지와 도착지 좌표 설정 (서울 63빌딩 -> 남산타워)
+        var origin_latitude = 37.5199;
+        var origin_longitude = 126.9406;
+        var destination_latitude = 37.5512;
+        var destination_longitude = 126.9882;
+
+        // 라우팅 함수를 통해서 길찾기
+        var control = L.Routing.control({
+            waypoints: [
+                L.latLng(origin_latitude, origin_longitude),
+                L.latLng(destination_latitude, destination_longitude),
+            ],
+            plan: L.Routing.plan(
+                [
+                    L.latLng(origin_latitude, origin_longitude),
+                    L.latLng(destination_latitude, destination_longitude),
+                ],
+                {
+                    // 마커는 활성화 안해도 기본적으로 표시됨 (이때는 draggable: false)
+                    createMarker: function (i, wp) {
+                        // i(인덱스), waypoint, n(전체개수)
+                        return L.marker(wp.latLng, {
+                            draggable: true,
+                        });
+                    },
+                }
+            ),
+            addWaypoints: false,
+            routeWhileDragging: false,
+            draggableWaypoints: false,
+            show: false,
+        }).addTo(map);
+    </script>
+</body>
+</html>

@@ -12,3 +12,4 @@ pygame==2.5.2
 requests==2.32.2
 selenium==4.22.0
 SQLAlchemy==2.0.31
+folium==0.17.0
