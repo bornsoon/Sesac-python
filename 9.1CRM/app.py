@@ -294,7 +294,8 @@ def storeDetail(id, date=None):
 
     revenue_date = []
     revenue_month = []
-    topCustomers = []
+    topCustomers_date = []
+    topCustomers_month = []
  #try
     if date:      ## build_query
         revenue_query = "SELECT strftime('%m-%d', OrderAt) AS perDate, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? AND strftime('%Y-%m', OrderAt) = ?  GROUP BY perDate ORDER BY perDate DESC"
@@ -304,7 +305,7 @@ def storeDetail(id, date=None):
                 revenue_date.append([i[0], f"{i[1]:,}원", i[2], i[0][:2]+'월'+i[0][3:]+'일'])
                 
         customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? AND strftime('%Y-%m', OrderAt) = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
-        topCustomers = db.get_query(customer_query, (id,date,))
+        topCustomers_date = db.get_query(customer_query, (id,date,))
     else:
         revenue_query = "SELECT strftime('%Y-%m', OrderAt) AS perMonth, CAST(SUM(price) AS INTEGER), count(oi.Id) FROM orderitems oi INNER JOIN items i ON oi.itemId=i.Id JOIN orders o ON oi.orderId=o.Id WHERE o.storeID = ? GROUP BY perMonth ORDER BY perMonth DESC"
         revenue = db.get_query(revenue_query, (id,))
@@ -313,9 +314,9 @@ def storeDetail(id, date=None):
                 revenue_month.append([i[0], f"{i[1]:,}원", i[2], i[0][:4]+'년'+i[0][6:]+'월'])
 
         customer_query = "SELECT o.userId, u.name, count(o.Id) AS Visit FROM orders o INNER JOIN users u ON o.userId=u.Id WHERE o.storeId = ? GROUP BY o.userId ORDER BY Visit DESC LIMIT 10"
-        topCustomers = db.get_query(customer_query, (id,))
+        topCustomers_month = db.get_query(customer_query, (id,))
 
-    return render_template('storeDetail.html', keys=keys, paging=paging, store=store, revenue_month=revenue_month, revenue_date = revenue_date, topCustomers=topCustomers)
+    return render_template('storeDetail.html', keys=keys, paging=paging, store=store, revenue_month=revenue_month, revenue_date = revenue_date, topCustomers_date=topCustomers_date, topCustomers_month=topCustomers_month)
 
 if __name__ == '__main__':
     app.debug=True

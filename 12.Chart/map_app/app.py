@@ -53,14 +53,14 @@ def index():
     #     ).add_to(mymap)
 
 
-    # 클러스터 추가
-    marker_cluster = MarkerCluster().add_to(mymap)
-    for _, shops in coffee_shops.items():
-        for shop in shops:
-            folium.Marker(
-                location=[shop['latitude'], shop['longitude']],
-                popup=shop['name']
-            ).add_to(marker_cluster)
+    # # 클러스터 추가
+    # marker_cluster = MarkerCluster().add_to(mymap)
+    # for _, shops in coffee_shops.items():
+    #     for shop in shops:
+    #         folium.Marker(
+    #             location=[shop['latitude'], shop['longitude']],
+    #             popup=shop['name']
+    #         ).add_to(marker_cluster)
    
 
     # # 마커 추가
@@ -70,6 +70,20 @@ def index():
     #             location=[shop['latitude'], shop['longitude']],
     #             popup=shop['name']
     #         ).add_to(mymap)
+
+    # 마커 추가
+    for shop in coffee_shops:
+        popup_html = f"""
+        <div style="font-size: 16px; color: black;">
+            <strong>{shop['name']}</strong>
+        </div>
+        """
+        folium.Marker(
+            location=[shop['latitude'], shop['longitude']],
+            # popup=shop['name']
+            popup=folium.Popup(popup_html, max_width=300)
+        ).add_to(mymap)
+
 
     # HTML 저장
     map_html = mymap._repr_html_()

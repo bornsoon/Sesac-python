@@ -84,8 +84,8 @@
             <th> Name </th>
             <th> Frequency </th>
         </tr>
-        {% if customers_month %}
-            {% for i in topCustomers %}
+        {% if topCustomers_month %}
+            {% for i in topCustomers_month %}
             <tr class="pointer" onclick="location.href='/userDetail/{{ i.userId }}'">
                 <td> {{ i['userId'] }} </td>
                 <td> {{ i['Name'] }} </td>
@@ -94,8 +94,8 @@
             {% endfor %} 
         {% endif %}
             
-        {% if customers_date %}
-            {% for i in topCustomers %}
+        {% if topCustomers_date %}
+            {% for i in topCustomers_date %}
             <tr class="pointer" onclick="location.href='/userDetail/{{ i.userId }}'">
                 <td> {{ i['userId'] }} </td>
                 <td> {{ i['Name'] }} </td>
