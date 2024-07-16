@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>TTS (Text-to-Speech) 음성 스피치 서비스</H1>
+    <textarea id="text" rows="4" cols="50">Hello, This is a text-to-speech Example.</textarea>
+    <select id="voiceSelect"></select>
+    <button id="speakButton">SPEAK</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const voiceSelect = document.getElementById('voiceSelect');
+            const speakButton = document.getElementById('speakButton');
+
+            // web Speech API 지원 여부 확인  ..요즘은 거의 지원되서 필요없음
+            if ('speechSynthesis' in window) {
+                // 음성 목록을 가져오기
+                const updateVoices = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    console.log('사용 가능한 목소리 목록: ', voices);
+
+                    voices.forEach((voice, index) => {
+                        const option = document.createElement('option');
+                        option.value = index;
+                        option.text = `${voice.name} (${voice.lang})`;
+                        voiceSelect.add(option);
+                    });
+                }
+
+                window.speechSynthesis.addEventListener('voiceschanged', updateVoices);
+
+                const speakText = () => {
+                    const selectedVocieIndex = voiceSelect.value;
+                    const selectedVoice = window.speechSynthesis.getVoices()[selectedVocieIndex]
+
+                    // 텍스트 글자 로딩
+                    const text = document.getElementById('text').value;
+
+                    // 목소리 셋업
+                    const speech = new SpeechSynthesisUtterance(text);
+                    speech.voice = selectedVoice;
+
+                    // 음성 속도 조정...(크롬은 지원안됨)
+                    speech.rate = 3; // 속도 (0.1 ~ 10)
+                    speech.pitch = 1; // 피치 (0 ~ 2)
+                    speech.volume = 1; // 볼륨 (0 ~ 1)
+
+                    speech.onstart = () => {
+                        console.log('음성 읽기 시작...');
+                    }
+
+                    speech.onend = () => {
+                        console.log('음성 읽기 끝...');
+                    }
+                    
+                    speech.onpause = () => {
+                        console.log('음성 출력 일시 중지...');
+                    }
+
+                    speech.onerror = () => {
+                        console.log('상태 오류...');
+                    }
+
+                    // 읽어주기
+                    window.speechSynthesis.speak(speech);
+                }
+                speakButton.addEventListener('click', speakText);
+            } else {
+                alert('TTS 가능 미지원 브라우저');
+            }
+        })
+    </script>
+</body>
+</html>

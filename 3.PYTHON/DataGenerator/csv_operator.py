@@ -16,7 +16,7 @@ class CsvOperator:
                 csv_list.append(l)
         return csv_list
     
-    def print_csv(self, csv_list, filename,):
+    def print_csv(self, csv_list, filename):
         with open(filename, 'w', encoding = 'utf-8', newline = '') as file:
             writer = csv.writer(file)
             for l in csv_list:
