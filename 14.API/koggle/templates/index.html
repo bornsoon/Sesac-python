@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    }
+    form{
+        display: flex;
+        align-items: center;
+    }
+</style>
+<body>
+    <h1>Koogle</h1>
+    <form action="/search" method="GET">
+        <input type="text" name="query" placeholder="검색어를 입력.." required>
+        <button type="submit" name="type">웹 검색</button>
+    </form>
+</body>
+</html>
