@@ -7,7 +7,7 @@ load_dotenv()
 
 OWM_API_KEY = os.getenv('OPENWEATHERMAP_API_KEY')
 
-url = 'https://api.openweathermap.org/data/2.5/weather'
+url = 'https://api.openweathermap.org/data/2.5/weather'  # EndPoint
 params = {
     'q': 'Seoul', # q는 어쩌다보니 hidden api가 되었음...
     'appid': OWM_API_KEY,

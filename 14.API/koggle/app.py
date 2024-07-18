@@ -23,9 +23,14 @@ def index():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('query')
+    search_type = request.args.get('type')
 
-    api_url_web = 'https://dapi.kakao.com/v2/search/web'
-    api_url_img = 'https://dapi.kakao.com/v2/search/image'
+    if (search_type == 'web'):
+        api_url = 'https://dapi.kakao.com/v2/search/web'
+    elif (search_type == 'image'):
+        api_url = 'https://dapi.kakao.com/v2/search/image'
+    else:
+        return "지원되지 않는 검색 타입입니다.", 400
 
     params = {
         "query": query,
@@ -34,10 +39,8 @@ def search():
         "size": 10
     }
     
-    results_web = call_kakao_api(api_url_web, params)
-    results_img = call_kakao_api(api_url_img, params)
-    results = results_web.extend(results_img)
-    return render_template('results.html', query=query, results=results)
+    results = call_kakao_api(api_url, params)
+    return render_template('results.html', query=query, results=results, search_type=search_type)
 
 if __name__=='__main__':
     app.run(debug=True)
