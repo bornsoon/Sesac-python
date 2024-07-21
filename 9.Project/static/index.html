@@ -20,12 +20,13 @@
 
     <script>
         function searchStores() {
-            const name = document.getElementById('sesarch-input').value;
+            const name = document.getElementById('search-input').value;
             fetch(`/api/stores?name=${encodeURIComponent(name)}`)
             .then(response => response.json())
             .then(data => {
                 const table = document.getElementById('store-table');
                 // 기존 테이블 내용을 지운다
+                clearTable();
                 data.forEach(store => {
                     const row = table.insertRow();
                     row.insertCell(0).textContent = store.Id;
@@ -35,20 +36,14 @@
                 })
             });
         }
-
-        function clearTable() {
-            const table = document.getElementById('store-table');
-            while (table.rows.length > 1) {
-                table.deleteRow(1);
-            }
-        }
-
+        
         function fetchStores() {
             fetch('/api/stores')
             .then(response => response.json())
             .then(data => {
                 // 여기에서 fetch를 해서 받아온 데이터를 처리하는 코드를 작성
                 const table = document.getElementById('store-table');
+                clearTable();
                 data.forEach(store => {
                     const row = table.insertRow();
                     row.insertCell(0).textContent = store.Id;
@@ -59,7 +54,14 @@
             })
             .catch(error => console.error('데이터 처리중 오류 발생'))
         }
-
+        
+                function clearTable() {
+                    const table = document.getElementById('store-table');
+                    while (table.rows.length > 1) {
+                        table.deleteRow(1);
+                    }
+                }
+        
         document.addEventListener('DOMContentLoaded', function() {
             fetchStores();
         })
