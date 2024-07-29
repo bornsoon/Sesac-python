@@ -32,7 +32,7 @@ def t2i(prompt, negative_prompt):
     return response
 
 # 프롬프트에 사용할 제시어
-prompt = "hippop music."
+prompt = "a smiling dog sketch"
 negative_prompt = ""
 
 # 이미지 생성하기 REST API 호출
