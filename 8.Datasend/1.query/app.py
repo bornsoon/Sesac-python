@@ -9,7 +9,6 @@ def main():
 @app.route('/user_json', methods=["GET", "POST", "DELETE"])
 def json_parse():
     data = request.json
-    print(data)
     return data
 
 @app.route('/user', methods=['GET'])
